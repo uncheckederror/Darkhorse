@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>fcb4eb5f-a4e9-49af-9bb0-72b3a44ebda8</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.60" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Darkhorse.DataAccess\Darkhorse.DataAccess.csproj" />
+  </ItemGroup>
+</Project>

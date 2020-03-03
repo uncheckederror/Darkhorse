@@ -1,0 +1,124 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: none;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #FFD2C0;
+    background-color: #436D8D;
+    border-color: none;
+}
+
+.navbar-dark {
+    background-color: #436D8D;
+    border: none;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 0px;
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#body-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#sidebar-container {
+    min-height: 95vh;
+    background-color: #436D8D;
+    padding: 0;
+}
+
+    /* Menu item*/
+    #sidebar-container .list-group a {
+        height: auto;
+        color: white;
+    }
+
+    /* Submenu item*/
+    #sidebar-container .list-group .sidebar-submenu a {
+        height: auto;
+    }
+
+.sidebar-submenu {
+    font-size: 0.9rem;
+}
+
+.logo-separator {
+    background-color: #B95D38;
+    height: 60px;
+}
+
+table {
+    overflow-x: hidden;
+}
+
+.bg-orange {
+    background-color: #001F3F;
+    border: none;
+}
+
+.list-group-item-action:active, .list-group-item-action:focus, .list-group-item-action:hover {
+    background-color: #FF4136;
+    border: none;
+}
+
+.list-group-item:first-child {
+    border: none;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+}
+
+/*High contrast colors from https://clrs.cc/a11y/*/
+
+.bg-orange-secondary {
+    background-color: #85144B;
+    border: none;
+    text-align: match-parent;
+    overflow-wrap: break-word;
+}
+
+.menu-collapsed {
+    font-size: 1.2rem;
+}
+
+.title {
+    font-size: 1.4rem;
+    font-weight: lighter;
+}
+
+main {
+    overflow: hidden;
+}
+
+.sidebar-icon {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.account-number {
+    font-size: 1.8rem;
+}
