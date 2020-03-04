@@ -16,10 +16,14 @@ namespace Darkhorse.Mvc.Models
         public string ContactType { get; set; }
         public int StreetNumber { get; set; }
         public string StreetName { get; set; }
+        public string StreetAddress { get; set; }
         public string StreetNameSort { get; set; }
         public string SectionTownshipRange { get; set; }
         public int AccountGroup { get; set; }
         public string QuarterSection { get; set; }
         public string Tags { get; set; }
+        public int PropertyClass { get; set; }
+        public decimal ParcelAcreage { get; set; }
+        public int TaxCode { get; set; }
     }
 }

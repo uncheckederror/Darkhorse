@@ -41,12 +41,43 @@ namespace Darkhorse.Mvc.Models
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearch query)
         {
-            var results = await RpAccts.GetAsync(query.AccountNumber, LISP.ConnectionString);
-
-            return View("Accounts", new AccountVM
+            var accounts = new List<RealAccountSearch>();
+            var results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, LISP.ConnectionString);
+            foreach (var result in results)
             {
-                Query = query,
-                Accounts = results
+                var realAccountYear = await RealPropertyAccountYears.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);
+                var tags = await AccountTags.GetAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+                var accountGroup = await RealPropertyAccountGroups.GetAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+                string outTags = string.Empty;
+                foreach (var tag in tags)
+                {
+                    outTags += $"{tag?.TAG_CODE}, ";
+                }
+                var checkStreetNumber = int.TryParse(result?.STREET_NO, out var streetNumber);
+                accounts.Add(new RealAccountSearch
+                {
+                    AccountNumber = result?.ACCT_NO,
+                    ProcessNumber = result.RP_ACCT_ID,
+                    ActiveIndicatior = GetActiveIndicatorFromAccountStatus(result),
+                    Contact = result?.CONTACT_NAME,
+                    ContactType = result?.CONTACT_TYPE,
+                    StreetNumber = checkStreetNumber ? streetNumber : 0,
+                    StreetName = result?.STREET_NAME,
+                    StreetAddress = result?.STREET_ADDR,
+                    SectionTownshipRange = result?.SEC_TWN_RNG,
+                    AccountGroup = accountGroup.GROUP_NO,
+                    QuarterSection = result?.QUARTER_SECTION,
+                    Tags = outTags,
+                    PropertyClass = realAccountYear.PROPERTY_CLASS,
+                    ParcelAcreage = realAccountYear.PARCEL_ACREAGE,
+                    TaxCode = realAccountYear.TAX_CODE
+                });
+            }
+
+            return View("Accounts", new Account
+            {
+                Query = accounts.FirstOrDefault(),
+                Accounts = accounts
             });
         }
 
@@ -59,6 +90,22 @@ namespace Darkhorse.Mvc.Models
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public static string GetActiveIndicatorFromAccountStatus(RealPropertyAccountsFilter account)
+        {
+            switch (account?.ACCT_STATUS)
+            {
+                case 'A':
+                    return "Active";
+                // This might not be the right char.
+                case 'R':
+                    return "Reference";
+                case 'D':
+                    return "Inactive";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

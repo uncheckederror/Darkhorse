@@ -1,7 +1,9 @@
-﻿@model Darkhorse.Mvc.Models.AccountVM;
+﻿@model Darkhorse.Mvc.Models.Account;
 
 @{
     ViewData["Title"] = "Real Accounts";
+    // This page is a direct recreation of
+    // LISRPASACCTFILTER
 }
 
 <p class="display-4 pr-3">🏠 Real Accounts</p>
@@ -14,39 +16,23 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Account</span>
                     </div>
-                    <input asp-for="Query.AccountNumber" type="text" class="form-control" id="account" aria-describedby="account" placeholder="Enter Account Number" title="Account">
+                    <input asp-for="Query.AccountNumber" type="text" class="form-control" id="account" aria-describedby="account" placeholder="Enter Account Number" title="Account" value="@Model?.Query?.AccountNumber">
                 </div>
             </div>
-            @*<div class="col-2">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Sort</span>
-                    </div>
-                    <input asp-for="Query.AccountNumberSort" type="text" class="form-control col" id="accountInputSort" aria-describedby="accountSort" placeholder="Sort" title="Sort">
-                </div>
-            </div>*@
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Process #</span>
                     </div>
-                    <input asp-for="Query.ProcessNumber" type="text" class="form-control" id="processInput" placeholder="Enter Process Number" title="Process #">
+                    <input asp-for="Query.ProcessNumber" type="text" class="form-control" id="processInput" placeholder="Enter Process Number" title="Process #" value="@Model?.Query?.ProcessNumber">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Active Indicator</span>
                     </div>
-                    <select asp-for="Query.ActiveIndicatior" class="form-control" id="accountActive" title="Active Indicator">
+                    <select asp-for="Query.ActiveIndicatior" class="form-control" id="accountActive" title="Active Indicator" value="@Model?.Query?.ActiveIndicatior">
                         <option></option>
                         <option>Active</option>
                         <option>Reference</option>
@@ -58,102 +44,125 @@
     </div>
     <div class="form-group">
         <div class="form-row">
-            <div class="col-6">
+            <div class="col-8">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Contact</span>
                     </div>
-                    <input asp-for="Query.Contact" type="text" class="form-control" id="contact" placeholder="Contact" title="Contact" readonly>
+                    <input asp-for="Query.Contact" type="text" class="form-control" id="contact" placeholder="Contact" title="Contact" value="@Model?.Query?.Contact" readonly>
                 </div>
             </div>
-            @*<div class="col-2">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Sort</span>
-                    </div>
-                    <input asp-for="Query.ContactSort" type="text" class="form-control" id="contactSort" aria-describedby="contactSort" placeholder="Sort" title="Sort">
-                </div>
-            </div>*@
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Contact Type</span>
                     </div>
-                    <input asp-for="Query.ContactType" type="text" class="form-control" id="contactType" placeholder="Contact Type" title="Contact Type" readonly>
+                    <input asp-for="Query.ContactType" type="text" class="form-control" id="contactType" placeholder="Contact Type" title="Contact Type" value="@Model?.Query?.ContactType" readonly>
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="form-row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Situs Street #</span>
                     </div>
-                    <input asp-for="Query.StreetNumber" type="number" class="form-control" id="streetNumber" placeholder="Enter Street Number" title="Situs Street #">
+                    <input asp-for="Query.StreetNumber" type="number" class="form-control" id="streetNumber" placeholder="Enter Street Number" title="Situs Street #" value="@Model?.Query?.StreetNumber">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col-6">
+            <div class="col-8">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Situs Street Name</span>
                     </div>
-                    <input asp-for="Query.StreetName" type="text" class="form-control" id="streetName" placeholder="Situs Street Name" title="Situs Street Name" readonly>
+                    <input asp-for="Query.StreetName" type="text" class="form-control" id="streetName" placeholder="Situs Street Name" title="Situs Street Name" value="@Model?.Query?.StreetName" readonly>
                 </div>
             </div>
-            @*<div class="col-2">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Sort</span>
-                    </div>
-                    <input asp-for="Query.StreetNameSort" type="text" class="form-control" id="streetNameSort" aria-describedby="streetNameSort" placeholder="Sort" title="Sort">
-                </div>
-            </div>*@
         </div>
     </div>
     <div class="form-group">
         <div class="form-row">
-            <div class="col-6">
+            <div class="col-8">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Section Township Range</span>
                     </div>
-                    <input asp-for="Query.SectionTownshipRange" type="text" class="form-control" id="str" placeholder="Section Township Range" title="Section Township Range" readonly>
+                    <input asp-for="Query.SectionTownshipRange" type="text" class="form-control" id="str" placeholder="Section Township Range" title="Section Township Range" value="@Model?.Query?.SectionTownshipRange" readonly>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Account Group</span>
+                        <span class="input-group-text">Quarter Section</span>
                     </div>
-                    <input asp-for="Query.AccountGroup" type="number" class="form-control" id="accountGroup" aria-describedby="accountGroup" placeholder="Account Group" title="Account Group">
+                    @{
+                        if (Model?.Query?.QuarterSection != null)
+                        {
+                            switch (Model?.Query?.QuarterSection)
+                            {
+                                case "NE":
+                                    <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
+                                        <option></option>
+                                        <option selected="selected">NE</option>
+                                        <option>NW</option>
+                                        <option>SE</option>
+                                        <option>SW</option>
+                                    </select>
+                                    break;
+                                case "NW":
+                                    <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
+                                        <option></option>
+                                        <option>NE</option>
+                                        <option selected="selected">NW</option>
+                                        <option>SE</option>
+                                        <option>SW</option>
+                                    </select>
+                                    break;
+                                case "SE":
+                                    <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
+                                        <option></option>
+                                        <option>NE</option>
+                                        <option>NW</option>
+                                        <option selected="selected">SE</option>
+                                        <option>SW</option>
+                                    </select>
+                                    break;
+                                case "SW":
+                                    <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
+                                        <option></option>
+                                        <option>NE</option>
+                                        <option>NW</option>
+                                        <option>SE</option>
+                                        <option selected="selected">SW</option>
+                                    </select>
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
+                                <option></option>
+                                <option>NE</option>
+                                <option>NW</option>
+                                <option>SE</option>
+                                <option>SW</option>
+                            </select>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
     <div class="form-group">
         <div class="form-row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">Quarter Section</span>
+                        <span class="input-group-text">Account Group</span>
                     </div>
-                    <select asp-for="Query.QuarterSection" class="form-control" title="Quarter Section">
-                        <option></option>
-                        <option>NE</option>
-                        <option>NW</option>
-                        <option>SE</option>
-                        <option>SW</option>
-                    </select>
+                    <input asp-for="Query.AccountGroup" type="number" class="form-control" id="accountGroup" aria-describedby="accountGroup" placeholder="Account Group" title="Account Group" value="@Model?.Query?.AccountGroup">
                 </div>
             </div>
             <div class="col-6">
@@ -161,13 +170,13 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Tag Codes</span>
                     </div>
-                    <input asp-for="Query.Tags" type="text" class="form-control" id="tags" aria-describedby="tags" placeholder="Tag Codes" title="Tag Codes">
+                    <input asp-for="Query.Tags" type="text" class="form-control" id="tags" aria-describedby="tags" placeholder="Tag Codes" title="Tag Codes" value="@Model?.Query?.Tags">
                 </div>
             </div>
+            <div class="col-2">
+                <button class="btn btn-danger col-12" type="submit">Search</button>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <button class="btn btn-danger" type="submit">Submit</button>
     </div>
 </form>
 
@@ -206,26 +215,26 @@
                         foreach (var account in Model.Accounts)
                         {
                             <tr>
-                                <td scope="row" class="account-number">
-                                    @account.ACCT_NO
+                                <td scope="row">
+                                    @account.AccountNumber
                                 </td>
                                 <td>
-                                    @account.RP_ACCT_ID
+                                    @account.Contact
                                 </td>
                                 <td>
-                                    @account.LAND_FOR_BLDG_ID
+                                    @account.ContactType
                                 </td>
                                 <td>
-                                    @account.CREATED_DT
+                                    @account.StreetAddress
                                 </td>
                                 <td>
-                                    @account.LAST_UPDATE_FOR_EXPORT
+                                    @account.PropertyClass
                                 </td>
                                 <td>
-                                    @account.NEIGHBORHOOD_CODE
+                                    @account.ParcelAcreage
                                 </td>
                                 <td>
-                                    @account.PP_AS_RP_FLAG
+                                    @account.TaxCode
                                 </td>
                             </tr>
                         }
