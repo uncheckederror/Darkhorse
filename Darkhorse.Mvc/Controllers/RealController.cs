@@ -34,14 +34,37 @@ namespace Darkhorse.Mvc.Models
 
         public async Task<IActionResult> Index()
         {
-            return View("Accounts");
+            return View("Search");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearch query)
+        public async Task<IActionResult> Account(string rpAcctId)
         {
-            var accounts = new List<RealAccountSearch>();
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, LISP.ConnectionString);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, LISP.ConnectionString);
+            var searchAccount = search.FirstOrDefault();
+
+            // Tabbed data
+            var contacts = await Contacts.GetAsync(searchAccount.CONTACT_ID, LISP.ConnectionString);
+
+
+            return View("Account", new RealAccountDetail
+            {
+                Account = account,
+                Contacts = contacts,
+            });
+        }
+
+        public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearchResult query)
+        {
+            var accounts = new List<RealAccountSearchResult>();
             var results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, LISP.ConnectionString);
             foreach (var result in results)
             {
@@ -54,7 +77,7 @@ namespace Darkhorse.Mvc.Models
                     outTags += $"{tag?.TAG_CODE}, ";
                 }
                 var checkStreetNumber = int.TryParse(result?.STREET_NO, out var streetNumber);
-                accounts.Add(new RealAccountSearch
+                accounts.Add(new RealAccountSearchResult
                 {
                     AccountNumber = result?.ACCT_NO,
                     ProcessNumber = result.RP_ACCT_ID,
@@ -74,7 +97,7 @@ namespace Darkhorse.Mvc.Models
                 });
             }
 
-            return View("Accounts", new Account
+            return View("Search", new AccountSearchResults
             {
                 Query = accounts.FirstOrDefault(),
                 Accounts = accounts

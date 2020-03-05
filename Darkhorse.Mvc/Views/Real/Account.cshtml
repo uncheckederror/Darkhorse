@@ -1,0 +1,331 @@
+﻿@model Darkhorse.Mvc.Models.RealAccountDetail;
+
+@{
+    ViewData["Title"] = "Real Property Account";
+    // This page is a direct recreation of
+    // LISRPASACCTFILTER
+}
+
+<p class="display-4 pr-3">🏠 Real Property Account</p>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Account</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.ACCT_NO" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Process #</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.RP_ACCT_ID" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    @{
+                        switch (Model.Account.WORK_GROUP)
+                        {
+                            case "RS":
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="option1" checked> Commerical
+                                </label>
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="option2"> Residential
+                                </label>
+                                break;
+                            case "CM":
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="option1" checked> Commerical
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="option2"> Residential
+                                </label>
+                                break;
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Reference Date</span>
+                </div>
+                <input type="datetime-local" class="form-control" value="@Model.Account.REFERENCE_DT">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Inactive Date</span>
+                </div>
+                <input type="datetime-local" class="form-control" value="@Model.Account.INACTIVE_DT">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Section Township Range</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.SEC_TWN_RNG">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Quarter Section</span>
+                </div>
+                @{
+                    if (Model?.Account?.QUARTER_SECTION != null)
+                    {
+                        switch (Model?.Account?.QUARTER_SECTION)
+                        {
+                            case "NE":
+                                <select asp-for="Account.QUARTER_SECTION" class="form-control" title="Quarter Section">
+                                    <option></option>
+                                    <option selected="selected">NE</option>
+                                    <option>NW</option>
+                                    <option>SE</option>
+                                    <option>SW</option>
+                                </select>
+                                break;
+                            case "NW":
+                                <select asp-for="Account.QUARTER_SECTION" class="form-control" title="Quarter Section">
+                                    <option></option>
+                                    <option>NE</option>
+                                    <option selected="selected">NW</option>
+                                    <option>SE</option>
+                                    <option>SW</option>
+                                </select>
+                                break;
+                            case "SE":
+                                <select asp-for="Account.QUARTER_SECTION" class="form-control" title="Quarter Section">
+                                    <option></option>
+                                    <option>NE</option>
+                                    <option>NW</option>
+                                    <option selected="selected">SE</option>
+                                    <option>SW</option>
+                                </select>
+                                break;
+                            case "SW":
+                                <select asp-for="Account.QUARTER_SECTION" class="form-control" title="Quarter Section">
+                                    <option></option>
+                                    <option>NE</option>
+                                    <option>NW</option>
+                                    <option>SE</option>
+                                    <option selected="selected">SW</option>
+                                </select>
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <select asp-for="Account.QUARTER_SECTION" class="form-control" title="Quarter Section">
+                            <option></option>
+                            <option>NE</option>
+                            <option>NW</option>
+                            <option>SE</option>
+                            <option>SW</option>
+                        </select>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Map Number</span>
+                    </div>
+                    <input type="text" class="form-control" value="@Model.Account.MAP_NO">
+                    @*This won't work unless the tax maps are avalible via https*@
+                    <a class="btn btn-info" role="button" href="ftp://kcftp2.co.kitsap.wa.us/assr/taxmaps/t251e(l)/l23s.pdf" target="_blank" rel="noreferrer">View</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Neighborhood Code</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.NEIGHBORHOOD_CODE">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Tax Service</span>
+                </div>
+                <input type="text" class="form-control" value="" readonly>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zone</span>
+                </div>
+                <input type="text" class="form-control" value="" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Personal Property</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.PP_AS_RP_FLAG">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="btn-group col-4">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Details
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Tax Year</a>
+                <a class="dropdown-item" href="#">Account History by Owner</a>
+                <a class="dropdown-item" href="#">Associated Accounts</a>
+                <a class="dropdown-item" href="#">Cadastral</a>
+                <a class="dropdown-item" href="#">Foreclosure</a>
+                <a class="dropdown-item" href="#">Local Improvement District</a>
+                <a class="dropdown-item" href="#">Receipts and Refunds</a>
+                <a class="dropdown-item" href="#">Senior Citizen</a>
+                <a class="dropdown-item" href="#">Destroyed Property Exemption</a>
+                <a class="dropdown-item" href="#">Distraints</a>
+                <a class="dropdown-item" href="#">Three Year Exemption</a>
+            </div>
+        </div>
+        <a class="btn btn-info col-4" href="#" role="button">ATS Change History</a>
+    </div>
+</div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="home" aria-selected="true">
+            Contacts
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="legal-tab" data-toggle="tab" href="#legal" role="tab" aria-controls="home" aria-selected="true">
+            Legal
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="situs-tab" data-toggle="tab" href="#situs" role="tab" aria-controls="home" aria-selected="true">
+            Site Address
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="inspections-tab" data-toggle="tab" href="#inspections" role="tab" aria-controls="home" aria-selected="true">
+            Inspections
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="acctgroup-tab" data-toggle="tab" href="#acctgroup" role="tab" aria-controls="home" aria-selected="true">
+            Account Group
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="notices-tab" data-toggle="tab" href="#notices" role="tab" aria-controls="home" aria-selected="true">
+            Notices
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="home" aria-selected="true">
+            Sales
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tags-tab" data-toggle="tab" href="#tags" role="tab" aria-controls="home" aria-selected="true">
+            Account Tags
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="buildings-tab" data-toggle="tab" href="#buildings" role="tab" aria-controls="home" aria-selected="true">
+            Buildings
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="prepaycontact-tab" data-toggle="tab" href="#prepaycontact" role="tab" aria-controls="home" aria-selected="true">
+            Prepayment Contact
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Name
+                    </th>
+                    <th scope="col">
+                        Type
+                    </th>
+                    <th scope="col">
+                        Reason
+                    </th>
+                    <th scope="col">
+                        Begin Date
+                    </th>
+                    <th scope="col">
+                        End Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var contact in Model?.Contacts)
+                    {
+                        <tr>
+                            <td scope="row">
+                                @contact.NAME
+                            </td>
+                            <td>
+                                @contact.CONTACT_TYPE
+                            </td>
+                            <td>
+                                @contact.CHG_CODE
+                            </td>
+                            <td>
+                                @contact.BEGIN_DT
+                            </td>
+                            <td>
+                                @contact.END_DT
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="tab-pane fade" id="legal" role="tabpanel" aria-labelledby="legal-tab">legal information</div>
+    <div class="tab-pane fade" id="situs" role="tabpanel" aria-labelledby="situs-tab">situs information street address</div>
+    <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">inspects</div>
+    <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">acctgroup</div>
+    <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">notice</div>
+    <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">sales</div>
+    <div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags-tab">tags</div>
+    <div class="tab-pane fade" id="buildings" role="tabpanel" aria-labelledby="buildings-tab">buildings</div>
+    <div class="tab-pane fade" id="prepaycontact" role="tabpanel" aria-labelledby="prepaycontact-tab">prepayment contact</div>
+</div>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Darkhorse.Mvc.Models
 {
-    public class RealAccountSearch
+    public class RealAccountSearchResult
     {
         public string AccountNumber { get; set; }
         public string AccountNumberSort { get; set; }
