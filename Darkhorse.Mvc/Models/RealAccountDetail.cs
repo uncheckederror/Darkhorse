@@ -7,5 +7,7 @@ namespace Darkhorse.Mvc.Models
     {
         public RealPropertyAccount Account { get; set; }
         public IEnumerable<Contacts> Contacts { get; set; }
+        public IEnumerable<LegalDiscription> LegalDiscriptions { get; set; }
+        public Plat Plat { get; set; }
     }
 }

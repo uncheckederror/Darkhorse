@@ -52,13 +52,24 @@ namespace Darkhorse.Mvc.Models
             var searchAccount = search.FirstOrDefault();
 
             // Tabbed data
-            var contacts = await Contacts.GetAsync(searchAccount.CONTACT_ID, LISP.ConnectionString);
+            var contacts = await Contacts.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+            var legal = await LegalDiscription.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
 
+            // Create an empty plat, in case there's not one for this account.
+            var plat = new Plat();
+            var checkPlat = int.TryParse(searchAccount.ACCT_NO.Substring(0, 2), out int platValue);
+            if (checkPlat && platValue >= 37)
+            {
+                // Set the real plat here if it exists.
+                plat = await Plat.GetNameAsync(searchAccount.ACCT_NO, LISP.ConnectionString);
+            }
 
             return View("Account", new RealAccountDetail
             {
                 Account = account,
                 Contacts = contacts,
+                LegalDiscriptions = legal,
+                Plat = plat,
             });
         }
 

@@ -24,15 +24,15 @@ namespace Darkhorse.DataAccess
         public char MAIL_TS_FLAG { get; set; }
         public char MAIL_COPY_FLAG { get; set; }
 
-        public static async Task<IEnumerable<Contacts>> GetAsync(int contactId, string connectionString)
+        public static async Task<IEnumerable<Contacts>> GetAsync(int realPropertyAccountOwnersId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
             string sql = $@"SELECT  CONTACTS.NAME, RP_CONTACTS.CONTACT_TYPE, RP_CONTACTS.CHG_CODE, RP_CONTACTS.BEGIN_DT, RP_CONTACTS.END_DT, CONTACTS.MISC_LINE1, CONTACTS.STREET_ADDR, CONTACTS.MISC_LINE2, CONTACTS.CITY, CONTACTS.STATE, CONTACTS.ZIP_CODE, CONTACTS.ZIP_EXTENSION, RP_CONTACTS.MAIL_NOTICE_FLAG, RP_CONTACTS.MAIL_TS_FLAG, RP_CONTACTS.MAIL_COPY_FLAG
-                            FROM    CONTACTS,
-                                    RP_CONTACTS
-                            WHERE   CONTACTS.CONTACT_ID         = RP_CONTACTS.CONTACT_ID
-                            AND     RP_CONTACTS.CONTACT_ID = {contactId}";
+                            FROM    RP_CONTACTS, CONTACTS
+                            WHERE   RP_CONTACTS.RP_ACCT_OWNER_ID = {realPropertyAccountOwnersId}
+                            AND     RP_CONTACTS.CONTACT_ID = CONTACTS.CONTACT_ID
+                            ORDER BY RP_CONTACTS.BEGIN_DT DESC";
 
             var result = await connection.QueryAsync<Contacts>(sql).ConfigureAwait(false);
 

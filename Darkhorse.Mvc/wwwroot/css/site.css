@@ -46,6 +46,10 @@ body {
     margin-right: 0;
 }
 
+nav {
+    height: 5vh;
+}
+
 #sidebar-container {
     min-height: 95vh;
     background-color: #436D8D;
