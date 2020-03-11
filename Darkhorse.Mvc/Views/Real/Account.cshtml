@@ -6,8 +6,6 @@
     // LISRPASACCTFILTER
 }
 
-
-
 <p class="display-4 pr-3">🏠 Real Property Account</p>
 <div class="form-group">
     <div class="form-row">
@@ -63,7 +61,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Reference Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model.Account.REFERENCE_DT">
+                <input type="datetime-local" class="form-control" value="@Model.Account.REFERENCE_DT.ToString("yyyy-MM-ddThh:ss")">
             </div>
         </div>
         <div class="col-4">
@@ -72,7 +70,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Inactive Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model.Account.INACTIVE_DT">
+                <input type="datetime-local" class="form-control" value="@Model.Account.INACTIVE_DT.ToString("yyyy-MM-ddThh:ss")">
             </div>
         </div>
     </div>
@@ -675,7 +673,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Begin Date</span>
                                 </div>
-                                <input type="datetime-local" class="form-control" value="@legal.BEGIN_DT">
+                                <input type="datetime-local" class="form-control" value="@legal.BEGIN_DT.ToString("yyyy-MM-ddThh:ss")">
                             </div>
                         </div>
                         <div class="col-4">
@@ -683,7 +681,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">End Date</span>
                                 </div>
-                                <input type="datetime-local" class="form-control" value="@legal.END_DT">
+                                <input type="datetime-local" class="form-control" value="@legal.END_DT.ToString("yyyy-MM-ddThh:ss")">
                             </div>
                         </div>
                         <div class="col-4">
@@ -712,8 +710,134 @@
             }
         }
     </div>
-    <div class="tab-pane fade" id="situs" role="tabpanel" aria-labelledby="situs-tab">situs information street address</div>
-    <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">inspects</div>
+    <div class="tab-pane fade" id="situs" role="tabpanel" aria-labelledby="situs-tab">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Jurisdiction
+                        </th>
+                        <th>
+                            Street Address
+                        </th>
+                        <th>
+                            Zip Code
+                        </th>
+                        <th>
+                            In Use
+                        </th>
+                        <th>
+                            Primary
+                        </th>
+                        <th>
+                            Verified Date
+                        </th>
+                        <th>
+                            Unit Number
+                        </th>
+                        <th>
+                            Address Label
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var address in Model.SiteAddresses)
+                        {
+                            <tr>
+                                <td>
+                                    @address.JURISDICTION
+                                </td>
+                                <td>
+                                    @address.STREET_ADDR
+                                </td>
+                                <td>
+                                    @address.ZIP_CODE
+                                </td>
+                                <td>
+                                    @address.IN_USE_FLAG
+                                </td>
+                                <td>
+                                    @address.PRIMARY_FLAG
+                                </td>
+                                <td>
+                                    @address.VERIFIED_DT
+                                </td>
+                                <td>
+                                    @address.SUITE_UNIT
+                                </td>
+                                <td>
+                                    @*What are address labels???*@
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Date Created
+                        </th>
+                        <th>
+                            Jurisdiction
+                        </th>
+                        <th>
+                            Source
+                        </th>
+                        <th>
+                            Application #
+                        </th>
+                        <th>
+                            Permit Type
+                        </th>
+                        <th>
+                            Date Issued
+                        </th>
+                        <th>
+                            Permit Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var permit in Model.Inspections)
+                        {
+                            <tr>
+                                <td>
+                                    @permit.CREATED_DT
+                                </td>
+                                <td>
+                                    @permit.JURISDICTION
+                                </td>
+                                <td>
+                                    @permit.ROW_SOURCE
+                                </td>
+                                <td>
+                                    @permit.APPLICATION_ID
+                                </td>
+                                <td>
+                                    @permit.PERMIT_TYPE_CODE
+                                </td>
+                                <td>
+                                    @*date issued*@
+                                </td>
+                                <td>
+                                    @*permit  status*@
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">acctgroup</div>
     <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">notice</div>
     <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">sales</div>

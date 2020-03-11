@@ -64,19 +64,33 @@ namespace Darkhorse.Mvc.Models
                 plat = await Plat.GetNameAsync(searchAccount.ACCT_NO, LISP.ConnectionString);
             }
 
+            var situses = await RealPropertySiteAddress.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var newConstruction = await NewConstruction.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+
             return View("Account", new RealAccountDetail
             {
                 Account = account,
                 Contacts = contacts,
                 LegalDiscriptions = legal,
                 Plat = plat,
+                SiteAddresses = situses,
+                Inspections = newConstruction
             });
         }
 
         public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearchResult query)
         {
             var accounts = new List<RealAccountSearchResult>();
-            var results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, LISP.ConnectionString);
+            IEnumerable<RealPropertyAccountsFilter> results;
+            if (query?.ProcessNumber > 100000)
+            {
+                results = await RealPropertyAccountsFilter.GetAsync(query.ProcessNumber, LISP.ConnectionString);
+            }
+            else
+            {
+                results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, LISP.ConnectionString);
+            }
+
             foreach (var result in results)
             {
                 var realAccountYear = await RealPropertyAccountYears.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);

@@ -39,5 +39,18 @@ namespace Darkhorse.DataAccess
 
             return results;
         }
+
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetAsync(int realPropertyAccountId, string connectionString)
+        {
+            using var connection = new OracleConnection(connectionString);
+
+            string sql = $@"SELECT  ACCT_STATUS, RP_ACCT_ID, ACCT_NO, CONTACT_ID, CONTACT_NAME, MISC_LINE1, CONTACT_TYPE, STREET_NO, STREET_NAME, STREET_ADDR, SEC_TWN_RNG, QUARTER_SECTION, RP_ACCT_OWNER_ID
+                                FROM    REAL_PROP_ACCT_FILTER_VW 
+                                WHERE   REAL_PROP_ACCT_FILTER_VW.RP_ACCT_ID = {realPropertyAccountId}";
+
+            var results = await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+
+            return results;
+        }
     }
 }
