@@ -10,6 +10,6 @@ namespace Darkhorse.Mvc.Models
         public IEnumerable<LegalDiscription> LegalDiscriptions { get; set; }
         public Plat Plat { get; set; }
         public IEnumerable<RealPropertySiteAddress> SiteAddresses { get; set; }
-        public IEnumerable<NewConstruction> Inspections { get; set; }
+        public IEnumerable<NewConstructionDetail> Inspections { get; set; }
     }
 }

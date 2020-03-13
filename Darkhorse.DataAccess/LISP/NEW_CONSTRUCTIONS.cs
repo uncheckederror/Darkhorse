@@ -26,7 +26,8 @@ namespace Darkhorse.DataAccess
 
             string sql = $@"SELECT NEW_CONSTRUCTION_ID, RP_ACCT_ID, ROW_SOURCE, JURISDICTION, PERMIT_TYPE_CODE, CREATED_BY, CREATED_DT, APPLICATION_ID, MODIFIED_BY, MODIFIED_DT, PERMIT_ID
                             FROM NEW_CONSTRUCTIONS
-                            WHERE RP_ACCT_ID = {realPropertyAccountId}";
+                            WHERE RP_ACCT_ID = {realPropertyAccountId}
+                            ORDER BY CREATED_DT DESC";
 
             var results = await connection.QueryAsync<NewConstruction>(sql).ConfigureAwait(false);
 

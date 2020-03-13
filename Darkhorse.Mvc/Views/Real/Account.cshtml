@@ -273,392 +273,217 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-        <table class="table table-bordered table-hover table-striped mt-3">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        Name
-                    </th>
-                    <th scope="col">
-                        Type
-                    </th>
-                    <th scope="col">
-                        Reason
-                    </th>
-                    <th scope="col">
-                        Begin Date
-                    </th>
-                    <th scope="col">
-                        End Date
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var contact in Model?.Contacts)
-                    {
-                        <tr onclick="showContact(@contact.GetHashCode())">
-                            <td scope="row">
-                                @contact.NAME
-                            </td>
-                            <td>
-                                @contact.CONTACT_TYPE
-                            </td>
-                            <td>
-                                @contact.CHG_CODE
-                            </td>
-                            <td>
-                                @contact.BEGIN_DT
-                            </td>
-                            <td>
-                                @contact.END_DT
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
         @{
-            var first = true;
             foreach (var contact in Model?.Contacts)
             {
-                if (first)
-                {
-                    first = false;
-                    <div class="contactDetail" id="@contact.GetHashCode()">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Name Continued</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.MISC_LINE1">
+                <table class="table table-bordered table-hover table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Name
+                            </th>
+                            <th scope="col">
+                                Type
+                            </th>
+                            <th scope="col">
+                                Reason
+                            </th>
+                            <th scope="col">
+                                Begin Date
+                            </th>
+                            <th scope="col">
+                                End Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            <tr onclick="showContact(@contact.GetHashCode())">
+                                <td scope="row">
+                                    @contact.NAME
+                                </td>
+                                <td>
+                                    @contact.CONTACT_TYPE
+                                </td>
+                                <td>
+                                    @contact.CHG_CODE
+                                </td>
+                                <td>
+                                    @contact.BEGIN_DT
+                                </td>
+                                <td>
+                                    @contact.END_DT
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+                <div class="contactDetail" id="@contact.GetHashCode()">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Name Continued</span>
                                     </div>
+                                    <input type="text" class="form-control" value="@contact.MISC_LINE1">
                                 </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_TS_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
-                                                    </label>
-                                                }
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        @{
+                                            if (contact.MAIL_TS_FLAG == 'Y')
+                                            {
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option1" checked> Mail Tax Statement
+                                                </label>
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
+                                                </label>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Street Address</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.STREET_ADDR">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_COPY_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
-                                                    </label>
-                                                }
+                                            else
+                                            {
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option1"> Mail Tax Statement
+                                                </label>
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
+                                                </label>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" value="@contact.MISC_LINE2">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_NOTICE_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Notice
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Notice
-                                                    </label>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">City</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.CITY">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Link Contact</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">State</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.STATE">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Zip Code</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.ZIP_CODE">
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" value="@contact.ZIP_EXTENSION">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Add Contact</button>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Review Contact Info</button>
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <div class="contactDetail d-none" id="@contact.GetHashCode()">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Name Continued</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.MISC_LINE1">
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Street Address</span>
                                     </div>
+                                    <input type="text" class="form-control" value="@contact.STREET_ADDR">
                                 </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_TS_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
-                                                    </label>
-                                                }
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        @{
+                                            if (contact.MAIL_COPY_FLAG == 'Y')
+                                            {
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
+                                                </label>
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
+                                                </label>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Street Address</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.STREET_ADDR">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_COPY_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
-                                                    </label>
-                                                }
+                                            else
+                                            {
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
+                                                </label>
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
+                                                </label>
                                             }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" value="@contact.MISC_LINE2">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            @{
-                                                if (contact.MAIL_NOTICE_FLAG == 'Y')
-                                                {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Notice
-                                                    </label>
-                                                }
-                                                else
-                                                {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Notice
-                                                    </label>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">City</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.CITY">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Link Contact</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col-2">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">State</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.STATE">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Zip Code</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="@contact.ZIP_CODE">
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" value="@contact.ZIP_EXTENSION">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Add Contact</button>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Review Contact Info</button>
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="@contact.MISC_LINE2">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        @{
+                                            if (contact.MAIL_NOTICE_FLAG == 'Y')
+                                            {
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option1" checked> Mail Notice
+                                                </label>
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option2"> Don't Mail Notice
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="btn btn-dark">
+                                                    <input type="radio" name="options" id="option1"> Mail Notice
+                                                </label>
+                                                <label class="btn btn-dark active">
+                                                    <input type="radio" name="options" id="option2" checked> Don't Mail Notice
+                                                </label>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">City</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@contact.CITY">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-secondary col-12">Link Contact</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">State</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@contact.STATE">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Zip Code</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@contact.ZIP_CODE">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="@contact.ZIP_EXTENSION">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-secondary col-12">Add Contact</button>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-secondary col-12">Review Contact Info</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         }
     </div>
@@ -778,65 +603,130 @@
         </div>
     </div>
     <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">
-        <div class="table-responsive">
-            <table class="table table-hover table-striped table-bordered mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Date Created
-                        </th>
-                        <th>
-                            Jurisdiction
-                        </th>
-                        <th>
-                            Source
-                        </th>
-                        <th>
-                            Application #
-                        </th>
-                        <th>
-                            Permit Type
-                        </th>
-                        <th>
-                            Date Issued
-                        </th>
-                        <th>
-                            Permit Status
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var permit in Model.Inspections)
-                        {
+        @{
+            foreach (var permit in Model?.Inspections)
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered mt-3">
+                        <thead>
                             <tr>
-                                <td>
-                                    @permit.CREATED_DT
-                                </td>
-                                <td>
-                                    @permit.JURISDICTION
-                                </td>
-                                <td>
-                                    @permit.ROW_SOURCE
-                                </td>
-                                <td>
-                                    @permit.APPLICATION_ID
-                                </td>
-                                <td>
-                                    @permit.PERMIT_TYPE_CODE
-                                </td>
-                                <td>
-                                    @*date issued*@
-                                </td>
-                                <td>
-                                    @*permit  status*@
-                                </td>
+                                <th>
+                                    Date Created
+                                </th>
+                                <th>
+                                    Jurisdiction
+                                </th>
+                                <th>
+                                    Source
+                                </th>
+                                <th>
+                                    Application #
+                                </th>
+                                <th>
+                                    Permit Type
+                                </th>
+                                <th>
+                                    Date Issued
+                                </th>
+                                <th>
+                                    Permit Status
+                                </th>
                             </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
+                        </thead>
+                        <tbody>
+                            @{
+
+                                <tr>
+                                    <td>
+                                        @permit.NewConstruction?.CREATED_DT
+                                    </td>
+                                    <td>
+                                        @permit.NewConstruction?.JURISDICTION
+                                    </td>
+                                    <td>
+                                        @permit.NewConstruction?.ROW_SOURCE
+                                    </td>
+                                    <td>
+                                        @permit.NewConstruction?.APPLICATION_ID
+                                    </td>
+                                    <td>
+                                        @permit.NewConstruction?.PERMIT_TYPE_CODE
+                                    </td>
+                                    <td>
+                                        @*date issued*@
+                                    </td>
+                                    <td>
+                                        @*permit  status*@
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Inspection Date
+                                </th>
+                                <th>
+                                    Inspector
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Posted Date
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var inspect in permit?.Inspections)
+                                {
+                                    <tr>
+                                        <td>
+                                            @inspect?.INSPECTION_DT
+                                        </td>
+                                        <td>
+                                            @inspect?.INSPECTOR
+                                        </td>
+                                        <td>
+                                            @{
+                                                var status = string.Empty;
+                                                switch (inspect?.NC_STATUS)
+                                                {
+                                                    case "C":
+                                                        status = "Complete";
+                                                        break;
+                                                    case "P":
+                                                        status = "Partial";
+                                                        break;
+                                                    default:
+                                                        status = inspect?.NC_STATUS;
+                                                        break;
+
+                                                }
+                                                @status
+                                            }
+                                        </td>
+                                        <td>
+                                            @inspect?.POSTED_DT
+                                        </td>
+                                        <td>
+                                            @inspect?.NC_VALUE
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">acctgroup</div>
     <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">notice</div>

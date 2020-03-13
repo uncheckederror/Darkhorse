@@ -65,7 +65,21 @@ namespace Darkhorse.Mvc.Models
             }
 
             var situses = await RealPropertySiteAddress.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+
+            // TODO: Rewrite this section as a single query.
             var newConstruction = await NewConstruction.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var ncPairs = new List<NewConstructionDetail>();
+            foreach (var nc in newConstruction)
+            {
+                var inspections = await Inspection.GetAsync(nc.NEW_CONSTRUCTION_ID, LISP.ConnectionString);
+                ncPairs.Add(new NewConstructionDetail
+                {
+                    NewConstruction = nc,
+                    Inspections = inspections
+                });
+            }
+
+
 
             return View("Account", new RealAccountDetail
             {
@@ -74,7 +88,7 @@ namespace Darkhorse.Mvc.Models
                 LegalDiscriptions = legal,
                 Plat = plat,
                 SiteAddresses = situses,
-                Inspections = newConstruction
+                Inspections = ncPairs
             });
         }
 
