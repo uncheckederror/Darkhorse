@@ -11,5 +11,7 @@ namespace Darkhorse.Mvc.Models
         public Plat Plat { get; set; }
         public IEnumerable<RealPropertySiteAddress> SiteAddresses { get; set; }
         public IEnumerable<NewConstructionDetail> Inspections { get; set; }
+        public IEnumerable<RealPropertyAccountGroup> AccountGroups { get; set; }
+        public IEnumerable<Notice> Notices { get; set; }
     }
 }

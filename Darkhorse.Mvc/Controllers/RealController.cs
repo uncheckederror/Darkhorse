@@ -79,6 +79,8 @@ namespace Darkhorse.Mvc.Models
                 });
             }
 
+            var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+            var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
 
 
             return View("Account", new RealAccountDetail
@@ -88,7 +90,10 @@ namespace Darkhorse.Mvc.Models
                 LegalDiscriptions = legal,
                 Plat = plat,
                 SiteAddresses = situses,
-                Inspections = ncPairs
+                Inspections = ncPairs,
+                AccountGroups = accountGroup,
+                // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
+                Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
             });
         }
 
@@ -109,7 +114,7 @@ namespace Darkhorse.Mvc.Models
             {
                 var realAccountYear = await RealPropertyAccountYears.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);
                 var tags = await AccountTags.GetAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
-                var accountGroup = await RealPropertyAccountGroups.GetAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+                var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
                 string outTags = string.Empty;
                 foreach (var tag in tags)
                 {

@@ -728,8 +728,241 @@
             }
         }
     </div>
-    <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">acctgroup</div>
-    <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">notice</div>
+    <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">
+        @{
+            foreach (var group in Model?.AccountGroups)
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Group Name
+                                </th>
+                                <th>
+                                    Group Number
+                                </th>
+                                <th>
+                                    Begin Date
+                                </th>
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+                                    Mortgage or Account Number
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @group.GROUP_NAME
+                                </td>
+                                <td>
+                                    @group.GROUP_NO
+                                </td>
+                                <td>
+                                    @group.BEGIN_DT
+                                </td>
+                                <td>
+                                    @group.END_DT
+                                </td>
+                                <td>
+                                    @group.GRP_ACCT_NO
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Contact</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.CONTACT_NAME">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Phone</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.PHONE">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Street Address</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.STREET_ADDR">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    @{
+                                        if (group.MAIL_TS_FLAG == 'Y')
+                                        {
+                                            <label class="btn btn-dark active">
+                                                <input type="radio" name="options" id="option1" checked> Mail Tax Statement
+                                            </label>
+                                            <label class="btn btn-dark">
+                                                <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="btn btn-dark">
+                                                <input type="radio" name="options" id="option1"> Mail Tax Statement
+                                            </label>
+                                            <label class="btn btn-dark active">
+                                                <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
+                                            </label>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="@group.MISC_LINE2">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    @{
+                                        if (group.MORTGAGE_FLAG == 'Y')
+                                        {
+                                            <label class="btn btn-dark active">
+                                                <input type="radio" name="options" id="option1" checked> Mortgage Company
+                                            </label>
+                                            <label class="btn btn-dark">
+                                                <input type="radio" name="options" id="option2"> No Mortgage Company
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="btn btn-dark">
+                                                <input type="radio" name="options" id="option1"> Mortgage Comapny
+                                            </label>
+                                            <label class="btn btn-dark active">
+                                                <input type="radio" name="options" id="option2" checked> No Mortgage Company
+                                            </label>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">City</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.CITY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">State</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.STATE">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Zip Code</span>
+                                </div>
+                                <input type="text" class="form-control" value="@group.ZIP_CODE">
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary col-12">Tax Service</button>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary col-12">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>
+                            Notice type
+                        </th>
+                        <th>
+                            Destination
+                        </th>
+                        <th>
+                            Notice Date
+                        </th>
+                        <th>
+                            Notice Generation Date
+                        </th>
+                        <th>
+                            Suppress
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var notice in Model?.Notices)
+                        {
+
+                            <tr>
+                                <td>
+                                    @notice.DESCRIPTION
+                                </td>
+                                <td>
+                                    @notice.NAME
+                                </td>
+                                <td>
+                                    @notice.NOTICE_DT
+                                </td>
+                                <td>
+                                    @notice.NOTICE_GENERATION_DT
+                                </td>
+                                <td>
+                                    @notice.SUPPRESS_FLAG
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">sales</div>
     <div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags-tab">tags</div>
     <div class="tab-pane fade" id="buildings" role="tabpanel" aria-labelledby="buildings-tab">buildings</div>
