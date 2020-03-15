@@ -986,10 +986,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                    </tr>
+                    @{
+                        foreach (var sale in Model?.Sales)
+                        {
+                            <tr>
+                                <td>
+                                    @sale.EXCISE_NO
+                                </td>
+                                <td>
+                                    @sale.DOCUMENT_DT
+                                </td>
+                                <td>
+                                    @sale.PRICE
+                                </td>
+                                <td>
+                                    @sale.INVALID_CODE
+                                </td>
+                                <td>
+                                    @sale.PRIMARY_PARCEL
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
