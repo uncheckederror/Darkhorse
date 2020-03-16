@@ -1053,10 +1053,46 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                    </tr>
+                    @{
+                        foreach (var tag in Model?.Tags)
+                        {
+                            <tr>
+                                <td>
+                                    @tag.TAG_CODE
+                                </td>
+                                <td>
+                                    @tag.DESCRIPTION
+                                </td>
+                                <td>
+                                    @tag.BEGIN_DT
+                                </td>
+                                <td>
+                                    @tag.END_DT
+                                </td>
+                                <td>
+                                    @tag.REMOVED_BY
+                                </td>
+                                <td>
+                                    @tag.TEMP_FLAG
+                                </td>
+                                <td>
+                                    @tag.NO_STATEMENT_FLAG
+                                </td>
+                                <td>
+                                    @tag.QUE_STATEMENT_FLAG
+                                </td>
+                                <td>
+                                    @tag.TRANSFER_FLAG
+                                </td>
+                                <td>
+                                    @tag.ALERT_FLAG
+                                </td>
+                                <td>
+                                    @tag.LOCK_ACCT_FLAG
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>

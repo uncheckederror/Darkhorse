@@ -14,5 +14,6 @@ namespace Darkhorse.Mvc.Models
         public IEnumerable<RealPropertyAccountGroup> AccountGroups { get; set; }
         public IEnumerable<Notice> Notices { get; set; }
         public IEnumerable<SalesAccount> Sales { get; set; }
+        public IEnumerable<AccountTags> Tags { get; set; }
     }
 }

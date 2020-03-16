@@ -82,6 +82,7 @@ namespace Darkhorse.Mvc.Models
             var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
             var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var tags = await AccountTags.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
 
 
             return View("Account", new RealAccountDetail
@@ -96,6 +97,7 @@ namespace Darkhorse.Mvc.Models
                 // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
                 Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
                 Sales = sales,
+                Tags = tags,
             });
         }
 
@@ -115,7 +117,7 @@ namespace Darkhorse.Mvc.Models
             foreach (var result in results)
             {
                 var realAccountYear = await RealPropertyAccountYears.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);
-                var tags = await AccountTags.GetAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+                var tags = await AccountTags.GetCodeAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
                 var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
                 string outTags = string.Empty;
                 foreach (var tag in tags)
