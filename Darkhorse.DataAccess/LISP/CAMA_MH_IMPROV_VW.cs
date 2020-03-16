@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Darkhorse.DataAccess
 {
-    public class MobileHome
+    public class Building
     {
         public int LRSN { get; set; }
         public string BLDGNO { get; set; }
@@ -34,7 +34,7 @@ namespace Darkhorse.DataAccess
         public int TAX_VALUE { get; set; }
         public int BLDGS { get; set; }
 
-        public static async Task<IEnumerable<MobileHome>> GetAsync(int realPropertyAccountId, string connectionString)
+        public static async Task<IEnumerable<Building>> GetAsync(int realPropertyAccountId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -42,7 +42,7 @@ namespace Darkhorse.DataAccess
                             FROM    CAMA_MH_IMPROV_VW CA
                             WHERE   CA.LRSN = {realPropertyAccountId}";
 
-            var result = await connection.QueryAsync<MobileHome>(sql).ConfigureAwait(false);
+            var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
 
             return result;
         }

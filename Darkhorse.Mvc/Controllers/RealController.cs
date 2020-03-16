@@ -37,7 +37,7 @@ namespace Darkhorse.Mvc.Models
             return View("Search");
         }
 
-        public async Task<IActionResult> Account(string rpAcctId)
+        public async Task<IActionResult> Account(string rpAcctId, string page)
         {
             var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
             if (!checkRealAccountId)
@@ -84,24 +84,69 @@ namespace Darkhorse.Mvc.Models
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
             var tags = await AccountTags.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
             var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
-            var mobileHomes = await MobileHome.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var buildings = await Building.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            // TODO: Display the mobile homes on the Buildings tab.
+            //var mobileHomes = new List<MobileHome>();
+            //foreach (var building in buildings)
+            //{
+            //    var mobileHome = await MobileHome.GetAsync(searchAccount.RP_ACCT_ID, building.BLDGNO, LISP.ConnectionString);
+            //    if (!string.IsNullOrWhiteSpace(mobileHome.MH_MAKE))
+            //    {
 
-            return View("Account", new RealAccountDetail
+            //    }
+            //}
+
+            if (string.IsNullOrWhiteSpace(page))
             {
-                Account = account,
-                Contacts = contacts,
-                LegalDiscriptions = legal,
-                Plat = plat,
-                SiteAddresses = situses,
-                Inspections = ncPairs,
-                AccountGroups = accountGroup,
-                // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
-                Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
-                Sales = sales,
-                Tags = tags,
-                CrmContacts = crmContacts,
-                MobileHomes = mobileHomes
-            });
+                return View("Account", new RealAccountDetail
+                {
+                    Account = account,
+                    Contacts = contacts,
+                    LegalDiscriptions = legal,
+                    Plat = plat,
+                    SiteAddresses = situses,
+                    Inspections = ncPairs,
+                    AccountGroups = accountGroup,
+                    // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
+                    Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
+                    Sales = sales,
+                    Tags = tags,
+                    CrmContacts = crmContacts,
+                    Buildings = buildings
+                });
+            }
+            else
+            {
+                switch (page)
+                {
+                    case "ChangeHistory":
+                        var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+                        var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+                        return View("ChangeHistory", new ChangeHistoryDetail
+                        {
+                            Account = account,
+                            Histories = history,
+                            Remarks = remarks
+                        });
+                }
+
+                return View("Account", new RealAccountDetail
+                {
+                    Account = account,
+                    Contacts = contacts,
+                    LegalDiscriptions = legal,
+                    Plat = plat,
+                    SiteAddresses = situses,
+                    Inspections = ncPairs,
+                    AccountGroups = accountGroup,
+                    // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
+                    Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
+                    Sales = sales,
+                    Tags = tags,
+                    CrmContacts = crmContacts,
+                    Buildings = buildings
+                });
+            }
         }
 
         public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearchResult query)

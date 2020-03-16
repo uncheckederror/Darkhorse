@@ -16,6 +16,6 @@ namespace Darkhorse.Mvc.Models
         public IEnumerable<SalesAccount> Sales { get; set; }
         public IEnumerable<AccountTags> Tags { get; set; }
         public IEnumerable<CrmContact> CrmContacts { get; set; }
-        public IEnumerable<MobileHome> MobileHomes { get; set; }
+        public IEnumerable<Building> Buildings { get; set; }
     }
 }
