@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Darkhorse.DataAccess
 {
-    public class Contacts
+    public class Contact
     {
         public string NAME { get; set; }
         public string CONTACT_TYPE { get; set; }
@@ -24,7 +24,7 @@ namespace Darkhorse.DataAccess
         public char MAIL_TS_FLAG { get; set; }
         public char MAIL_COPY_FLAG { get; set; }
 
-        public static async Task<IEnumerable<Contacts>> GetAsync(int realPropertyAccountOwnersId, string connectionString)
+        public static async Task<IEnumerable<Contact>> GetAsync(int realPropertyAccountOwnersId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -34,7 +34,7 @@ namespace Darkhorse.DataAccess
                             AND     RP_CONTACTS.CONTACT_ID = CONTACTS.CONTACT_ID
                             ORDER BY RP_CONTACTS.BEGIN_DT DESC";
 
-            var result = await connection.QueryAsync<Contacts>(sql).ConfigureAwait(false);
+            var result = await connection.QueryAsync<Contact>(sql).ConfigureAwait(false);
 
             return result;
         }

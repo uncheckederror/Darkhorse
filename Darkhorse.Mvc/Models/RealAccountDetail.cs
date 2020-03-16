@@ -6,7 +6,7 @@ namespace Darkhorse.Mvc.Models
     public class RealAccountDetail
     {
         public RealPropertyAccount Account { get; set; }
-        public IEnumerable<Contacts> Contacts { get; set; }
+        public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<LegalDiscription> LegalDiscriptions { get; set; }
         public Plat Plat { get; set; }
         public IEnumerable<RealPropertySiteAddress> SiteAddresses { get; set; }
@@ -15,5 +15,7 @@ namespace Darkhorse.Mvc.Models
         public IEnumerable<Notice> Notices { get; set; }
         public IEnumerable<SalesAccount> Sales { get; set; }
         public IEnumerable<AccountTags> Tags { get; set; }
+        public IEnumerable<CrmContact> CrmContacts { get; set; }
+        public IEnumerable<MobileHome> MobileHomes { get; set; }
     }
 }

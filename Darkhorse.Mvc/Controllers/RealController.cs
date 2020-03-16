@@ -52,7 +52,7 @@ namespace Darkhorse.Mvc.Models
             var searchAccount = search.FirstOrDefault();
 
             // Tabbed data
-            var contacts = await Contacts.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+            var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
             var legal = await LegalDiscription.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
 
             // Create an empty plat, in case there's not one for this account.
@@ -83,7 +83,8 @@ namespace Darkhorse.Mvc.Models
             var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
             var tags = await AccountTags.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
-
+            var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var mobileHomes = await MobileHome.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
 
             return View("Account", new RealAccountDetail
             {
@@ -98,6 +99,8 @@ namespace Darkhorse.Mvc.Models
                 Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
                 Sales = sales,
                 Tags = tags,
+                CrmContacts = crmContacts,
+                MobileHomes = mobileHomes
             });
         }
 

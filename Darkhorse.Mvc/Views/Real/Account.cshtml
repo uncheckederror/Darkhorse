@@ -1097,7 +1097,176 @@
             </table>
         </div>
     </div>
-    <div class="tab-pane fade" id="buildings" role="tabpanel" aria-labelledby="buildings-tab">just link to this account in parcel details</div>
+    <div class="tab-pane fade" id="buildings" role="tabpanel" aria-labelledby="buildings-tab">
+        @{
+            foreach (var dwelling in Model?.MobileHomes)
+            {
+                <div class="form-group mt-3">
+                    <div class="form-row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Building</span>
+                                </div>
+                                @{
+                                    var count = $"{dwelling.BLDGNO} of {dwelling.BLDGS}";
+                                }
+                                <input type="text" class="form-control" value="@count">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Tax Value</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.TAX_VALUE">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Year Built</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.YEAR_BUILT">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Bedroom</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.DECKSF">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Deck Area</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Building Type</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.BLDGTYPE">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Basement Area</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.BSMTAREA">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Half Bathroom</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Stories</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.STORIES">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Finished Basement Area</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.BSMTFIN">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Full Bathroom</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.FBATHS">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Roof Material</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.ROOFMATD">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Detacted Garage Area</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.DETGARSF">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Fireplace</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.FIREPLACES">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Wall Cover</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.WALL_COVER">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Attached Garage Area</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.ATTGARSF">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Heating</span>
+                                </div>
+                                <input type="text" class="form-control" value="@dwelling.HEATDESC">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     <div class="tab-pane fade" id="prepaycontact" role="tabpanel" aria-labelledby="prepaycontact-tab">
         <div class="table-responsive">
             <table class="table table-hover table-bordered table-striped mt-3">
@@ -1118,10 +1287,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                    </tr>
+                    @{
+                        foreach (var crm in Model?.CrmContacts)
+                        {
+                            <tr>
+                                <td>
+                                    @crm.CRM_EMAIL
+                                </td>
+                                <td>
+                                    @crm.CRM_LASTNAME
+                                </td>
+                                <td>
+                                    @crm.CRM_FIRSTNAME
+                                </td>
+                                <td>
+                                    @crm.CRM_NOTIFY_FLAG
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
