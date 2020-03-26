@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DarkHorse.Mvc.Models
 {
-    public class AccountSearchResults
+    public class AccountSearchResult
     {
         public IEnumerable<RealAccountSearchResult> Accounts { get; set; }
         public RealAccountSearchResult Query { get; set; }

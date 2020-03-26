@@ -4003,7 +4003,7 @@
     }
 
     // We can't use class properties because they don't get listed in the
-    // class prototype and break stuff like Sinon stubs
+    // class prototype and break stuff like sign-on stubs
 
 
     createClass(Popper, [{

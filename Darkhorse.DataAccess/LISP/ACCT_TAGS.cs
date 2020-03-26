@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class AccountTags
+    public class AccountTag
     {
         public string TAG_CODE { get; set; }
         public string DESCRIPTION { get; set; }
@@ -22,7 +22,7 @@ namespace DarkHorse.DataAccess
         public char QUE_STATEMENT_FLAG { get; set; }
         public char TRANSFER_FLAG { get; set; }
 
-        public static async Task<IEnumerable<AccountTags>> GetCodeAsync(int realAccountOwnerId, string connectionString)
+        public static async Task<IEnumerable<AccountTag>> GetCodeAsync(int realAccountOwnerId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -32,12 +32,12 @@ namespace DarkHorse.DataAccess
 	                        AND    tc.end_dt IS NULL
 	                        ORDER BY tag_code";
 
-            var result = await connection.QueryAsync<AccountTags>(sql).ConfigureAwait(false);
+            var result = await connection.QueryAsync<AccountTag>(sql).ConfigureAwait(false);
 
             return result;
         }
 
-        public static async Task<IEnumerable<AccountTags>> GetAsync(int realAccountOwnerId, string connectionString)
+        public static async Task<IEnumerable<AccountTag>> GetAsync(int realAccountOwnerId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -47,7 +47,7 @@ namespace DarkHorse.DataAccess
                             AND     TA.TAG_CODE = TC.TAG_CODE
                             ORDER BY TA.BEGIN_DT DESC";
 
-            var result = await connection.QueryAsync<AccountTags>(sql).ConfigureAwait(false);
+            var result = await connection.QueryAsync<AccountTag>(sql).ConfigureAwait(false);
 
             return result;
         }

@@ -7,30 +7,6 @@ using Xunit.Abstractions;
 
 namespace DarkHorse.Tests
 {
-    public class ConfigurationTest
-    {
-        private readonly ITestOutputHelper output;
-
-        public ConfigurationTest(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
-        [Fact]
-        public void IsTheConfigurationFileValid()
-        {
-            var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddUserSecrets("fcb4eb5f-a4e9-49af-9bb0-72b3a44ebda8")
-                .Build();
-
-            foreach (var con in config.AsEnumerable())
-            {
-                output.WriteLine(con.ToString());
-            }
-        }
-    }
-
     public class LISPIntegrationTests
     {
         private readonly ITestOutputHelper output;
