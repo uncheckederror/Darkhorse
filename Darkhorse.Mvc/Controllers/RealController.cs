@@ -53,7 +53,7 @@ namespace DarkHorse.Mvc.Models
 
             // Tabbed data
             var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
-            var legal = await LegalDiscription.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
+            var legal = await LegalDescription.GetAsync(searchAccount.RP_ACCT_ID, LISP.ConnectionString);
 
             // Create an empty plat, in case there's not one for this account.
             var plat = new Plat();
@@ -102,7 +102,7 @@ namespace DarkHorse.Mvc.Models
                 {
                     Account = account,
                     Contacts = contacts,
-                    LegalDiscriptions = legal,
+                    LegalDescriptions = legal,
                     Plat = plat,
                     SiteAddresses = situses,
                     Inspections = ncPairs,
@@ -141,7 +141,7 @@ namespace DarkHorse.Mvc.Models
                 {
                     Account = account,
                     Contacts = contacts,
-                    LegalDiscriptions = legal,
+                    LegalDescriptions = legal,
                     Plat = plat,
                     SiteAddresses = situses,
                     Inspections = ncPairs,
