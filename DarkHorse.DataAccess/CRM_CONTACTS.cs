@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class CrmContact
+    public class CrmContact : BaseTableClass
     {
         public string CRM_EMAIL { get; set; }
         public string CRM_LASTNAME { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class Building
+    public class Building : BaseTableClass
     {
         public int LRSN { get; set; }
         public string BLDGNO { get; set; }

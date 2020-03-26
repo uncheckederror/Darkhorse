@@ -6,18 +6,14 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class Inspection
+    public class Inspection : BaseTableClass
     {
         public int ASSESSOR_INSPECTION_ID { get; set; }
         public int NEW_CONSTRUCTION_ID { get; set; }
         public string NC_STATUS { get; set; }
         public int NC_VALUE { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
         public DateTime INSPECTION_DT { get; set; }
         public string INSPECTOR { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public DateTime POSTED_DT { get; set; }
         public char POSTED_FLAG { get; set; }
 

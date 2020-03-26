@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealPropertyAccount
+    public class RealPropertyAccount : BaseTableClass
     {
         public int RP_ACCT_ID { get; set; }
         public string ACCT_NO { get; set; }
@@ -17,10 +17,6 @@ namespace DarkHorse.DataAccess
         public string WORK_GROUP { get; set; }
         public DateTime INACTIVE_DT { get; set; }
         public DateTime REFERENCE_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
         public string NEIGHBORHOOD_CODE { get; set; }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(int realAccountId, string connectionString)

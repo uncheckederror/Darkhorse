@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class Remark
+    public class Remark : BaseTableClass
     {
         public int RMK_ID { get; set; }
         public string RMK_CD { get; set; }
@@ -17,16 +17,12 @@ namespace DarkHorse.DataAccess
         public string REMARKS { get; set; }
         public char ACTIVE { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
         public int PP_ACCT_ID { get; set; }
         public int APPLICATION_ID { get; set; }
         public int RP_ACCT_ID { get; set; }
         public string LINK_TEXT { get; set; }
         public string LINK_OBJECT { get; set; }
         public DateTime END_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public int HOLD_CODE_ID { get; set; }
         public string COLUMN_NAME { get; set; }
         public string LINK_FILE { get; set; }

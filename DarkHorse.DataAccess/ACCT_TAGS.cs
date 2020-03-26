@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class AccountTag
+    public class AccountTag : BaseTableClass
     {
         public string TAG_CODE { get; set; }
         public string DESCRIPTION { get; set; }

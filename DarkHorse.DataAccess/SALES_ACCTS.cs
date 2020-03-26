@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class SalesAccount
+    public class SalesAccount : BaseTableClass
     {
         public string EXCISE_NO { get; set; }
         public DateTime DOCUMENT_DT { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealPropertySiteAddress
+    public class RealPropertySiteAddress : BaseTableClass
     {
         public int OBJECTID { get; set; }
         public int SITUS_ID { get; set; }
@@ -26,10 +26,6 @@ namespace DarkHorse.DataAccess
         public string PRIMARY_FLAG { get; set; }
         public string IN_USE_FLAG { get; set; }
         public string STREET_ADDR { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public string VERIFIED_BY { get; set; }
         public DateTime VERIFIED_DT { get; set; }
         public DateTime INACTIVE_DT { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealPropertyAccountGroup
+    public class RealPropertyAccountGroup : BaseTableClass
     {
         public int GROUP_NO { get; set; }
         public int RP_ACCT_GROUP_ID { get; set; }
@@ -14,10 +14,6 @@ namespace DarkHorse.DataAccess
         public int RP_ACCT_OWNER_ID { get; set; }
         public DateTime BEGIN_DT { get; set; }
         public DateTime END_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public string MODIFIED_DT { get; set; }
         public string GRP_ACCT_NO { get; set; }
         public string GROUP_NAME { get; set; }
         public string ACTIVE { get; set; }

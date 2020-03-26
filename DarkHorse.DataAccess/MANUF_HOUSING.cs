@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class MobileHome
+    public class MobileHome : BaseTableClass
     {
         public string MH_MAKE { get; set; }
         public string MH_MODEL { get; set; }
         public string MH_SERIAL_NUM { get; set; }
         public string IMP_LENGTH { get; set; }
         public string IMP_WIDTH { get; set; }
+
         public static async Task<MobileHome> GetAsync(int realPropertyAccountId, string buildingExtension, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);

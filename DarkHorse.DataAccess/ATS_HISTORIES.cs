@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class ATSHistory
+    public class ATSHistory : BaseTableClass
     {
         public int ATS_HIST_ID { get; set; }
         public int RP_ACCT_ID { get; set; }
@@ -15,10 +15,6 @@ namespace DarkHorse.DataAccess
         public string AHST_TYPE { get; set; }
         public DateTime AHST_DT { get; set; }
         public string AHST_USER { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public int LID_ACCT_ID { get; set; }
         public int ACCT_GROUP_ID { get; set; }
 

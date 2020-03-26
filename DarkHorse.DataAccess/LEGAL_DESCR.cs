@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class LegalDescription
+    public class LegalDescription : BaseTableClass
     {
         public int LEGAL_DESCR_ID { get; set; }
         public int RP_ACCT_ID { get; set; }
         public string LEGAL_TEXT { get; set; }
         public DateTime BEGIN_DT { get; set; }
         public DateTime END_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
 
         public static async Task<IEnumerable<LegalDescription>> GetAsync(int realAccountId, string connectionString)
         {

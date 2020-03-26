@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class Contact
+    public class Contact : BaseTableClass
     {
         public string NAME { get; set; }
         public string CONTACT_TYPE { get; set; }

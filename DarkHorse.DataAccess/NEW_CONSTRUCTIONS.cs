@@ -6,18 +6,14 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class NewConstruction
+    public class NewConstruction : BaseTableClass
     {
         public int NEW_CONSTRUCTION_ID { get; set; }
         public int RP_ACCT_ID { get; set; }
         public string ROW_SOURCE { get; set; }
         public string JURISDICTION { get; set; }
         public string PERMIT_TYPE_CODE { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
         public string APPLICATION_ID { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public string PERMIT_ID { get; set; }
 
         public static async Task<IEnumerable<NewConstruction>> GetAsync(int realPropertyAccountId, string connectionString)

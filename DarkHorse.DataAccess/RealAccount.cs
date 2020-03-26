@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealAccount
+    public class RealAccount : BaseTableClass
     {
         public int RP_ACCT_ID { get; set; }
         public string ACCT_NO { get; set; }
@@ -15,10 +15,6 @@ namespace DarkHorse.DataAccess
         public string MAP_NO { get; set; }
         public DateTime REFERENCE_DT { get; set; }
         public DateTime INACTIVE_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public string SEC_TWN_RNG { get; set; }
         public string SUB_ACCT_TYPE { get; set; }
         public string LAND_FOR_BLDG_ID { get; set; }

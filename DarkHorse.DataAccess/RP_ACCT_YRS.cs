@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealPropertyAccountYear
+    public class RealPropertyAccountYear : BaseTableClass
     {
         public int PROPERTY_CLASS { get; set; }
         public decimal PARCEL_ACREAGE { get; set; }
@@ -38,10 +38,6 @@ namespace DarkHorse.DataAccess
         public char NON_PROFIT_FLAG { get; set; }
         public DateTime PRORATE_START_DT { get; set; }
         public DateTime PRORATE_END_DT { get; set; }
-        public string CREATED_BY { get; set; }
-        public DateTime CREATED_DT { get; set; }
-        public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
         public int LAND_AV { get; set; }
         public int LAND_MKT_AV { get; set; }
         public int IMPR_AV { get; set; }

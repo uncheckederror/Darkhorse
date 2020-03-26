@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RealPropertyAccountsFilter
+    public class RealPropertyAccountsFilter : BaseTableClass
     {
         public char ACCT_STATUS { get; set; }
         public int RP_ACCT_ID { get; set; }
