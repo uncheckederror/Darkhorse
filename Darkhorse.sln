@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darkhorse.Mvc", "Darkhorse.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darkhorse.DataAccess", "Darkhorse.DataAccess\Darkhorse.DataAccess.csproj", "{A1490882-162B-4F6D-9DFE-700603430943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darkhorse.Tests", "Darkhorse.Tests\Darkhorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A1490882-162B-4F6D-9DFE-700603430943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1490882-162B-4F6D-9DFE-700603430943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1490882-162B-4F6D-9DFE-700603430943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E4630C-1057-4373-BFA4-257845B35B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E4630C-1057-4373-BFA4-257845B35B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E4630C-1057-4373-BFA4-257845B35B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E4630C-1057-4373-BFA4-257845B35B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
