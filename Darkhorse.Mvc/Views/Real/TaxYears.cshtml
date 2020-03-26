@@ -1,0 +1,166 @@
+﻿@model Darkhorse.Mvc.Models.RealAccountTaxYearsDetail;
+
+@{
+    ViewData["Title"] = "Real Property Account Tax Years";
+    // This page is a direct recreation of
+    // LISRPASACCTYR
+}
+
+<p class="display-4 pr-3">🏠 Real Property Account Tax Years</p>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Account</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.ACCT_NO" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Process #</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.RP_ACCT_ID" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Taxpayer</span>
+                </div>
+                <input type="text" class="form-control" value="" readonly>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive mt-3">
+        <table class="table table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Tax Code
+                    </th>
+                    <th>
+                        Tax Rate
+                    </th>
+                    <th>
+                        Taxable Average Value
+                    </th>
+                    <th>
+                        Prorate Start Date
+                    </th>
+                    <th>
+                        Prorate End Date
+                    </th>
+                    <th>
+                        Total Billed
+                    </th>
+                    <th>
+                        Total Paid
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ foreach (var year in Model?.TaxYears)
+                    {
+                        <tr>
+                            <td>
+                                @year.TAX_YR
+                            </td>
+                            <td>
+                                @year.TAX_STATUS
+                            </td>
+                            <td>
+                                @year.TAX_CODE.ToString("D0")
+                            </td>
+                            <td>
+                                @*TODO: Tax Rate*@
+                            </td>
+                            <td>
+                                @year.TAXABLE_AV.ToString("D0")
+                            </td>
+                            <td>
+                                @year.PRORATE_START_DT
+                            </td>
+                            <td>
+                                @year.PRORATE_END_DT
+                            </td>
+                            <td>
+                                @year.ADJ_TAX_BILLED
+                            </td>
+                            <td>
+                                @year.RP_TAX_PAID
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="taxyear-tab" data-toggle="tab" href="#taxyear" role="tab" aria-controls="home" aria-selected="true">
+                Tax Year
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="balance-tab" data-toggle="tab" href="#balance" role="tab" aria-controls="home" aria-selected="true">
+                Balance
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="exemptions-tab" data-toggle="tab" href="#exemptions" role="tab" aria-controls="home" aria-selected="true">
+                Exemptions
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="assessments-tab" data-toggle="tab" href="#assessments" role="tab" aria-controls="home" aria-selected="true">
+                Assessments
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="adjustments-tab" data-toggle="tab" href="#adjustments" role="tab" aria-controls="home" aria-selected="true">
+                Adjustments
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="prepayment-tab" data-toggle="tab" href="#prepayment" role="tab" aria-controls="home" aria-selected="true">
+                Prepayment
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="delinquent-tab" data-toggle="tab" href="#delinquent" role="tab" aria-controls="home" aria-selected="true">
+                Delinquent
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="taxyear" role="tabpanel" aria-labelledby="taxyear-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="exemptions" role="tabpanel" aria-labelledby="exemptions-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="assessments" role="tabpanel" aria-labelledby="assessments-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="adjustments" role="tabpanel" aria-labelledby="adjustments-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="prepayment" role="tabpanel" aria-labelledby="prepayment-tab">
+            this text
+        </div>
+        <div class="tab-pane fade show active" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
+            this text
+        </div>
+    </div>

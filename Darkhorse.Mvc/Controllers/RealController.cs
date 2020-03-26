@@ -128,6 +128,13 @@ namespace Darkhorse.Mvc.Models
                             Histories = history,
                             Remarks = remarks
                         });
+                    case "TaxYears":
+                        var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, LISP.ConnectionString);
+                        return View("TaxYears", new RealAccountTaxYearsDetail
+                        {
+                            Account = account,
+                            TaxYears = taxYears
+                        });
                 }
 
                 return View("Account", new RealAccountDetail
@@ -164,7 +171,7 @@ namespace Darkhorse.Mvc.Models
 
             foreach (var result in results)
             {
-                var realAccountYear = await RealPropertyAccountYears.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);
+                var realAccountYear = await RealPropertyAccountYear.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), LISP.ConnectionString);
                 var tags = await AccountTags.GetCodeAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
                 var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, LISP.ConnectionString);
                 string outTags = string.Empty;
