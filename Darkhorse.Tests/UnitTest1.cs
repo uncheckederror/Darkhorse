@@ -1,11 +1,11 @@
-using Darkhorse.DataAccess;
+using DarkHorse.DataAccess;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Darkhorse.Tests
+namespace DarkHorse.Tests
 {
     public class ConfigurationTest
     {

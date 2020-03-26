@@ -1,6 +1,6 @@
 using System;
 
-namespace Darkhorse.Mvc.Models
+namespace DarkHorse.Mvc.Models
 {
     public class ErrorViewModel
     {

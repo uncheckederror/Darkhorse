@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Darkhorse.Mvc.Models;
+using DarkHorse.Mvc.Models;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
-using Darkhorse.DataAccess;
+using DarkHorse.DataAccess;
 
-namespace Darkhorse.Mvc.Models
+namespace DarkHorse.Mvc.Models
 {
     public class RealController : Controller
     {

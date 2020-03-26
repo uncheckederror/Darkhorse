@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darkhorse.Mvc", "Darkhorse.Mvc\Darkhorse.Mvc.csproj", "{4E5E360F-C59F-4316-96DC-30AD55918C3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.Mvc", "DarkHorse.Mvc\DarkHorse.Mvc.csproj", "{4E5E360F-C59F-4316-96DC-30AD55918C3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darkhorse.DataAccess", "Darkhorse.DataAccess\Darkhorse.DataAccess.csproj", "{A1490882-162B-4F6D-9DFE-700603430943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.DataAccess", "DarkHorse.DataAccess\DarkHorse.DataAccess.csproj", "{A1490882-162B-4F6D-9DFE-700603430943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darkhorse.Tests", "Darkhorse.Tests\Darkhorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkHorse.Tests", "DarkHorse.Tests\DarkHorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

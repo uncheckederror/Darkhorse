@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Darkhorse.DataAccess\Darkhorse.DataAccess.csproj" />
-    <ProjectReference Include="..\Darkhorse.Mvc\Darkhorse.Mvc.csproj" />
+    <ProjectReference Include="..\DarkHorse.DataAccess\DarkHorse.DataAccess.csproj" />
+    <ProjectReference Include="..\DarkHorse.Mvc\DarkHorse.Mvc.csproj" />
   </ItemGroup>
 
 </Project>

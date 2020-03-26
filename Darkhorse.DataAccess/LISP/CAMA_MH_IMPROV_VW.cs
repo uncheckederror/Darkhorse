@@ -1,9 +1,9 @@
-﻿using Dapper;
+using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Darkhorse.DataAccess
+namespace DarkHorse.DataAccess
 {
     public class Building
     {

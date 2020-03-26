@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -10,6 +10,6 @@
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.60" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Darkhorse.DataAccess\Darkhorse.DataAccess.csproj" />
+    <ProjectReference Include="..\DarkHorse.DataAccess\DarkHorse.DataAccess.csproj" />
   </ItemGroup>
 </Project>

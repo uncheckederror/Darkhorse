@@ -1,7 +1,7 @@
-﻿using Darkhorse.DataAccess;
+using DarkHorse.DataAccess;
 using System.Collections.Generic;
 
-namespace Darkhorse.Mvc.Models
+namespace DarkHorse.Mvc.Models
 {
     public class RealAccountTaxYearsDetail
     {

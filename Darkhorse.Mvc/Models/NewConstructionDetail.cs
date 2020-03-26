@@ -1,10 +1,10 @@
-﻿using Darkhorse.DataAccess;
+using DarkHorse.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Darkhorse.Mvc.Models
+namespace DarkHorse.Mvc.Models
 {
     public class NewConstructionDetail
     {

@@ -1,8 +1,8 @@
-﻿using Dapper;
+using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System.Threading.Tasks;
 
-namespace Darkhorse.DataAccess
+namespace DarkHorse.DataAccess
 {
     public class MobileHome
     {
