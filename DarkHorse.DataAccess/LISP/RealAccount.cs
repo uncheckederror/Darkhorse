@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public class RpAccts
+    public class RealAccount
     {
         public int RP_ACCT_ID { get; set; }
         public string ACCT_NO { get; set; }
@@ -40,7 +40,7 @@ namespace DarkHorse.DataAccess
         /// <param name="rpAcctId"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<RpAccts>> GetBlockAsync(string connectionString)
+        public static async Task<IEnumerable<RealAccount>> GetBlockAsync(string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -48,7 +48,7 @@ namespace DarkHorse.DataAccess
                             (SELECT * FROM RP_ACCTS) 
                             WHERE rownum <= 10";
 
-            var results = await connection.QueryAsync<RpAccts>(sql).ConfigureAwait(false);
+            var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
 
             foreach (var result in results)
             {
@@ -64,7 +64,7 @@ namespace DarkHorse.DataAccess
         /// <param name="rpAcctId"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<RpAccts> GetAsync(int rpAcctId, string connectionString)
+        public static async Task<RealAccount> GetAsync(int rpAcctId, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -78,7 +78,7 @@ namespace DarkHorse.DataAccess
                                 FROM    LIS.RP_ACCTS 
                                 WHERE   RP_ACCT_ID = {rpAcctId}";
 
-            var result = await connection.QuerySingleOrDefaultAsync<RpAccts>(sql).ConfigureAwait(false) ?? new RpAccts();
+            var result = await connection.QuerySingleOrDefaultAsync<RealAccount>(sql).ConfigureAwait(false) ?? new RealAccount();
 
             result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
 
@@ -91,7 +91,7 @@ namespace DarkHorse.DataAccess
         /// <param name="parcelNumber"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<RpAccts>> GetAsync(string parcelNumber, string connectionString)
+        public static async Task<IEnumerable<RealAccount>> GetAsync(string parcelNumber, string connectionString)
         {
             using var connection = new OracleConnection(connectionString);
 
@@ -105,7 +105,7 @@ namespace DarkHorse.DataAccess
                                 FROM    LIS.RP_ACCTS 
                                 WHERE   ACCT_NO LIKE '{parcelNumber}%'";
 
-            var results = await connection.QueryAsync<RpAccts>(sql).ConfigureAwait(false);
+            var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
 
             foreach (var result in results)
             {
