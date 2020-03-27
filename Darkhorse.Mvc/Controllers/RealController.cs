@@ -25,9 +25,11 @@ namespace DarkHorse.Mvc.Models
             _logger = logger;
             _configuration = configuration;
 
-            _dbConnection = _configuration["DatabaseSource"] == "Oracle"
-                ? new OracleConnection(_configuration.GetConnectionString("LISP")) as IDbConnection
-                : new SqlConnection(_configuration.GetConnectionString("LISPROD")) as IDbConnection;
+            _dbConnection = _configuration["DatabaseSource"] switch {
+                "LISP" => new OracleConnection(_configuration.GetConnectionString("LISP")) as IDbConnection,
+                "LISPROD" => new SqlConnection(_configuration.GetConnectionString("LISPROD")) as IDbConnection,
+                _ => throw new Exception("Unrecognized database source name")
+            };
         }
 
         public async Task<IActionResult> Index()

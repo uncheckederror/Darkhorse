@@ -23,27 +23,21 @@ namespace DarkHorse.DataAccess
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(int realAccountId, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT  MAP_NO, QUARTER_SECTION, PP_AS_RP_FLAG, SEC_TWN_RNG, WORK_GROUP, INACTIVE_DT, REFERENCE_DT, CREATED_BY, CREATED_DT, ACCT_NO, RP_ACCT_ID, MODIFIED_DT, MODIFIED_BY, NEIGHBORHOOD_CODE
-                            FROM    RP_ACCTS
-                            WHERE   RP_ACCT_ID = {realAccountId}";
+            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE RP_ACCT_ID = {realAccountId}";
 
             return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(string accountNumber, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT  MAP_NO, QUARTER_SECTION, PP_AS_RP_FLAG, SEC_TWN_RNG, WORK_GROUP, INACTIVE_DT, REFERENCE_DT, CREATED_BY, CREATED_DT, ACCT_NO, RP_ACCT_ID, MODIFIED_DT, MODIFIED_BY, NEIGHBORHOOD_CODE
-                            FROM    RP_ACCTS
-                            WHERE   ACCT_NO = '{accountNumber}'";
+            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'";
 
             return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(Regex accountRegEx, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT  MAP_NO, QUARTER_SECTION, PP_AS_RP_FLAG, SEC_TWN_RNG, WORK_GROUP, INACTIVE_DT, REFERENCE_DT, CREATED_BY, CREATED_DT, ACCT_NO, RP_ACCT_ID, MODIFIED_DT, MODIFIED_BY, NEIGHBORHOOD_CODE
-                            FROM    RP_ACCTS
-                            WHERE   ACCT_NO LIKE '{accountRegEx}%'";
+            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO";
 
             return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
