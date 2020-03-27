@@ -1,8 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Dapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
@@ -54,6 +57,19 @@ namespace DarkHorse.DataAccess
             {
                 return JsonConvert.SerializeObject(ex);
             }
+        }
+
+        public static async Task<List<string>> CompareSqlSatatements<T>(string originalSql, string revisedSql, IDbConnection dbConnection)
+        {
+            var originalResult = await dbConnection.QueryAsync<T>(originalSql).ConfigureAwait(false);
+            var revisedResult = await dbConnection.QueryAsync<T>(revisedSql).ConfigureAwait(false);
+
+            //TODO: compare the two objects, creating a list of mismatches.
+            //If the count is 0, the SQL query results are the same.
+
+            var mismatch = new List<string>();
+
+            return mismatch;
         }
     }
 }
