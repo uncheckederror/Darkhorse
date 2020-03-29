@@ -1,5 +1,8 @@
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -12,11 +15,23 @@ namespace DarkHorse.DataAccess
         public string IMP_LENGTH { get; set; }
         public string IMP_WIDTH { get; set; }
 
-        public static async Task<MobileHome> GetAsync(int realPropertyAccountId, string buildingExtension, string connectionString)
+        public static async Task<IEnumerable<MobileHome>> GetAsync(int realPropertyAccountId, string buildingExtension, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  cmh.mh_make,
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<MobileHome>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  cmh.mh_make,
                                     cmh.mh_model,
                                     cmh.mh_serial_num,
                                     ci.imp_length,
@@ -41,9 +56,10 @@ namespace DarkHorse.DataAccess
                             AND ce.status = 'A'
                             )";
 
-            var result = await connection.QueryFirstOrDefaultAsync<MobileHome>(sql).ConfigureAwait(false) ?? new MobileHome();
+                var result = await connection.QueryAsync<MobileHome>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

@@ -50,21 +50,7 @@ namespace DarkHorse.Tests
                 var m = mssqlAccounts[i];
 
                 // Check if objects are equal.
-                Assert.True(m.ACCT_NO == o.ACCT_NO);
-                Assert.True(m.CREATED_BY == o.CREATED_BY);
-                Assert.True(m.CREATED_DT == o.CREATED_DT);
-                Assert.True(m.INACTIVE_DT == m.INACTIVE_DT);
-                Assert.True(m.MAP_NO == o.MAP_NO);
-                Assert.True(m.MODIFIED_BY == o.MODIFIED_BY);
-                Assert.True(m.MODIFIED_DT == o.MODIFIED_DT);
-                Assert.True(m.NEIGHBORHOOD_CODE == o.NEIGHBORHOOD_CODE);
-                Assert.True(m.PP_AS_RP_FLAG == m.PP_AS_RP_FLAG);
-                Assert.True(m.QUARTER_SECTION == o.QUARTER_SECTION);
-                Assert.True(m.REFERENCE_DT == o.REFERENCE_DT);
-                Assert.True(m.RP_ACCT_ID == o.RP_ACCT_ID);
-                Assert.True(m.SEC_TWN_RNG == o.SEC_TWN_RNG);
-                Assert.True(m.WORK_GROUP == o.WORK_GROUP);
-
+                Assert.True(o.ToString() == m.ToString());
             }
         }
 
@@ -85,23 +71,7 @@ namespace DarkHorse.Tests
                 var m = mssqlAccounts[i];
 
                 // Check if objects are equal.
-                Assert.True(m.ALERT_FLAG == o.ALERT_FLAG);
-                Assert.True(m.BEGIN_DT == o.BEGIN_DT);
-                Assert.True(m.CREATED_BY == o.CREATED_BY);
-                Assert.True(m.CREATED_DT == o.CREATED_DT);
-                Assert.True(m.DESCRIPTION == o.DESCRIPTION);
-                Assert.True(m.END_DT == o.END_DT);
-                Assert.True(m.LOCK_ACCT_FLAG == o.LOCK_ACCT_FLAG);
-                Assert.True(m.MODIFIED_BY == o.MODIFIED_BY);
-                Assert.True(m.MODIFIED_DT == o.MODIFIED_DT);
-                Assert.True(m.NO_STATEMENT_FLAG == o.NO_STATEMENT_FLAG);
-                Assert.True(m.PROGRAM_GEN_FLAG == o.PROGRAM_GEN_FLAG);
-                Assert.True(m.QUE_STATEMENT_FLAG == o.QUE_STATEMENT_FLAG);
-                Assert.True(m.REMOVED_BY == o.REMOVED_BY);
-                Assert.True(m.SYSTEM_TAG_FLAG == o.SYSTEM_TAG_FLAG);
-                Assert.True(m.TAG_CODE == o.TAG_CODE);
-                Assert.True(m.TEMP_FLAG == o.TEMP_FLAG);
-                Assert.True(m.TRANSFER_FLAG == o.TRANSFER_FLAG);
+                Assert.True(o.ToString() == m.ToString());
             }
         }
 
@@ -121,18 +91,244 @@ namespace DarkHorse.Tests
                 var m = mssqlAccounts[i];
 
                 // Check if objects are equal.
-                Assert.True(o.ASSESSOR_INSPECTION_ID == m.ASSESSOR_INSPECTION_ID);
-                Assert.True(o.CREATED_BY == m.CREATED_BY);
-                Assert.True(o.CREATED_DT == m.CREATED_DT);
-                Assert.True(o.INSPECTION_DT == m.INSPECTION_DT);
-                Assert.True(o.INSPECTOR == m.INSPECTOR);
-                Assert.True(o.MODIFIED_BY == m.MODIFIED_BY);
-                Assert.True(o.MODIFIED_DT == m.MODIFIED_DT);
-                Assert.True(o.NC_STATUS == m.NC_STATUS);
-                Assert.True(o.NC_VALUE == m.NC_VALUE);
-                Assert.True(o.NEW_CONSTRUCTION_ID == m.NEW_CONSTRUCTION_ID);
-                Assert.True(o.POSTED_DT == m.POSTED_DT);
-                Assert.True(o.POSTED_FLAG == m.POSTED_FLAG);
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task ATSHistoryComparison()
+        {
+            var rpacctid = 2193589;
+
+            var oa = await ATSHistory.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await ATSHistory.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task BuildingComparison()
+        {
+            var rpacctid = 2193589;
+
+            var oa = await Building.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await Building.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task ContactComparison()
+        {
+            var rpacctid = 2193589;
+
+            var oa = await Contact.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await Contact.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task CrmContactComparison()
+        {
+            var rpacctid = 2193589;
+
+            var oa = await CrmContact.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await CrmContact.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task LegalDescriptionComparison()
+        {
+            var rpacctid = 2193589;
+
+            var oa = await LegalDescription.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await LegalDescription.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task MobileHomesComparison()
+        {
+            var rpacctid = 1795343;
+            var extension = "R02";
+            var oa = await MobileHome.GetAsync(rpacctid, extension, oracleDbConnection);
+            var ma = await MobileHome.GetAsync(rpacctid, extension, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task NewConstructionComparison()
+        {
+            var rpacctid = 1477108;
+            var oa = await NewConstruction.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await NewConstruction.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task NoticesComparison()
+        {
+            var rpacctid = 1477108;
+            var oa = await Notice.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await Notice.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task PlatComparison()
+        {
+            var accountnumber = "4852-001-001-0008";
+            var oa = await Plat.GetNameAsync(accountnumber, oracleDbConnection);
+            var ma = await Plat.GetNameAsync(accountnumber, mssqlDbConnection);
+
+            // Check if objects are equal.
+            Assert.True(oa.ToString() == ma.ToString());
+        }
+
+        [Fact]
+        public async Task RealPropertyAccountsFilterGetComparison()
+        {
+            var accountnumber = "4852";
+            var oa = await RealPropertyAccountsFilter.GetAsync(accountnumber, oracleDbConnection);
+            var ma = await RealPropertyAccountsFilter.GetAsync(accountnumber, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task RealPropertyAccountsFilterGetByIdComparison()
+        {
+            var rpacctid = 1477108;
+            var oa = await RealPropertyAccountsFilter.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await RealPropertyAccountsFilter.GetAsync(rpacctid, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
+            }
+        }
+
+        [Fact]
+        public async Task RealAccountGetByIdComparison()
+        {
+            var rpacctid = 1477108;
+            var oa = await RealAccount.GetAsync(rpacctid, oracleDbConnection);
+            var ma = await RealAccount.GetAsync(rpacctid, mssqlDbConnection);
+
+            // Check if objects are equal.
+            Assert.True(oa.ToString() == ma.ToString());
+        }
+
+        [Fact]
+        public async Task RealAccountGetComparison()
+        {
+            var accountNumber = "5432";
+            var oa = await RealAccount.GetAsync(accountNumber, oracleDbConnection);
+            var ma = await RealAccount.GetAsync(accountNumber, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(o.ToString() == m.ToString());
             }
         }
     }

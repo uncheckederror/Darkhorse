@@ -1,11 +1,7 @@
-﻿using Dapper;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
@@ -48,7 +44,12 @@ namespace DarkHorse.DataAccess
 
                 if (Debugger.IsAttached)
                 {
-                    errors.ForEach(s => Debug.WriteLine(s));
+                    // It worth trying to make everything in this method as performant as possible, because we use it in so many places.
+                    // There's no point in converting this list to a more peformant data structure (ex. ToArray()), because we expect the number of errors to be small.
+                    foreach (var error in errors)
+                    {
+                        Debug.WriteLine(error);
+                    }
                 }
 
                 return JsonConvert.SerializeObject(this, settings);
@@ -57,19 +58,6 @@ namespace DarkHorse.DataAccess
             {
                 return JsonConvert.SerializeObject(ex);
             }
-        }
-
-        public static async Task<List<string>> CompareSqlSatatements<T>(string originalSql, string revisedSql, IDbConnection dbConnection)
-        {
-            var originalResult = await dbConnection.QueryAsync<T>(originalSql).ConfigureAwait(false);
-            var revisedResult = await dbConnection.QueryAsync<T>(revisedSql).ConfigureAwait(false);
-
-            //TODO: compare the two objects, creating a list of mismatches.
-            //If the count is 0, the SQL query results are the same.
-
-            var mismatch = new List<string>();
-
-            return mismatch;
         }
     }
 }

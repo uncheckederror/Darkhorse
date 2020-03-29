@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -31,40 +33,30 @@ namespace DarkHorse.DataAccess
         public DateTime LAST_UPDATE_FOR_EXPORT { get; set; }
 
         /// <summary>
-        /// Get first 100 real accounts from ATS.
-        /// </summary>
-        /// <param name="rpAcctId"></param>
-        /// <param name="connectionString"></param>
-        /// <returns></returns>
-        public static async Task<IEnumerable<RealAccount>> GetBlockAsync(string connectionString)
-        {
-            using var connection = new OracleConnection(connectionString);
-
-            string sql = $@"SELECT * FROM
-                            (SELECT * FROM RP_ACCTS) 
-                            WHERE rownum <= 10";
-
-            var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
-
-            foreach (var result in results)
-            {
-                result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
-            }
-
-            return results;
-        }
-
-        /// <summary>
         /// Gets a Real Property account by its id.
         /// </summary>
         /// <param name="rpAcctId"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<RealAccount> GetAsync(int rpAcctId, string connectionString)
+        public static async Task<RealAccount> GetAsync(int rpAcctId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
+                string sql = $@"";
+
+                var result = await connection.QuerySingleOrDefaultAsync<RealAccount>(sql).ConfigureAwait(false) ?? new RealAccount();
+
+                result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
                                         MAP_NO, REFERENCE_DT, INACTIVE_DT, CREATED_BY, CREATED_DT, 
                                         MODIFIED_BY, MODIFIED_DT, SEC_TWN_RNG, SUB_ACCT_TYPE, 
                                         LAND_FOR_BLDG_ID, PP_AS_RP_FLAG, BILLING_ID, EXEMPTION_ID, 
@@ -74,11 +66,12 @@ namespace DarkHorse.DataAccess
                                 FROM    LIS.RP_ACCTS 
                                 WHERE   RP_ACCT_ID = {rpAcctId}";
 
-            var result = await connection.QuerySingleOrDefaultAsync<RealAccount>(sql).ConfigureAwait(false) ?? new RealAccount();
+                var result = await connection.QuerySingleOrDefaultAsync<RealAccount>(sql).ConfigureAwait(false) ?? new RealAccount();
 
-            result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
+                result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
 
-            return result;
+                return result;
+            }
         }
 
         /// <summary>
@@ -87,11 +80,13 @@ namespace DarkHorse.DataAccess
         /// <param name="parcelNumber"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<RealAccount>> GetAsync(string parcelNumber, string connectionString)
+        public static async Task<IEnumerable<RealAccount>> GetAsync(string parcelNumber, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
+                string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
                                         MAP_NO, REFERENCE_DT, INACTIVE_DT, CREATED_BY, CREATED_DT, 
                                         MODIFIED_BY, MODIFIED_DT, SEC_TWN_RNG, SUB_ACCT_TYPE, 
                                         LAND_FOR_BLDG_ID, PP_AS_RP_FLAG, BILLING_ID, EXEMPTION_ID, 
@@ -101,14 +96,36 @@ namespace DarkHorse.DataAccess
                                 FROM    LIS.RP_ACCTS 
                                 WHERE   ACCT_NO LIKE '{parcelNumber}%'";
 
-            var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
+                var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
 
-            foreach (var result in results)
-            {
-                result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
+                foreach (var result in results)
+                {
+                    result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
+                }
+                return results;
             }
-            return results;
-        }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
 
+                string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
+                                        MAP_NO, REFERENCE_DT, INACTIVE_DT, CREATED_BY, CREATED_DT, 
+                                        MODIFIED_BY, MODIFIED_DT, SEC_TWN_RNG, SUB_ACCT_TYPE, 
+                                        LAND_FOR_BLDG_ID, PP_AS_RP_FLAG, BILLING_ID, EXEMPTION_ID, 
+                                        NEIGHBORHOOD_CODE, ROAD_SERVICE_AREA, SUBDIVISION, BLOCK_LOT, 
+                                        BLOCK_TYPE_ID, LOT_TYPE_ID, LOT, MESSAGE_ID, 
+                                        LAST_UPDATE_FOR_EXPORT 
+                                FROM    LIS.RP_ACCTS 
+                                WHERE   ACCT_NO LIKE '{parcelNumber}%'";
+
+                var results = await connection.QueryAsync<RealAccount>(sql).ConfigureAwait(false);
+
+                foreach (var result in results)
+                {
+                    result.SEC_TWN_RNG = string.IsNullOrWhiteSpace(result.SEC_TWN_RNG) ? "Not Found" : result.SEC_TWN_RNG.Trim();
+                }
+                return results;
+            }
+        }
     }
 }

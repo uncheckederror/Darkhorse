@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -18,18 +20,31 @@ namespace DarkHorse.DataAccess
         public int LID_ACCT_ID { get; set; }
         public int ACCT_GROUP_ID { get; set; }
 
-        public static async Task<IEnumerable<ATSHistory>> GetAsync(int realPropertyAccountId, string connectionString)
+        public static async Task<IEnumerable<ATSHistory>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  ATS_HIST_ID, RP_ACCT_ID, PP_ACCT_ID, AHST_NUM, AHST_TYPE, AHST_DT, AHST_USER, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, LID_ACCT_ID, ACCT_GROUP_ID
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<ATSHistory>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  ATS_HIST_ID, RP_ACCT_ID, PP_ACCT_ID, AHST_NUM, AHST_TYPE, AHST_DT, AHST_USER, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, LID_ACCT_ID, ACCT_GROUP_ID
                             FROM    ATS_HISTORIES H
                             WHERE   H.RP_ACCT_ID = {realPropertyAccountId}
                             ORDER BY H.AHST_DT DESC";
 
-            var result = await connection.QueryAsync<ATSHistory>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<ATSHistory>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

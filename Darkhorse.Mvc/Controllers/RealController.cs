@@ -25,7 +25,8 @@ namespace DarkHorse.Mvc.Models
             _logger = logger;
             _configuration = configuration;
 
-            _dbConnection = _configuration["DatabaseSource"] switch {
+            _dbConnection = _configuration["DatabaseSource"] switch
+            {
                 "LISP" => new OracleConnection(_configuration.GetConnectionString("LISP")) as IDbConnection,
                 "LISPROD" => new SqlConnection(_configuration.GetConnectionString("LISPROD")) as IDbConnection,
                 _ => throw new Exception("Unrecognized database source name")
@@ -48,12 +49,12 @@ namespace DarkHorse.Mvc.Models
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, _dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, _dbConnection.ConnectionString);
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, _dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             // Tabbed data
-            var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
-            var legal = await LegalDescription.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+            var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
+            var legal = await LegalDescription.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
 
             // Create an empty plat, in case there's not one for this account.
             var plat = new Plat();
@@ -61,13 +62,13 @@ namespace DarkHorse.Mvc.Models
             if (checkPlat && platValue >= 37)
             {
                 // Set the real plat here if it exists.
-                plat = await Plat.GetNameAsync(searchAccount.ACCT_NO, _dbConnection.ConnectionString);
+                plat = await Plat.GetNameAsync(searchAccount.ACCT_NO, _dbConnection);
             }
 
             var situses = await RealPropertySiteAddress.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
 
             // TODO: Rewrite this section as a single query.
-            var newConstruction = await NewConstruction.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+            var newConstruction = await NewConstruction.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
             var ncPairs = new List<NewConstructionDetail>();
             foreach (var nc in newConstruction)
             {
@@ -80,11 +81,11 @@ namespace DarkHorse.Mvc.Models
             }
 
             var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
-            var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+            var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
             var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
-            var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
-            var buildings = await Building.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+            var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
+            var buildings = await Building.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
             // TODO: Display the mobile homes on the Buildings tab.
             //var mobileHomes = new List<MobileHome>();
             //foreach (var building in buildings)
@@ -120,7 +121,7 @@ namespace DarkHorse.Mvc.Models
                 switch (page)
                 {
                     case "ChangeHistory":
-                        var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+                        var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
                         var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
                         return View("ChangeHistory", new ChangeHistoryDetail
                         {
@@ -162,11 +163,11 @@ namespace DarkHorse.Mvc.Models
             IEnumerable<RealPropertyAccountsFilter> results;
             if (query?.ProcessNumber > 100000)
             {
-                results = await RealPropertyAccountsFilter.GetAsync(query.ProcessNumber, _dbConnection.ConnectionString);
+                results = await RealPropertyAccountsFilter.GetAsync(query.ProcessNumber, _dbConnection);
             }
             else
             {
-                results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, _dbConnection.ConnectionString);
+                results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, _dbConnection);
             }
 
             foreach (var result in results)
