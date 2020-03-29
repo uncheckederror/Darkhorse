@@ -42,7 +42,7 @@ namespace DarkHorse.DataAccess
         {
             if (dbConnection.GetType()?.Name == "SqlConnection")
             {
-                using var connection = new OracleConnection(dbConnection.ConnectionString);
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
                 string sql = $@"";
 
@@ -84,7 +84,7 @@ namespace DarkHorse.DataAccess
         {
             if (dbConnection.GetType()?.Name == "SqlConnection")
             {
-                using var connection = new OracleConnection(dbConnection.ConnectionString);
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
                 string sql = $@"SELECT  RP_ACCT_ID, ACCT_NO, WORK_GROUP, QUARTER_SECTION, 
                                         MAP_NO, REFERENCE_DT, INACTIVE_DT, CREATED_BY, CREATED_DT, 

@@ -65,7 +65,7 @@ namespace DarkHorse.Mvc.Models
                 plat = await Plat.GetNameAsync(searchAccount.ACCT_NO, _dbConnection);
             }
 
-            var situses = await RealPropertySiteAddress.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+            var situses = await RealPropertySiteAddress.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
 
             // TODO: Rewrite this section as a single query.
             var newConstruction = await NewConstruction.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
@@ -80,9 +80,9 @@ namespace DarkHorse.Mvc.Models
                 });
             }
 
-            var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+            var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
             var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
-            var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+            var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
             var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
             var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
             var buildings = await Building.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
@@ -122,7 +122,7 @@ namespace DarkHorse.Mvc.Models
                 {
                     case "ChangeHistory":
                         var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
-                        var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
+                        var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection);
                         return View("ChangeHistory", new ChangeHistoryDetail
                         {
                             Account = account,
@@ -130,7 +130,7 @@ namespace DarkHorse.Mvc.Models
                             Remarks = remarks
                         });
                     case "TaxYears":
-                        var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+                        var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
                         return View("TaxYears", new RealAccountTaxYearsDetail
                         {
                             Account = account,
@@ -172,9 +172,9 @@ namespace DarkHorse.Mvc.Models
 
             foreach (var result in results)
             {
-                var realAccountYear = await RealPropertyAccountYear.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), _dbConnection.ConnectionString);
+                var realAccountYear = await RealPropertyAccountYear.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), _dbConnection);
                 var tags = await AccountTag.GetCodeAsync(result.RP_ACCT_OWNER_ID, _dbConnection);
-                var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+                var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, _dbConnection);
                 string outTags = string.Empty;
                 foreach (var tag in tags)
                 {

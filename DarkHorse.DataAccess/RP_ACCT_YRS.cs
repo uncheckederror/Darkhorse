@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -72,32 +74,58 @@ namespace DarkHorse.DataAccess
         /// <param name="taxYear"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<RealPropertyAccountYear> GetRealAccountFiltersAsync(int realAccountOwnerId, DateTime taxYear, string connectionString)
+        public static async Task<RealPropertyAccountYear> GetRealAccountFiltersAsync(int realAccountOwnerId, DateTime taxYear, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT property_class, parcel_acreage, tax_code
+                string sql = $@"";
+
+                var result = await connection.QueryFirstOrDefaultAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false) ?? new RealPropertyAccountYear();
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT property_class, parcel_acreage, tax_code
 	                        FROM   rp_acct_yrs
 	                        WHERE  rp_acct_owner_id = {realAccountOwnerId}
 	                        AND    tax_yr = {taxYear.Year}";
 
-            var result = await connection.QueryFirstOrDefaultAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false) ?? new RealPropertyAccountYear();
+                var result = await connection.QueryFirstOrDefaultAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false) ?? new RealPropertyAccountYear();
 
-            return result;
+                return result;
+            }
         }
 
-        public static async Task<IEnumerable<RealPropertyAccountYear>> GetAsync(int realAccountOwnerId, string connectionString)
+        public static async Task<IEnumerable<RealPropertyAccountYear>> GetAsync(int realAccountOwnerId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  RP_ACCT_YR_ID, RP_ACCT_OWNER_ID, SSWM_ASMT_ID, FFP_ASMT_ID, TAX_STATUS, TAX_CODE, TAX_YR, PROPERTY_CLASS, TAXABLE_AV, ASSESSED_VALUE, MARKET_VALUE, RP_TAX_PAID, RP_TAX_REFUND, RP_INTEREST_PAID, RP_PENALTY_PAID, IMPERVIOUS_SURF_BLDG, IMPERVIOUS_SURF_OTHER, MEASURED_DT, SSWM_ASMT_BILLED, SSWM_ASMT_PAID, FFP_ACRES, FFP_ASMT_BILLED, FFP_ASMT_PAID, NEW_CONSTRUCTION_AMT, FFP_AGRMT_FLAG, PUBLIC_OWNED_FLAG, NON_PROFIT_FLAG, PRORATE_START_DT, PRORATE_END_DT, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, LAND_AV, LAND_MKT_AV, IMPR_AV, STATE_ASSESSED_FLAG, PARCEL_ACREAGE, SSWM_ASMT_REFUND, FFP_ASMT_REFUND, OVERRIDE_FFP_FLAG, OVERRIDE_SSWM_FLAG, RP_TAX_BILLED, ADJ_TAX_BILLED, ADJ_SSWM_BILLED, ADJ_FFP_BILLED, OVERRIDE_ASSESSED_FLAG, OVERRIDE_CAMA_FLAG, OVERRIDE_TAX_BILLED_FLAG, PRORATE_CURR_BILLED, PRORATE_PREV_BILLED, FROZEN_VALUE, FED_OWNED_FLAG, RP_ADVANCE_PAID, PARCEL_ACRES, NOX_WEED_ASMT_ID, NOX_WEED_ASMT_BILLED, NOX_WEED_ASMT_PAID, NOX_WEED_ASMT_REFUND, ADJ_NOX_WEED_BILLED, OVERRIDE_NOX_WEED_FLAG
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  RP_ACCT_YR_ID, RP_ACCT_OWNER_ID, SSWM_ASMT_ID, FFP_ASMT_ID, TAX_STATUS, TAX_CODE, TAX_YR, PROPERTY_CLASS, TAXABLE_AV, ASSESSED_VALUE, MARKET_VALUE, RP_TAX_PAID, RP_TAX_REFUND, RP_INTEREST_PAID, RP_PENALTY_PAID, IMPERVIOUS_SURF_BLDG, IMPERVIOUS_SURF_OTHER, MEASURED_DT, SSWM_ASMT_BILLED, SSWM_ASMT_PAID, FFP_ACRES, FFP_ASMT_BILLED, FFP_ASMT_PAID, NEW_CONSTRUCTION_AMT, FFP_AGRMT_FLAG, PUBLIC_OWNED_FLAG, NON_PROFIT_FLAG, PRORATE_START_DT, PRORATE_END_DT, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, LAND_AV, LAND_MKT_AV, IMPR_AV, STATE_ASSESSED_FLAG, PARCEL_ACREAGE, SSWM_ASMT_REFUND, FFP_ASMT_REFUND, OVERRIDE_FFP_FLAG, OVERRIDE_SSWM_FLAG, RP_TAX_BILLED, ADJ_TAX_BILLED, ADJ_SSWM_BILLED, ADJ_FFP_BILLED, OVERRIDE_ASSESSED_FLAG, OVERRIDE_CAMA_FLAG, OVERRIDE_TAX_BILLED_FLAG, PRORATE_CURR_BILLED, PRORATE_PREV_BILLED, FROZEN_VALUE, FED_OWNED_FLAG, RP_ADVANCE_PAID, PARCEL_ACRES, NOX_WEED_ASMT_ID, NOX_WEED_ASMT_BILLED, NOX_WEED_ASMT_PAID, NOX_WEED_ASMT_REFUND, ADJ_NOX_WEED_BILLED, OVERRIDE_NOX_WEED_FLAG
                             FROM    RP_ACCT_YRS Y
                             WHERE   Y.RP_ACCT_OWNER_ID = {realAccountOwnerId}
                             ORDER   BY Y.TAX_YR DESC";
 
-            var result = await connection.QueryAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<RealPropertyAccountYear>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

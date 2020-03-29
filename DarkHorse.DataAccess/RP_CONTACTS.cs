@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -18,17 +20,31 @@ namespace DarkHorse.DataAccess
         public char MAIL_TS_FLAG { get; set; }
         public char MAIL_NOTICE_FLAG { get; set; }
         public char MAIL_COPY_FLAG { get; set; }
-        public static async Task<IEnumerable<RealPropertyContact>> GetAsync(int contactId, string connectionString)
-        {
-            using var connection = new OracleConnection(connectionString);
 
-            string sql = $@"SELECT  ZIP_EXTENSION, ZIP_CODE, STATE, CITY, STREET_ADDR, NAME, MISC_LINE1, MISC_LINE2
+        public static async Task<IEnumerable<RealPropertyContact>> GetAsync(int contactId, IDbConnection dbConnection)
+        {
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<RealPropertyContact>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  ZIP_EXTENSION, ZIP_CODE, STATE, CITY, STREET_ADDR, NAME, MISC_LINE1, MISC_LINE2
                             FROM    CONTACTS
                             WHERE   CONTACT_ID = {contactId}";
 
-            var result = await connection.QueryAsync<RealPropertyContact>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<RealPropertyContact>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }
