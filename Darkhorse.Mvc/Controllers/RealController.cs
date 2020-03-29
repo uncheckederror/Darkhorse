@@ -71,7 +71,7 @@ namespace DarkHorse.Mvc.Models
             var ncPairs = new List<NewConstructionDetail>();
             foreach (var nc in newConstruction)
             {
-                var inspections = await Inspection.GetAsync(nc.NEW_CONSTRUCTION_ID, _dbConnection.ConnectionString);
+                var inspections = await Inspection.GetAsync(nc.NEW_CONSTRUCTION_ID, _dbConnection);
                 ncPairs.Add(new NewConstructionDetail
                 {
                     NewConstruction = nc,
