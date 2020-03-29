@@ -1,9 +1,13 @@
 ﻿using Dapper;
 using Newtonsoft.Json;
+using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,17 +63,56 @@ namespace DarkHorse.DataAccess
             }
         }
 
-        public static async Task<List<string>> CompareSqlSatatements<T>(string originalSql, string revisedSql, IDbConnection dbConnection)
+        public static async Task<List<string>> CompareSqlStatements<T>(string originalSql, string modifiedSql, string dbConnectionString) where T : BaseTableClass
         {
-            var originalResult = await dbConnection.QueryAsync<T>(originalSql).ConfigureAwait(false);
-            var revisedResult = await dbConnection.QueryAsync<T>(revisedSql).ConfigureAwait(false);
+            var mismatches = new List<string>();
 
-            //TODO: compare the two objects, creating a list of mismatches.
-            //If the count is 0, the SQL query results are the same.
+            using var dbConnection = new OracleConnection(dbConnectionString);
+            var originalEnum = await dbConnection.QueryAsync<T>(originalSql).ConfigureAwait(false);
+            var modifiedEnum = await dbConnection.QueryAsync<T>(modifiedSql).ConfigureAwait(false);
 
-            var mismatch = new List<string>();
+            var originalResult = originalEnum.ToList();
+            var modifiedResult = modifiedEnum.ToList();
 
-            return mismatch;
+            // perform a single JSON value comparison
+            // if the results are the same, we're done.
+            if (JsonConvert.SerializeObject(originalResult) == JsonConvert.SerializeObject(modifiedResult))
+            {
+                return mismatches;
+            }
+
+            // perform a single JSON value comparison
+            // if the results are the same, we're done.
+            if (originalResult.Count != modifiedResult.Count)
+            {
+                mismatches.Add($"Count mismatch: Original SQL = {originalResult.Count:N0}, Modified SQL = {modifiedResult.Count:N0}");
+            }
+
+            var maxIterations = originalResult.Count <= modifiedResult.Count
+                ? originalResult.Count
+                : modifiedResult.Count;
+
+            for (var i = 0; i < maxIterations; i++)
+            {
+                mismatches.AddRange(originalResult[i].CompareProperties(modifiedResult[i]));
+            }
+
+            return mismatches;
+        }
+
+        protected List<string> CompareProperties<T>(T compareTo)
+        {
+            var mismatched = new List<string>();
+
+            foreach (PropertyInfo prop in GetType().GetProperties())
+            {
+                if (prop.GetValue(this) != prop.GetValue(compareTo))
+                {
+                    mismatched.Add($"[{prop.Name}]: Original = {prop.GetValue(this)}, Modified = {prop.GetValue(compareTo)}");
+                }
+            }
+
+            return mismatched;
         }
     }
 }
