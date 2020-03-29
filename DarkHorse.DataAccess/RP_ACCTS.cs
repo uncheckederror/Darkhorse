@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Dapper;
+using Oracle.ManagedDataAccess.Client;
 
 namespace DarkHorse.DataAccess
 {
@@ -23,23 +25,82 @@ namespace DarkHorse.DataAccess
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(int realAccountId, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE RP_ACCT_ID = {realAccountId}";
+            // If the concrete type of the IDbConnection is the MS-SQL connection object, run the new query, if not run the old query.
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                // Explicitly create and dispose of a new database connection. Let the framework handle the pooling and reuse of these objects.
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+                string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE RP_ACCT_ID = {realAccountId}";
+
+                var result = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                // Add customer getters and setters here like mapping a tax year to a DateTime or setting null dates from the database to a known value for their C# counter part.
+
+                return result;
+            }
+            else
+            {
+                // This is legacy Oracle version. It's preserved here as an instant fall back/optional path depending on the type of the IDbConnection.
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  MAP_NO, QUARTER_SECTION, PP_AS_RP_FLAG, SEC_TWN_RNG, WORK_GROUP, INACTIVE_DT, REFERENCE_DT, CREATED_BY, CREATED_DT, ACCT_NO, RP_ACCT_ID, MODIFIED_DT, MODIFIED_BY, NEIGHBORHOOD_CODE
+                            FROM    RP_ACCTS
+                            WHERE   RP_ACCT_ID = {realAccountId}";
+
+                var result = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                return result;
+            }
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(string accountNumber, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'";
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+                string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'";
+
+                var results = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                return results;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'";
+
+                var results = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                return results;
+            }
+
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(Regex accountRegEx, IDbConnection dbConnection)
         {
-            string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO";
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+                string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO";
+
+                var results = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                return results;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO";
+
+                var results = await connection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+
+                return results;
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -34,17 +36,30 @@ namespace DarkHorse.DataAccess
         public int TAX_VALUE { get; set; }
         public int BLDGS { get; set; }
 
-        public static async Task<IEnumerable<Building>> GetAsync(int realPropertyAccountId, string connectionString)
+        public static async Task<IEnumerable<Building>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  *
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  *
                             FROM    CAMA_MH_IMPROV_VW CA
                             WHERE   CA.LRSN = {realPropertyAccountId}";
 
-            var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -16,19 +18,36 @@ namespace DarkHorse.DataAccess
         public int SALES_ID { get; set; }
         public string PRIMARY_PARCEL { get; set; }
 
-        public static async Task<IEnumerable<SalesAccount>> GetAsync(int realAccountId, string connectionString)
+        public static async Task<IEnumerable<SalesAccount>> GetAsync(int realAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  S.EXCISE_NO, S.DOCUMENT_DT, S.INVALID_CODE, S.DATA_ENTRY_DT, S.PRICE, SA.SALES_ID, SA.PRIMARY_PARCEL
+                string sql = $@"SELECT  S.EXCISE_NO, S.DOCUMENT_DT, S.INVALID_CODE, S.DATA_ENTRY_DT, S.PRICE, SA.SALES_ID, SA.PRIMARY_PARCEL
                             FROM    SALES_ACCTS SA, SALES S
                             WHERE   RP_ACCT_ID = {realAccountId}
                             AND     SA.SALES_ID = S.SALES_ID
                             ORDER BY S.DOCUMENT_DT DESC";
 
-            var result = await connection.QueryAsync<SalesAccount>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<SalesAccount>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  S.EXCISE_NO, S.DOCUMENT_DT, S.INVALID_CODE, S.DATA_ENTRY_DT, S.PRICE, SA.SALES_ID, SA.PRIMARY_PARCEL
+                            FROM    SALES_ACCTS SA, SALES S
+                            WHERE   RP_ACCT_ID = {realAccountId}
+                            AND     SA.SALES_ID = S.SALES_ID
+                            ORDER BY S.DOCUMENT_DT DESC";
+
+                var result = await connection.QueryAsync<SalesAccount>(sql).ConfigureAwait(false);
+
+                return result;
+            }
         }
     }
 }

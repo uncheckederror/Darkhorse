@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -14,11 +16,23 @@ namespace DarkHorse.DataAccess
         public DateTime BEGIN_DT { get; set; }
         public DateTime END_DT { get; set; }
 
-        public static async Task<IEnumerable<LegalDescription>> GetAsync(int realAccountId, string connectionString)
+        public static async Task<IEnumerable<LegalDescription>> GetAsync(int realAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  LEGAL_DESCR_ID,
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<LegalDescription>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  LEGAL_DESCR_ID,
                                     RP_ACCT_ID,
                                     LEGAL_TEXT,
                                     BEGIN_DT,
@@ -30,9 +44,10 @@ namespace DarkHorse.DataAccess
                             FROM    LEGAL_DESCRS
                             WHERE   RP_ACCT_ID = {realAccountId}";
 
-            var result = await connection.QueryAsync<LegalDescription>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<LegalDescription>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

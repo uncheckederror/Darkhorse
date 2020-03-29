@@ -1,6 +1,7 @@
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -20,19 +21,34 @@ namespace DarkHorse.DataAccess
 
         #endregion
 
-        public static async Task<Plat> GetNameAsync(string accountNumber, string connectionString)
+        public static async Task<Plat> GetNameAsync(string accountNumber, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-            var platNumber = accountNumber.Substring(0, 4);
+                var platNumber = accountNumber.Substring(0, 4);
 
-            string sql = $@"SELECT  plat_name 
+                string sql = $@"";
+
+                var result = await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var platNumber = accountNumber.Substring(0, 4);
+
+                string sql = $@"SELECT  plat_name 
 	                        FROM    plats
 	                        WHERE   {platNumber} = plat_no";
 
-            var result = await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
+                var result = await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
 
-            return result;
+                return result;
+            }
         }
     }
 }

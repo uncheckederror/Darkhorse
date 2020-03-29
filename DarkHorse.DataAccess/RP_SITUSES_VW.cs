@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,17 +32,30 @@ namespace DarkHorse.DataAccess
         public DateTime VERIFIED_DT { get; set; }
         public DateTime INACTIVE_DT { get; set; }
 
-        public static async Task<IEnumerable<RealPropertySiteAddress>> GetAsync(int realPropertyAccountId, string connectionString)
+        public static async Task<IEnumerable<RealPropertySiteAddress>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT OBJECTID, SITUS_ID, RP_ACCT_ID, LAND_ACCT_ID, JURISDICTION, ST_NO, PREFIX, STREET_NAME, IDENTIFIER, SUFFIX, SUITE_UNIT, CITY, STATE, ZIP_CODE, PRIMARY_FLAG, IN_USE_FLAG, STREET_ADDR, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, VERIFIED_BY, VERIFIED_DT, INACTIVE_DT
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<RealPropertySiteAddress>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT OBJECTID, SITUS_ID, RP_ACCT_ID, LAND_ACCT_ID, JURISDICTION, ST_NO, PREFIX, STREET_NAME, IDENTIFIER, SUFFIX, SUITE_UNIT, CITY, STATE, ZIP_CODE, PRIMARY_FLAG, IN_USE_FLAG, STREET_ADDR, CREATED_BY, CREATED_DT, MODIFIED_BY, MODIFIED_DT, VERIFIED_BY, VERIFIED_DT, INACTIVE_DT
                             FROM RP_SITUSES_VW
                             WHERE RP_ACCT_ID = {realPropertyAccountId}";
 
-            var result = await connection.QueryAsync<RealPropertySiteAddress>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<RealPropertySiteAddress>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }

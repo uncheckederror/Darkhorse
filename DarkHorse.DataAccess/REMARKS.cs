@@ -2,6 +2,8 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -27,18 +29,31 @@ namespace DarkHorse.DataAccess
         public string COLUMN_NAME { get; set; }
         public string LINK_FILE { get; set; }
 
-        public static async Task<IEnumerable<Remark>> GetAsync(int realPropertyAccountId, string connectionString)
+        public static async Task<IEnumerable<Remark>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(connectionString);
+            if (dbConnection.GetType()?.Name == "SqlConnection")
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-            string sql = $@"SELECT  RMK_ID, RMK_CD, TABLE_NAME, TABLE_PRIMARY_ID, FORM_NAME, PRINT_NOTE_FLAG, REMARKS, ACTIVE, BEGIN_DT, CREATED_BY, CREATED_DT, PP_ACCT_ID, APPLICATION_ID, RP_ACCT_ID, LINK_TEXT, LINK_OBJECT, END_DT, MODIFIED_BY, MODIFIED_DT, HOLD_CODE_ID, COLUMN_NAME, LINK_FILE
+                string sql = $@"";
+
+                var result = await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
+
+                return result;
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                string sql = $@"SELECT  RMK_ID, RMK_CD, TABLE_NAME, TABLE_PRIMARY_ID, FORM_NAME, PRINT_NOTE_FLAG, REMARKS, ACTIVE, BEGIN_DT, CREATED_BY, CREATED_DT, PP_ACCT_ID, APPLICATION_ID, RP_ACCT_ID, LINK_TEXT, LINK_OBJECT, END_DT, MODIFIED_BY, MODIFIED_DT, HOLD_CODE_ID, COLUMN_NAME, LINK_FILE
                             FROM    REMARKS R
                             WHERE   R.RP_ACCT_ID = {realPropertyAccountId}
                             ORDER BY R.BEGIN_DT DESC";
 
-            var result = await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
+                var result = await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
 
-            return result;
+                return result;
+            }
         }
     }
 }
