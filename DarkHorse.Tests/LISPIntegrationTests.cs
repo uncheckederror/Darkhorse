@@ -107,5 +107,55 @@ namespace DarkHorse.Tests
 
             accounts.ForEach(a => output.WriteLine(a.ToString()));
         }
+
+        [Fact]
+        public async Task AccountTagsGetById()
+        {
+            var accountWithTags = 2193589;
+            var results = await AccountTag.GetAsync(accountWithTags, oracleDbConnection);
+            foreach (var result in results)
+            {
+                Assert.NotNull(results);
+                Assert.False(string.IsNullOrWhiteSpace(result.TAG_CODE));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        // Beacuse the MS-SQL path hasn't been implemented this test will fail.
+        [Fact]
+        public async Task AccountTagsGetByIdComparison()
+        {
+            var accountWithTags = 2193589;
+
+            var oa = await AccountTag.GetAsync(accountWithTags, oracleDbConnection);
+            var ma = await AccountTag.GetAsync(accountWithTags, mssqlDbConnection);
+            var oracleAccounts = oa.ToArray();
+            var mssqlAccounts = ma.ToArray();
+
+            for (var i = 0; i < oracleAccounts.Length; i++)
+            {
+                var o = oracleAccounts[i];
+                var m = mssqlAccounts[i];
+
+                // Check if objects are equal.
+                Assert.True(m.ALERT_FLAG == o.ALERT_FLAG);
+                Assert.True(m.BEGIN_DT == o.BEGIN_DT);
+                Assert.True(m.CREATED_BY == o.CREATED_BY);
+                Assert.True(m.CREATED_DT == o.CREATED_DT);
+                Assert.True(m.DESCRIPTION == o.DESCRIPTION);
+                Assert.True(m.END_DT == o.END_DT);
+                Assert.True(m.LOCK_ACCT_FLAG == o.LOCK_ACCT_FLAG);
+                Assert.True(m.MODIFIED_BY == o.MODIFIED_BY);
+                Assert.True(m.MODIFIED_DT == o.MODIFIED_DT);
+                Assert.True(m.NO_STATEMENT_FLAG == o.NO_STATEMENT_FLAG);
+                Assert.True(m.PROGRAM_GEN_FLAG == o.PROGRAM_GEN_FLAG);
+                Assert.True(m.QUE_STATEMENT_FLAG == o.QUE_STATEMENT_FLAG);
+                Assert.True(m.REMOVED_BY == o.REMOVED_BY);
+                Assert.True(m.SYSTEM_TAG_FLAG == o.SYSTEM_TAG_FLAG);
+                Assert.True(m.TAG_CODE == o.TAG_CODE);
+                Assert.True(m.TEMP_FLAG == o.TEMP_FLAG);
+                Assert.True(m.TRANSFER_FLAG == o.TRANSFER_FLAG);
+            }
+        }
     }
 }

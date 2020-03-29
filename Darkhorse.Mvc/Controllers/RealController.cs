@@ -82,7 +82,7 @@ namespace DarkHorse.Mvc.Models
             var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
             var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
-            var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+            var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, _dbConnection);
             var crmContacts = await CrmContact.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
             var buildings = await Building.GetAsync(searchAccount.RP_ACCT_ID, _dbConnection.ConnectionString);
             // TODO: Display the mobile homes on the Buildings tab.
@@ -172,7 +172,7 @@ namespace DarkHorse.Mvc.Models
             foreach (var result in results)
             {
                 var realAccountYear = await RealPropertyAccountYear.GetRealAccountFiltersAsync(result.RP_ACCT_OWNER_ID, DateTime.Now.AddYears(1), _dbConnection.ConnectionString);
-                var tags = await AccountTag.GetCodeAsync(result.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
+                var tags = await AccountTag.GetCodeAsync(result.RP_ACCT_OWNER_ID, _dbConnection);
                 var accountGroup = await RealPropertyAccountGroup.GetNumberAsync(result.RP_ACCT_OWNER_ID, _dbConnection.ConnectionString);
                 string outTags = string.Empty;
                 foreach (var tag in tags)
