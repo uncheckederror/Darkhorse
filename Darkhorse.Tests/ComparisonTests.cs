@@ -297,7 +297,7 @@ namespace DarkHorse.Tests
         public async Task RealPropertyAccountYearFilterComparison()
         {
             var rpacctid = 1477108;
-            var year = new DateTime(2, 2, 2018);
+            var year = new DateTime(2018, 2, 2);
 
             var oa = await RealPropertyAccountYear.GetRealAccountFiltersAsync(rpacctid, year, oracleDbConnection);
             var ma = await RealPropertyAccountYear.GetRealAccountFiltersAsync(rpacctid, year, mssqlDbConnection);

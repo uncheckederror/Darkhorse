@@ -12,6 +12,8 @@ namespace DarkHorse.DataAccess
 {
     public class RealPropertyAccount : BaseTableClass
     {
+        #region Fields
+
         public int RP_ACCT_ID { get; set; }
         public string ACCT_NO { get; set; }
         public string MAP_NO { get; set; }
@@ -22,6 +24,8 @@ namespace DarkHorse.DataAccess
         public DateTime INACTIVE_DT { get; set; }
         public DateTime REFERENCE_DT { get; set; }
         public string NEIGHBORHOOD_CODE { get; set; }
+
+        #endregion
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(int realAccountId, IDbConnection dbConnection)
         {
@@ -47,7 +51,7 @@ namespace DarkHorse.DataAccess
         {
             var sql = (dbConnection is SqlConnection)
                 ? $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO"
-                : $@"SELECT * FROM LIS.RP_ACCTS WHERE REGEXP_LIKE(ACCT_NO, '{accountRegEx}%') ORDER BY ACCT_NO";
+                : $@"SELECT * FROM LIS.RP_ACCTS WHERE REGEXP_LIKE(ACCT_NO, '{accountRegEx}') ORDER BY ACCT_NO";
 
             return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }

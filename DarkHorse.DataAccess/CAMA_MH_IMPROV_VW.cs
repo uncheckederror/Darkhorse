@@ -9,6 +9,8 @@ namespace DarkHorse.DataAccess
 {
     public class Building : BaseTableClass
     {
+        #region Fields
+
         public int LRSN { get; set; }
         public string BLDGNO { get; set; }
         public string IMPROVEMENT_ID { get; set; }
@@ -36,29 +38,29 @@ namespace DarkHorse.DataAccess
         public int TAX_VALUE { get; set; }
         public int BLDGS { get; set; }
 
+        #endregion
+
         public static async Task<IEnumerable<Building>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            if (dbConnection.GetType()?.Name == "SqlConnection")
+            if (dbConnection is SqlConnection)
             {
                 using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-                string sql = $@"";
+                var sql = $@"SELECT  *
+                             FROM    LIS.CAMA_MH_IMPROV_VW
+                             WHERE   LRSN = {realPropertyAccountId}";
 
-                var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
-
-                return result;
+                return await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
             }
             else
             {
                 using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-                string sql = $@"SELECT  *
-                            FROM    CAMA_MH_IMPROV_VW CA
-                            WHERE   CA.LRSN = {realPropertyAccountId}";
+                var sql = $@"SELECT  *
+                             FROM    CAMA_MH_IMPROV_VW CA
+                             WHERE   CA.LRSN = {realPropertyAccountId}";
 
-                var result = await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
-
-                return result;
+                return await connection.QueryAsync<Building>(sql).ConfigureAwait(false);
             }
         }
     }

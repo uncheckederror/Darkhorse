@@ -10,6 +10,8 @@ namespace DarkHorse.DataAccess
 {
     public class Remark : BaseTableClass
     {
+        #region Fields
+
         public int RMK_ID { get; set; }
         public string RMK_CD { get; set; }
         public string TABLE_NAME { get; set; }
@@ -29,30 +31,31 @@ namespace DarkHorse.DataAccess
         public string COLUMN_NAME { get; set; }
         public string LINK_FILE { get; set; }
 
+        #endregion
+
         public static async Task<IEnumerable<Remark>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
-            if (dbConnection.GetType()?.Name == "SqlConnection")
+            if (dbConnection is SqlConnection)
             {
                 using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-                string sql = $@"";
+                var sql = $@"SELECT   RMK_ID, RMK_CD, TABLE_NAME, TABLE_PRIMARY_ID, FORM_NAME, PRINT_NOTE_FLAG, REMARKS, ACTIVE, BEGIN_DT, CREATED_BY, CREATED_DT, PP_ACCT_ID, APPLICATION_ID, RP_ACCT_ID, LINK_TEXT, LINK_OBJECT, END_DT, MODIFIED_BY, MODIFIED_DT, HOLD_CODE_ID, COLUMN_NAME, LINK_FILE
+                             FROM     LIS.REMARKS
+                             WHERE    RP_ACCT_ID = {realPropertyAccountId}
+                             ORDER BY BEGIN_DT DESC";
 
-                var result = await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
-
-                return result;
+                return await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
             }
             else
             {
                 using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-                string sql = $@"SELECT  RMK_ID, RMK_CD, TABLE_NAME, TABLE_PRIMARY_ID, FORM_NAME, PRINT_NOTE_FLAG, REMARKS, ACTIVE, BEGIN_DT, CREATED_BY, CREATED_DT, PP_ACCT_ID, APPLICATION_ID, RP_ACCT_ID, LINK_TEXT, LINK_OBJECT, END_DT, MODIFIED_BY, MODIFIED_DT, HOLD_CODE_ID, COLUMN_NAME, LINK_FILE
-                            FROM    REMARKS R
-                            WHERE   R.RP_ACCT_ID = {realPropertyAccountId}
-                            ORDER BY R.BEGIN_DT DESC";
+                var sql = $@"SELECT  RMK_ID, RMK_CD, TABLE_NAME, TABLE_PRIMARY_ID, FORM_NAME, PRINT_NOTE_FLAG, REMARKS, ACTIVE, BEGIN_DT, CREATED_BY, CREATED_DT, PP_ACCT_ID, APPLICATION_ID, RP_ACCT_ID, LINK_TEXT, LINK_OBJECT, END_DT, MODIFIED_BY, MODIFIED_DT, HOLD_CODE_ID, COLUMN_NAME, LINK_FILE
+                             FROM    REMARKS R
+                             WHERE   R.RP_ACCT_ID = {realPropertyAccountId}
+                             ORDER BY R.BEGIN_DT DESC";
 
-                var result = await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
-
-                return result;
+                return await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
             }
         }
     }

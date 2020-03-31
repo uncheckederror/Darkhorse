@@ -10,6 +10,8 @@ namespace DarkHorse.DataAccess
 {
     public class AccountTag : BaseTableClass
     {
+        #region Fields
+
         public string TAG_CODE { get; set; }
         public string DESCRIPTION { get; set; }
         public DateTime BEGIN_DT { get; set; }
@@ -23,6 +25,8 @@ namespace DarkHorse.DataAccess
         public char TEMP_FLAG { get; set; }
         public char QUE_STATEMENT_FLAG { get; set; }
         public char TRANSFER_FLAG { get; set; }
+
+        #endregion
 
         public static async Task<IEnumerable<AccountTag>> GetCodeAsync(int realAccountOwnerId, IDbConnection dbConnection)
         {

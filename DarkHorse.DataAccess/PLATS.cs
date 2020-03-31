@@ -2,6 +2,7 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -23,31 +24,25 @@ namespace DarkHorse.DataAccess
 
         public static async Task<Plat> GetNameAsync(string accountNumber, IDbConnection dbConnection)
         {
-            if (dbConnection.GetType()?.Name == "SqlConnection")
+            var platNumber = accountNumber.Substring(0, 4);
+
+            if (dbConnection is SqlConnection)
             {
-                using var connection = new OracleConnection(dbConnection.ConnectionString);
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
 
-                var platNumber = accountNumber.Substring(0, 4);
+                var sql = $@"SELECT PLAT_NAME FROM LIS.PLATS WHERE PLAT_NO = {platNumber}";
 
-                string sql = $@"";
-
-                var result = await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
-
-                return result;
+                return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
             }
             else
             {
                 using var connection = new OracleConnection(dbConnection.ConnectionString);
 
-                var platNumber = accountNumber.Substring(0, 4);
+                var sql = $@"SELECT  plat_name 
+	                         FROM    plats
+	                         WHERE   {platNumber} = plat_no";
 
-                string sql = $@"SELECT  plat_name 
-	                        FROM    plats
-	                        WHERE   {platNumber} = plat_no";
-
-                var result = await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
-
-                return result;
+                return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
             }
         }
     }
