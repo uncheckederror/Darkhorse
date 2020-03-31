@@ -28,7 +28,7 @@ namespace DarkHorse.DataAccess
         {
             var sql = (dbConnection is SqlConnection)
 
-                ? $@"SELECT DISTINCT tag_code FROM acct_tags WHERE rp_acct_owner_id = {realAccountOwnerId} AND end_dt IS NULL ORDER BY tag_code"
+                ? $@"SELECT DISTINCT tag_code FROM LIS.acct_tags WHERE rp_acct_owner_id = {realAccountOwnerId} AND end_dt IS NULL ORDER BY tag_code"
 
                 : $@"SELECT DISTINCT tag_code
 	                        FROM   acct_tags tc
@@ -44,8 +44,8 @@ namespace DarkHorse.DataAccess
             var sql = (dbConnection is SqlConnection)
 
                 ? $@"SELECT TA.TAG_CODE, TC.DESCRIPTION, TA.BEGIN_DT, TA.END_DT, TA.REMOVED_BY, TC.LOCK_ACCT_FLAG, TC.ALERT_FLAG, TC.SYSTEM_TAG_FLAG, TC.NO_STATEMENT_FLAG, TC.PROGRAM_GEN_FLAG, TC.TEMP_FLAG, TC.QUE_STATEMENT_FLAG, TC.TRANSFER_FLAG
-                     FROM ACCT_TAGS TA
-                     INNER JOIN TAG_CODES TC ON (TA.TAG_CODE = TC.TAG_CODE)
+                     FROM LIS.ACCT_TAGS TA
+                     INNER JOIN LIS.TAG_CODES TC ON (TA.TAG_CODE = TC.TAG_CODE)
                      WHERE TA.RP_ACCT_OWNER_ID = {realAccountOwnerId}
                      ORDER BY TA.BEGIN_DT DESC"
 

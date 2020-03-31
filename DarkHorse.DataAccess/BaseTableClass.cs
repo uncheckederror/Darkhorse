@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
-    public abstract class BaseTableClass
+    public abstract class BaseTableClass : IComparable<BaseTableClass>
     {
         #region Fields
 
@@ -63,56 +63,64 @@ namespace DarkHorse.DataAccess
             }
         }
 
-        public static async Task<List<string>> CompareSqlStatements<T>(string originalSql, string modifiedSql, string dbConnectionString) where T : BaseTableClass
+        /// <summary>
+        /// Compare the properties of one object to another of the same type.
+        /// </summary>
+        /// <param name="other">The "other" object to compare to.</param>
+        /// <returns>0 if equal, non-zero if not.</returns>
+        /// <remarks>If the created or modified dates do not match, the comparison automatically fails.</remarks>
+        public int CompareTo(BaseTableClass other)
         {
-            var mismatches = new List<string>();
-
-            using var dbConnection = new OracleConnection(dbConnectionString);
-            var originalEnum = await dbConnection.QueryAsync<T>(originalSql).ConfigureAwait(false);
-            var modifiedEnum = await dbConnection.QueryAsync<T>(modifiedSql).ConfigureAwait(false);
-
-            var originalResult = originalEnum.ToList();
-            var modifiedResult = modifiedEnum.ToList();
-
-            // perform a single JSON value comparison
-            // if the results are the same, we're done.
-            if (JsonConvert.SerializeObject(originalResult) == JsonConvert.SerializeObject(modifiedResult))
+            if (other == null)
             {
-                return mismatches;
+                throw new ArgumentException("Attempt to compare to null object.");
             }
 
-            // perform a single JSON value comparison
-            // if the results are the same, we're done.
-            if (originalResult.Count != modifiedResult.Count)
+            if (GetType() != other.GetType())
             {
-                mismatches.Add($"Count mismatch: Original SQL = {originalResult.Count:N0}, Modified SQL = {modifiedResult.Count:N0}");
+                throw new ArgumentException("Objects are not of the same type.");
             }
 
-            var maxIterations = originalResult.Count <= modifiedResult.Count
-                ? originalResult.Count
-                : modifiedResult.Count;
-
-            for (var i = 0; i < maxIterations; i++)
+            if (CREATED_DT < other.CREATED_DT || MODIFIED_DT < other.MODIFIED_DT)
             {
-                mismatches.AddRange(originalResult[i].CompareProperties(modifiedResult[i]));
+                return -1;
             }
 
-            return mismatches;
-        }
-
-        protected List<string> CompareProperties<T>(T compareTo)
-        {
-            var mismatched = new List<string>();
+            if (CREATED_DT > other.CREATED_DT || MODIFIED_DT > other.MODIFIED_DT)
+            {
+                return 1;
+            }
 
             foreach (PropertyInfo prop in GetType().GetProperties())
             {
-                if (prop.GetValue(this) != prop.GetValue(compareTo))
+                if (!prop.Name.StartsWith("CREATED_BY") && !prop.Name.StartsWith("MODIFIED_BY"))
                 {
-                    mismatched.Add($"[{prop.Name}]: Original = {prop.GetValue(this)}, Modified = {prop.GetValue(compareTo)}");
+                    if (Debugger.IsAttached)
+                    {
+                        Debug.WriteLine($"Comparing {prop.Name}");
+                    }
+
+                    var thisValue = prop.GetValue(this);
+                    var otherValue = prop.GetValue(other);
+
+                    if (thisValue == null && otherValue != null)
+                    {
+                        return -1;
+                    }
+
+                    if (thisValue != null && otherValue == null)
+                    {
+                        return 1;
+                    }
+
+                    if (thisValue != null && otherValue != null && !thisValue.Equals(otherValue))
+                    {
+                        return -1;
+                    }
                 }
             }
 
-            return mismatched;
+            return 0;
         }
     }
 }
