@@ -12,8 +12,9 @@ using Microsoft.Extensions.Logging;
 using Oracle.ManagedDataAccess.Client;
 
 using DarkHorse.DataAccess;
+using DarkHorse.Mvc.Models;
 
-namespace DarkHorse.Mvc.Models
+namespace DarkHorse.Mvc.Controllers
 {
     public class RealController : Controller
     {
