@@ -1,15 +1,16 @@
-using DarkHorse.DataAccess;
-using Microsoft.Extensions.Configuration;
-using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+using Microsoft.Extensions.Configuration;
+using Oracle.ManagedDataAccess.Client;
 using Xunit;
 using Xunit.Abstractions;
+
+using DarkHorse.DataAccess;
 
 namespace DarkHorse.Tests
 {

@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using DarkHorse.Mvc.Models;
 using Microsoft.Extensions.Configuration;
-using System.Data;
+using Microsoft.Extensions.Logging;
 using Oracle.ManagedDataAccess.Client;
+
 using DarkHorse.DataAccess;
-using System.Data.SqlClient;
 
 namespace DarkHorse.Mvc.Models
 {
