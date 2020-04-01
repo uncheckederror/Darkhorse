@@ -35,7 +35,7 @@ namespace DarkHorse.DataAccess
                      FROM    RP_ACCTS
                      WHERE   RP_ACCT_ID = {realAccountId}";
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+            return await Connection(dbConnection).QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(string accountNumber, IDbConnection dbConnection)
@@ -44,7 +44,7 @@ namespace DarkHorse.DataAccess
                 ? $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'"
                 : $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO = '{accountNumber}'";
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+            return await Connection(dbConnection).QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
 
         public static async Task<IEnumerable<RealPropertyAccount>> GetAsync(Regex accountRegEx, IDbConnection dbConnection)
@@ -53,7 +53,7 @@ namespace DarkHorse.DataAccess
                 ? $@"SELECT * FROM LIS.RP_ACCTS WHERE ACCT_NO LIKE '{accountRegEx}%' ORDER BY ACCT_NO"
                 : $@"SELECT * FROM LIS.RP_ACCTS WHERE REGEXP_LIKE(ACCT_NO, '{accountRegEx}') ORDER BY ACCT_NO";
 
-            return await dbConnection.QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
+            return await Connection(dbConnection).QueryAsync<RealPropertyAccount>(sql).ConfigureAwait(false);
         }
     }
 }

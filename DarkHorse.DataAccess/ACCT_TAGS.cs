@@ -40,7 +40,7 @@ namespace DarkHorse.DataAccess
 	                        AND    tc.end_dt IS NULL
 	                        ORDER BY tag_code";
 
-            return await dbConnection.QueryAsync<AccountTag>(sql).ConfigureAwait(false);
+            return await Connection(dbConnection).QueryAsync<AccountTag>(sql).ConfigureAwait(false);
         }
 
         public static async Task<IEnumerable<AccountTag>> GetAsync(int realAccountOwnerId, IDbConnection dbConnection)
@@ -59,7 +59,7 @@ namespace DarkHorse.DataAccess
                      AND     TA.TAG_CODE = TC.TAG_CODE
                      ORDER BY TA.BEGIN_DT DESC";
 
-            return await dbConnection.QueryAsync<AccountTag>(sql).ConfigureAwait(false);
+            return await Connection(dbConnection).QueryAsync<AccountTag>(sql).ConfigureAwait(false);
         }
     }
 }

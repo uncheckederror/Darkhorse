@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -24,6 +25,18 @@ namespace DarkHorse.DataAccess
         public DateTime MODIFIED_DT { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// Helper method to create the correct database connection object
+        /// based on the object type of the prototype parameter.
+        /// </summary>
+        /// <param name="prototype">The object to base the new database connection on.</param>
+        /// <returns>New database connection object of the appropriate type.</returns>
+        /// <remarks>Do not use the prototype for connecting to the database.</remarks>
+        protected static IDbConnection Connection(IDbConnection prototype) =>
+            (prototype is SqlConnection)
+                ? new SqlConnection(prototype.ConnectionString) as IDbConnection
+                : new OracleConnection(prototype.ConnectionString) as IDbConnection;
 
         /// <summary>
         /// Override the ToString() method to dump the model object's properties as JSON
