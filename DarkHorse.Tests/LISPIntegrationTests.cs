@@ -2,6 +2,8 @@ using DarkHorse.DataAccess;
 using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -34,30 +36,186 @@ namespace DarkHorse.Tests
             mssqlDbConnection = new SqlConnection(configuration.GetConnectionString("LISPROD"));
         }
 
-        [Fact]
-        public async Task RealPropertyAccountById()
+        public class TestData : IEnumerable<object[]>
         {
-            var acctId = 2361145;
-            var accounts = await RealPropertyAccount.GetAsync(acctId, oracleDbConnection);
+            static readonly string[] _differentPropertyClasses = new string[]
+            {
+            "112601-1-001-2009",
+            "072402-2-107-2007",
+            "082402-4-005-1007",
+            "362402-2-006-1006",
+            "4330-003-003-0004",
+            "4381-000-003-0008",
+            "312302-3-043-2003",
+            "282402-4-055-2000",
+            "212401-3-005-2100",
+            "9000-010-144-0007",
+            "132401-1-029-2007"
+            };
+
+            public static IEnumerable<object[]> GetPropertyClassesFromDataGenerator()
+            {
+                foreach (var account in _differentPropertyClasses)
+                {
+                    yield return new object[] { account };
+                }
+            }
+
+            static readonly string[] _weirdAccounts = new string[]
+            {
+            "4316-033-001-0001",
+            "5652-000-001-0009",
+            "4158-002-002-0006",
+            "4516-001-037-0004",
+            "3790-007-009-0004",
+            "322301-4-023-2005",
+            "032702-2-029-2003",
+            "5432-000-065-0009",
+            "362301-3-033-2001",
+            "282301-3-007-2003",
+            "4759-000-005-0000",
+            "4538-010-004-0206",
+            "3771-001-004-0005",
+            "152501-3-004-2009",
+            "142301-1-052-2007",
+            "4232-000-003-0009",
+            "172302-2-017-2005",
+            "012602-3-036-2005",
+            "9000-001-265-0009",
+            "192501-3-006-2003",
+            "322501-3-023-1007"
+            };
+
+            public static IEnumerable<object[]> GetWeirdAccountsFromDataGenerator()
+            {
+                foreach (var account in _weirdAccounts)
+                {
+                    yield return new object[] { account };
+                }
+            }
+
+            static readonly int[] _differentZones = new int[]
+            {
+            2575694,
+            2344315,
+            2636041,
+            2311363,
+            2640779,
+            2641231,
+            2637825,
+            2506525,
+            2324234,
+            2611986,
+            2636843,
+            2395325,
+            2605152,
+            2524395,
+            2632149,
+            2632776,
+            2605376,
+            2310803,
+            2637825,
+            2330090,
+            2507192,
+            2105898,
+            2444198,
+            1173509,
+            2636686,
+            2638948,
+            2627438,
+            2632834,
+            2630150,
+            2631083,
+            2615011,
+            2638732,
+            2640894,
+            2641017,
+            2640951,
+            2605970,
+            2187383,
+            2539203,
+            2636173,
+            2582765,
+            2587764,
+            1987759,
+            2612281,
+            2640654,
+            2631240,
+            2639839,
+            2639862
+            };
+
+            public static IEnumerable<object[]> GetZonesFromDataGenerator()
+            {
+                foreach (var account in _differentZones)
+                {
+                    yield return new object[] { account };
+                }
+            }
+
+            static readonly int[] _differentDesignDistricts = new int[]
+            {
+            1238930,
+            1238278,
+            1608827,
+            1238591,
+            1404474,
+            1200930,
+            1238161,
+            1581826,
+            1245562,
+            2529196,
+            1405703,
+            1222918,
+            1239607,
+            1240670
+            };
+
+            public static IEnumerable<object[]> GetDesignDistrictsFromDataGenerator()
+            {
+                foreach (var account in _differentDesignDistricts)
+                {
+                    yield return new object[] { account };
+                }
+            }
+
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyAccountById(int rpAcctId)
+        {
+            var accounts = await RealPropertyAccount.GetAsync(rpAcctId, oracleDbConnection);
 
             foreach (var account in accounts)
             {
                 Assert.NotNull(account);
-                Assert.Equal(acctId, account.RP_ACCT_ID);
+                Assert.Equal(rpAcctId, account.RP_ACCT_ID);
                 output.WriteLine(account.ToString());
             }
         }
 
-        [Fact]
-        public async Task RealPropertyAccountByNumber()
+        [Theory]
+        [MemberData(nameof(TestData.GetPropertyClassesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetWeirdAccountsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyAccountByNumber(string accountNumber)
         {
-            var acctNo = "092202-1-060-2004";
-            var accounts = await RealPropertyAccount.GetAsync(acctNo, oracleDbConnection);
+            var accounts = await RealPropertyAccount.GetAsync(accountNumber, oracleDbConnection);
 
             foreach (var account in accounts)
             {
                 Assert.NotNull(account);
-                Assert.Equal(acctNo, account.ACCT_NO);
+                Assert.Equal(accountNumber, account.ACCT_NO);
                 output.WriteLine(account.ToString());
             }
         }
@@ -74,11 +232,12 @@ namespace DarkHorse.Tests
             accounts.ForEach(a => output.WriteLine(a.ToString()));
         }
 
-        [Fact]
-        public async Task AccountTagsGetById()
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task AccountTagsGetById(int rpAcctId)
         {
-            var accountWithTags = 2193589;
-            var results = await AccountTag.GetAsync(accountWithTags, oracleDbConnection);
+            var results = await AccountTag.GetAsync(rpAcctId, oracleDbConnection);
             foreach (var result in results)
             {
                 Assert.NotNull(results);
