@@ -33,7 +33,6 @@ namespace DarkHorse.Tests
             configuration = config;
 
             oracleDbConnection = new OracleConnection(configuration.GetConnectionString("LISP"));
-            mssqlDbConnection = new SqlConnection(configuration.GetConnectionString("LISPROD"));
         }
 
         public class TestData : IEnumerable<object[]>
@@ -179,6 +178,29 @@ namespace DarkHorse.Tests
                 }
             }
 
+            static readonly int[] _newConstructionIds = new int[]
+            {
+                206387,
+                205544,
+                205533,
+                205528,
+                204842,
+                204542,
+                204356,
+                204340,
+                204338,
+                203802
+            };
+
+            public static IEnumerable<object[]> GetNewConstructionsFromDataGenerator()
+            {
+                foreach (var account in _newConstructionIds)
+                {
+                    yield return new object[] { account };
+                }
+            }
+
+
             public IEnumerator<object[]> GetEnumerator()
             {
                 throw new NotImplementedException();
@@ -246,11 +268,10 @@ namespace DarkHorse.Tests
             }
         }
 
-        [Fact]
-        public async Task InspectionsGetById()
+        [Theory]
+        [MemberData(nameof(TestData.GetNewConstructionsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task InspectionsGetById(int newConstructionId)
         {
-            var newConstructionId = 10319;
-
             var results = await Inspection.GetAsync(newConstructionId, oracleDbConnection);
 
             foreach (var result in results)
