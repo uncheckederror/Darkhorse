@@ -19,7 +19,6 @@ namespace DarkHorse.Tests
         private readonly ITestOutputHelper output;
         private readonly IConfiguration configuration;
         private readonly IDbConnection oracleDbConnection;
-        private readonly IDbConnection mssqlDbConnection;
 
         public LISPIntegrationTests(ITestOutputHelper output)
         {
@@ -257,7 +256,7 @@ namespace DarkHorse.Tests
         [Theory]
         [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
         [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
-        public async Task AccountTagsGetById(int rpAcctId)
+        public async Task AccountTagsGet(int rpAcctId)
         {
             var results = await AccountTag.GetAsync(rpAcctId, oracleDbConnection);
             foreach (var result in results)
@@ -268,9 +267,24 @@ namespace DarkHorse.Tests
             }
         }
 
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task AccountTagsGetCode(int rpAcctId)
+        {
+            var results = await AccountTag.GetCodeAsync(rpAcctId, oracleDbConnection);
+            foreach (var result in results)
+            {
+                Assert.NotNull(results);
+                Assert.False(string.IsNullOrWhiteSpace(result.TAG_CODE));
+                output.WriteLine(result.ToString());
+            }
+        }
+
         [Theory]
         [MemberData(nameof(TestData.GetNewConstructionsFromDataGenerator), MemberType = typeof(TestData))]
-        public async Task InspectionsGetById(int newConstructionId)
+        public async Task InspectionsGet(int newConstructionId)
         {
             var results = await Inspection.GetAsync(newConstructionId, oracleDbConnection);
 
@@ -279,6 +293,225 @@ namespace DarkHorse.Tests
                 Assert.NotNull(result);
                 Assert.True(result.NEW_CONSTRUCTION_ID > 0);
             }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task ATSHistoryGet(int rpAcctId)
+        {
+            var results = await ATSHistory.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.True(result.ATS_HIST_ID > 0);
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task BuildingGet(int rpAcctId)
+        {
+            var results = await Building.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.True(result.LRSN > 0);
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task ContactGet(int rpAcctId)
+        {
+            var results = await Contact.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.NAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task CrmContactGet(int rpAcctId)
+        {
+            var results = await CrmContact.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.CRM_FIRSTNAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task LegalDescriptionGet(int rpAcctId)
+        {
+            var results = await LegalDescription.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.LEGAL_TEXT));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        // TODO: Figure out how to write a test for Mobile Homes.
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task NewConstructionGet(int rpAcctId)
+        {
+            var results = await NewConstruction.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.JURISDICTION));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task NoticeGet(int rpAcctId)
+        {
+            var results = await Notice.GetAsync(rpAcctId, oracleDbConnection);
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.NAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetPropertyClassesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetWeirdAccountsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task PlatGet(string accountNumber)
+        {
+            var result = await Plat.GetNameAsync(accountNumber, oracleDbConnection);
+
+            var check = int.TryParse(accountNumber.Substring(0, 2), out int plat);
+
+            if (plat < 37 && check)
+            {
+                // These accounts are not in a Plat
+                Assert.True(string.IsNullOrWhiteSpace(result.PLAT_NAME));
+            }
+            if (plat >= 37 && check)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.PLAT_NAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetPropertyClassesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetWeirdAccountsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyAccountsFilterGet(string accountNumber)
+        {
+            var results = await RealPropertyAccountsFilter.GetAsync(accountNumber, oracleDbConnection);
+
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.CONTACT_NAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyAccountsFilterGetById(int rpAcctId)
+        {
+            var results = await RealPropertyAccountsFilter.GetAsync(rpAcctId, oracleDbConnection);
+
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.CONTACT_NAME));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealAccountGetById(int rpAcctId)
+        {
+            var result = await RealAccount.GetAsync(rpAcctId, oracleDbConnection);
+
+            Assert.NotNull(result);
+            Assert.False(string.IsNullOrWhiteSpace(result.ACCT_NO));
+            output.WriteLine(result.ToString());
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetPropertyClassesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetWeirdAccountsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyGet(string accountNumber)
+        {
+            var results = await RealAccount.GetAsync(accountNumber, oracleDbConnection);
+
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.ACCT_NO));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RemarkGet(int rpAcctId)
+        {
+            var results = await Remark.GetAsync(rpAcctId, oracleDbConnection);
+
+            Assert.NotNull(results);
+            foreach (var result in results)
+            {
+                Assert.NotNull(result);
+                Assert.False(string.IsNullOrWhiteSpace(result.REMARKS));
+                output.WriteLine(result.ToString());
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
+        [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
+        public async Task RealPropertyAccountGroupGetNumber(int rpAcctId)
+        {
+            var result = await RealPropertyAccountGroup.GetNumberAsync(rpAcctId, oracleDbConnection);
+
+            Assert.NotNull(result);
+            // Some accounts don't have group numbers.
+            //Assert.False(result.GROUP_NO > 0);
+            output.WriteLine(result.ToString());
+
         }
     }
 }

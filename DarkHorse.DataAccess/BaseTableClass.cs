@@ -1,16 +1,11 @@
-﻿using Dapper;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
 {
