@@ -42,6 +42,7 @@ namespace DarkHorse.Mvc.Controllers
             return View("Search");
         }
 
+        [Route("Real/Account/{rpAcctId}")]
         public async Task<IActionResult> Account(string rpAcctId, string page)
         {
             using var dbConnection = DbConnection;
@@ -104,66 +105,25 @@ namespace DarkHorse.Mvc.Controllers
             //    }
             //}
 
-            if (string.IsNullOrWhiteSpace(page))
+            return View("Account", new RealAccountDetail
             {
-                return View("Account", new RealAccountDetail
-                {
-                    Account = account,
-                    Contacts = contacts,
-                    LegalDescriptions = legal,
-                    Plat = plat,
-                    SiteAddresses = situses,
-                    Inspections = ncPairs,
-                    AccountGroups = accountGroup,
-                    // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
-                    Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
-                    Sales = sales,
-                    Tags = tags,
-                    CrmContacts = crmContacts,
-                    Buildings = buildings
-                });
-            }
-            else
-            {
-                switch (page)
-                {
-                    case "ChangeHistory":
-                        var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
-                        var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
-                        return View("ChangeHistory", new ChangeHistoryDetail
-                        {
-                            Account = account,
-                            Histories = history,
-                            Remarks = remarks
-                        });
-                    case "TaxYears":
-                        var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
-                        return View("TaxYears", new RealAccountTaxYearsDetail
-                        {
-                            Account = account,
-                            TaxYears = taxYears
-                        });
-                }
-
-                return View("Account", new RealAccountDetail
-                {
-                    Account = account,
-                    Contacts = contacts,
-                    LegalDescriptions = legal,
-                    Plat = plat,
-                    SiteAddresses = situses,
-                    Inspections = ncPairs,
-                    AccountGroups = accountGroup,
-                    // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
-                    Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
-                    Sales = sales,
-                    Tags = tags,
-                    CrmContacts = crmContacts,
-                    Buildings = buildings
-                });
-            }
+                Account = account,
+                Contacts = contacts,
+                LegalDescriptions = legal,
+                Plat = plat,
+                SiteAddresses = situses,
+                Inspections = ncPairs,
+                AccountGroups = accountGroup,
+                // TODO: Fix this SQL query so that it doesn't return duplicates and we can remove this inefficent hack.
+                Notices = notices.GroupBy(x => x.NOTICE_ID).Select(y => y.FirstOrDefault()),
+                Sales = sales,
+                Tags = tags,
+                CrmContacts = crmContacts,
+                Buildings = buildings
+            });
         }
 
+        [Route("Real/Search")]
         public async Task<IActionResult> Search([Bind("AccountNumber", "AccountNumberSort", "ProcessNumber", "ActiveIndicator", "Contact", "ContactSort", "ContactType", "StreetNumber", "StreetName", "StreetNameSort", "SectionTownshipRange", "AccountGroup", "QuarterSection", "Tags")] RealAccountSearchResult query)
         {
             using var dbConnection = DbConnection;
@@ -214,6 +174,59 @@ namespace DarkHorse.Mvc.Controllers
             {
                 Query = accounts.FirstOrDefault(),
                 Accounts = accounts
+            });
+        }
+
+        [Route("Real/ChangeHistory/{rpAcctId}")]
+        public async Task<IActionResult> ChangeHistory(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            // Change history specific data.
+            var history = await ATSHistory.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+            var remarks = await Remark.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+            return View("ChangeHistory", new ChangeHistoryDetail
+            {
+                Account = account,
+                Histories = history,
+                Remarks = remarks
+            });
+        }
+
+        [Route("Real/TaxHistory/{rpAcctId}")]
+        public async Task<IActionResult> TaxHistory(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            return View("TaxYears", new RealAccountTaxYearsDetail
+            {
+                Account = account,
+                TaxYears = taxYears
             });
         }
 
