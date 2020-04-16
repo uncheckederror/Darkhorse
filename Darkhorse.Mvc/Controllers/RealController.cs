@@ -134,9 +134,13 @@ namespace DarkHorse.Mvc.Controllers
             {
                 results = await RealPropertyAccountsFilter.GetAsync(query.ProcessNumber, dbConnection);
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(query?.AccountNumber))
             {
                 results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, dbConnection);
+            }
+            else
+            {
+                return View("Search");
             }
 
             foreach (var result in results)
@@ -205,8 +209,8 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
-        [Route("Real/TaxHistory/{rpAcctId}")]
-        public async Task<IActionResult> TaxHistory(string rpAcctId)
+        [Route("Real/TaxYears/{rpAcctId}")]
+        public async Task<IActionResult> TaxYears(string rpAcctId)
         {
             using var dbConnection = DbConnection;
 

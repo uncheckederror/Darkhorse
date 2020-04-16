@@ -203,7 +203,7 @@
                 Details
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Tax Year</a>
+                <a class="dropdown-item" asp-controller="Real" asp-action="TaxYears" asp-route-id="@Model.Account.RP_ACCT_ID">Tax Year</a>
                 <a class="dropdown-item" href="#">Account History by Owner</a>
                 <a class="dropdown-item" href="#">Associated Accounts</a>
                 <a class="dropdown-item" href="#">Cadastral</a>
@@ -216,11 +216,7 @@
                 <a class="dropdown-item" href="#">Three Year Exemption</a>
             </div>
         </div>
-        @{
-            var historyLink = $"./Account?rpAcctId={Model.Account.RP_ACCT_ID}&page=ChangeHistory";
-
-        }
-        <a class="btn btn-info col-4" href="@historyLink" role="button">ATS Change History</a>
+        <a class="btn btn-info col-4" asp-controller="Real" asp-action="ChangeHistory" role="button">ATS Change History</a>
     </div>
 </div>
 <p class="display-4 pr-3">📜 ATS Change History</p>
