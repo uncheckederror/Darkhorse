@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DarkHorse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark nav-color">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand ml-3" href="#">
+                <img src="~/kcbird.svg" width="35" height="35" class="d-inline-block align-top pr-2" alt="">
+                <span class="title">Kitsap County</span>
+            </a>
+            @{
+                // Use AI to inform the user of the passage of time.
+                var greeting = string.Empty;
+                var currentTime = DateTime.Now.TimeOfDay;
+                var midnight = new TimeSpan(0, 0, 0, 0, 0);
+                var morning = new TimeSpan(0, 5, 0, 0, 0);
+                var noon = new TimeSpan(0, 12, 0, 0, 0);
+                var evening = new TimeSpan(0, 18, 0, 0, 0);
+                if (currentTime > midnight && currentTime < morning)
+                {
+                    greeting = "Shouldn't you be sleeping";
+                }
+                else if (currentTime > morning && currentTime < noon)
+                {
+                    greeting = "Good morning";
+                }
+                else if (currentTime > noon && currentTime < evening)
+                {
+                    greeting = "Good afternoon";
+                }
+                else if (currentTime > evening)
+                {
+                    greeting = "Working late";
+                }
+                else
+                {
+                    // Should never be hit.
+                    greeting = "Hello";
+                }
+            }
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#top">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#top">Blog</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#top">@greeting, @User.Identity.Name! <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!-- This menu is hidden in bigger devices with d-sm-none.
+                    The sidebar isn't proper for smaller screens imo, so this dropdown menu can keep all the useful sidebar itens exclusively for smaller screens  -->
+                    <li class="nav-item dropdown d-sm-block d-md-none">
+                        <a class="nav-link" href="#" id="smallerscreenmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="d-flex w-100 justify-content-start align-items-center">
+                                <span class="sidebar-icon">🏘️</span>
+                                <span class="menu-collapsed">Real Property</span>
+                                <span class="ml-auto">⮟</span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                            <a class="dropdown-item" href="#top">Accounts</a>
+                            <a class="dropdown-item" href="#top">Plats</a>
+                            <a class="dropdown-item" href="#top">Section Township Range</a>
+                            <a class="dropdown-item" href="#top">Assessments</a>
+                            <a class="dropdown-item" href="#top">Cadastral</a>
+                            <a class="dropdown-item" href="#top">Non Profit</a>
+                            <a class="dropdown-item" href="#top">Foreclosure Actions</a>
+                            <a class="dropdown-item" href="#top">CAMA Update</a>
+                            <a class="dropdown-item" href="#top">Reports</a>
+                            <a class="dropdown-item" href="#top">Tax Calculation Estimator</a>
+                        </div>
+                    </li><!-- Smaller devices menu END -->
+                </ul>
+            </div>
+        </nav><!-- NavBar END -->
+    </header>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="sidebar-container" class="sidebar-expanded col-3 col-md-4 col-lg-4 col-xl-3 d-md-block d-sm-none d-none">
+                <!-- d-* hiddens the sidebar in smaller devices. its itens can be kept on the navbar 'menu' -->
+                <!-- bootstrap list group -->
+                <ul class="list-group">
+                    <!-- separator with title -->
+                    <!-- /end separator -->
+                    <!-- menu with submenu -->
+                    <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏘️</span>
+                            <span class="menu-collapsed">Real Property</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu1' class="collapse sidebar-submenu">
+                        <a href="~/Real/Index" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏠</span>
+                            <span class="menu-collapsed">Accounts</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏞️</span>
+                            <span class="menu-collapsed">Plats</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏕️</span>
+                            <span class="menu-collapsed">Section Township Range</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏊‍♀️</span>
+                            <span class="menu-collapsed">SSWM Assessments</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📊</span>
+                            <span class="menu-collapsed">Other Assessment Types</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🪓</span>
+                            <span class="menu-collapsed">Cadastral</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏢</span>
+                            <span class="menu-collapsed">Non Profit</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏚️</span>
+                            <span class="menu-collapsed">Foreclosure Actions</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏹</span>
+                            <span class="menu-collapsed">CAMA Update</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📰</span>
+                            <span class="menu-collapsed">Reports</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🧮</span>
+                            <span class="menu-collapsed">Tax Calculation Estimaor</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏪</span>
+                            <span class="menu-collapsed">Personal Property</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu2' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏬</span>
+                            <span class="menu-collapsed">Accounts</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">⚔️</span>
+                            <span class="menu-collapsed">Accounts Ready for Distraint</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🧱</span>
+                            <span class="menu-collapsed">Asset Categories</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">💎</span>
+                            <span class="menu-collapsed">Assets</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📉</span>
+                            <span class="menu-collapsed">Depreciation Schedules</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🗃️</span>
+                            <span class="menu-collapsed">Listing Tracking</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔩</span>
+                            <span class="menu-collapsed">NAICS Codes</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📰</span>
+                            <span class="menu-collapsed">Reports</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔮</span>
+                            <span class="menu-collapsed">Valuation Indicators</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu3" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏙️</span>
+                            <span class="menu-collapsed">Local Improvement District</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu3' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏠</span>
+                            <span class="menu-collapsed">Accounts</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🪓</span>
+                            <span class="menu-collapsed">Cadastral</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏫</span>
+                            <span class="menu-collapsed">District</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏚️</span>
+                            <span class="menu-collapsed">Foreclosure Actions</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📰</span>
+                            <span class="menu-collapsed">Reports</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu4" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">💰</span>
+                            <span class="menu-collapsed">Levies</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu4' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">💰</span>
+                            <span class="menu-collapsed">Funds</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📝</span>
+                            <span class="menu-collapsed">Levy Reports</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📇</span>
+                            <span class="menu-collapsed">Tax District and Codes</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu5" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">💸</span>
+                            <span class="menu-collapsed">Cashiering</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu5' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🤹</span>
+                            <span class="menu-collapsed">Balance Summary and Closeout</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📰</span>
+                            <span class="menu-collapsed">Reports</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📜</span>
+                            <span class="menu-collapsed">FFP Count Report</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📃</span>
+                            <span class="menu-collapsed">Generate ACH Files</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📤</span>
+                            <span class="menu-collapsed">Generate Emails for Prepayments</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📑</span>
+                            <span class="menu-collapsed">Process Refunds</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🎫</span>
+                            <span class="menu-collapsed">Re-receipting Advance Payments</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🧾</span>
+                            <span class="menu-collapsed">Receipt Inquiry</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📓</span>
+                            <span class="menu-collapsed">Receipt and Refund Query</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📥</span>
+                            <span class="menu-collapsed">Receive Payments</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔖</span>
+                            <span class="menu-collapsed">Refund Interest Rates</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📮</span>
+                            <span class="menu-collapsed">Tax Service Batch</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu6" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">📜</span>
+                            <span class="menu-collapsed">Contracts</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu6' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🕵️</span>
+                            <span class="menu-collapsed">Names and Addresses</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu7" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏦</span>
+                            <span class="menu-collapsed">Sales</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu7' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🛍️</span>
+                            <span class="menu-collapsed">Assessor Sales</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🎁</span>
+                            <span class="menu-collapsed">REETs to Sales</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📦</span>
+                            <span class="menu-collapsed">Sales Import</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📋</span>
+                            <span class="menu-collapsed">Sales Questionnaires</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu8" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">⚖️</span>
+                            <span class="menu-collapsed">Validation</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu8' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">👴</span>
+                            <span class="menu-collapsed">Senior Citizen Rates</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🎪</span>
+                            <span class="menu-collapsed">Account Groups</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏦</span>
+                            <span class="menu-collapsed">Tax Services</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔖</span>
+                            <span class="menu-collapsed">Tag Codes</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🏚️</span>
+                            <span class="menu-collapsed">Foreclosure Action Types</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">☎️</span>
+                            <span class="menu-collapsed">Contact Number Types</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔥</span>
+                            <span class="menu-collapsed">Distraint Types</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu9" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">⚙️</span>
+                            <span class="menu-collapsed">Utilities</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu9' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🌐</span>
+                            <span class="menu-collapsed">Annexations</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🚓</span>
+                            <span class="menu-collapsed">Contacts Cleanup</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🗄️</span>
+                            <span class="menu-collapsed">Misc Data Actions</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📍</span>
+                            <span class="menu-collapsed">NCOA Address Upload</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🔮</span>
+                            <span class="menu-collapsed">SSWM Projection</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                    <a href="#submenu10" data-toggle="collapse" aria-expanded="false" class="bg-orange list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-start align-items-center">
+                            <span class="sidebar-icon">💌</span>
+                            <span class="menu-collapsed">Notices</span>
+                            <span class="ml-auto">⮟</span>
+                        </div>
+                    </a>
+                    <!-- submenu content -->
+                    <div id='submenu10' class="collapse sidebar-submenu">
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📍</span>
+                            <span class="menu-collapsed">Create Files for NCOA Addresses</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">🧾</span>
+                            <span class="menu-collapsed">Generate Statement</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📧</span>
+                            <span class="menu-collapsed">Notice Batches</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-orange-secondary text-white d-flex justify-content-start align-items-center">
+                            <span class="sidebar-icon">📪</span>
+                            <span class="menu-collapsed">RP Notices for No Value Change</span>
+                            <span class="ml-auto">⮞</span>
+                        </a>
+                    </div>
+                </ul><!-- list group end-->
+            </div>
+            <main role="main" class="col-12 col-md-8 col-lg-8 col-xl-9 p-1 p-md-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - DarkHorse - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

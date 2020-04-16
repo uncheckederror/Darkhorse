@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.Mvc", "DarkHorse.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.DataAccess", "DarkHorse.DataAccess\DarkHorse.DataAccess.csproj", "{A1490882-162B-4F6D-9DFE-700603430943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkHorse.Tests", "DarkHorse.Tests\DarkHorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.Tests", "DarkHorse.Tests\DarkHorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
