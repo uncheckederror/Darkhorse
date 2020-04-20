@@ -143,24 +143,419 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="taxyear" role="tabpanel" aria-labelledby="taxyear-tab">
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tax Year</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tax Status</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tax Code</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Sr. Citizen Rate</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Publicly Owned
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Federally Owned
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Non-Profit
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> State Assessed
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Property Class</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Parcel Acreage</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a class="btn btn-block btn-secondary" href="#">Prorate Tax Year</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="input-group pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Land Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group  pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Land Market Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group  pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Improvements Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">New Construction Amount</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group pt-3">
+                            <a class="btn btn-secondary" href="#">Override Values</a>
+                            <div class="btn-group-toggle pl-3" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Overridden
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="input-group pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Frozen Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Market Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Assessed Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Taxable Average Value</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group pt-3">
+                            <a class="btn btn-secondary" href="#">Override Values</a>
+                            <div class="btn-group-toggle pl-3" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Overridden
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-deck pt-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="input-group pb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Tax Billed</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="input-group">
+                            <a class="btn btn-secondary" href="#">Override Values</a>
+                            <div class="btn-group-toggle pl-3" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Overridden
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card invisible">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+            <div class="table-responsive pt-3">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Billed
+                            </th>
+                            <th>
+                                Paid
+                            </th>
+                            <th>
+                                Refunded
+                            </th>
+                            <th>
+                                Advance
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Tax
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Stormwater Management
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                FFP
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Nox Weed
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Other Assessments
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Penalty
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Interest
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Totals
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-info text-light" role="button" herf="#">
+                Amount Owing
+            </a>
+            <a class="btn btn-secondary text-light" role="button" herf="#">
+                Receipts/Refunds
+            </a>
+            <a class="btn btn-danger text-light" role="button" herf="#">
+                Create Refund Record
+            </a>
+            <a class="btn btn-warning text-light" role="button" herf="#">
+                Calc Prepayments
+            </a>
+        </div>
+        <div class="tab-pane fade" id="exemptions" role="tabpanel" aria-labelledby="exemptions-tab">
+            <div class="table-responsive pt-3">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Exemption Type
+                            </th>
+                            <th>
+                                Exempt Description
+                            </th>
+                            <th>
+                                Value
+                            </th>
+                            <th>
+                                Review Year
+                            </th>
+                            <th>
+                                Override
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-3">
+                        <div class="input-group">
+                            <a class="btn btn-block btn-primary" role="button" href="#">Details</a>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="input-group">
+                            <a class="btn btn-block btn-danger" role="button" href="#">Override Value</a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Total Exemptions</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="assessments" role="tabpanel" aria-labelledby="assessments-tab">
             this text
         </div>
-        <div class="tab-pane fade show active" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+        <div class="tab-pane fade" id="adjustments" role="tabpanel" aria-labelledby="adjustments-tab">
             this text
         </div>
-        <div class="tab-pane fade show active" id="exemptions" role="tabpanel" aria-labelledby="exemptions-tab">
+        <div class="tab-pane fade" id="prepayment" role="tabpanel" aria-labelledby="prepayment-tab">
             this text
         </div>
-        <div class="tab-pane fade show active" id="assessments" role="tabpanel" aria-labelledby="assessments-tab">
-            this text
-        </div>
-        <div class="tab-pane fade show active" id="adjustments" role="tabpanel" aria-labelledby="adjustments-tab">
-            this text
-        </div>
-        <div class="tab-pane fade show active" id="prepayment" role="tabpanel" aria-labelledby="prepayment-tab">
-            this text
-        </div>
-        <div class="tab-pane fade show active" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
+        <div class="tab-pane fade" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
             this text
         </div>
     </div>
