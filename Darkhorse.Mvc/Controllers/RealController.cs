@@ -210,7 +210,7 @@ namespace DarkHorse.Mvc.Controllers
         }
 
         [Route("Real/TaxYears/{rpAcctId}")]
-        public async Task<IActionResult> TaxYears(string rpAcctId)
+        public async Task<IActionResult> TaxYears(string rpAcctId, int year)
         {
             using var dbConnection = DbConnection;
 
@@ -227,10 +227,26 @@ namespace DarkHorse.Mvc.Controllers
             var searchAccount = search.FirstOrDefault();
 
             var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            // Get the current tax year by default.
+            var taxYear = taxYears.Where(x => x.TAX_YR == DateTime.Now.Year).FirstOrDefault();
+            if (year > 1970)
+            {
+                taxYear = taxYears.Where(x => x.TAX_YR == year).FirstOrDefault();
+            }
+
+            var senior = new SeniorCitizenRate();
+            // Check for Senior Citizen status
+            if (taxYear.TAX_STATUS == "S")
+            {
+                senior = await SeniorCitizenRate.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
+            }
+
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
                 Account = account,
-                TaxYears = taxYears
+                TaxYears = taxYears,
+                TaxYear = taxYear,
+                SeniorCitizen = senior
             });
         }
 
