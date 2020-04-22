@@ -927,6 +927,19 @@
                                         <td>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <strong>Totals</strong>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -953,12 +966,331 @@
             </div>
         </div>
         <div class="tab-pane fade" id="adjustments" role="tabpanel" aria-labelledby="adjustments-tab">
-            this text
+            <div class="row pt-3">
+                <div class="table-responsive col-9">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Adjustment Reason
+                                </th>
+                                <th>
+                                    Change Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-3">
+                    <a href="#" class="btn btn-danger btn-block">
+                        Critical Fields
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tax Adjustment Type
+                            </th>
+                            <th>
+                                Tax Adjustement Amount
+                            </th>
+                            <th>
+                                SSWM Adjustment Type
+                            </th>
+                            <th>
+                                SSWM Adjustement Amount
+                            </th>
+                            <th>
+                                FFP Adjustment Type
+                            </th>
+                            <th>
+                                FFP Adjustment Amount
+                            </th>
+                            <th>
+                                Noxious Weed Assessment Type
+                            </th>
+                            <th>
+                                Noxious Weed Adjustment Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab-pane fade" id="prepayment" role="tabpanel" aria-labelledby="prepayment-tab">
-            this text
+            <div class="table-responsive pt-3">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Monthly Tax Payment
+                            </th>
+                            <th>
+                                Begin Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="tab-pane fade" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
-            this text
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Lock Date</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Last Paid Date</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Payment Months</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Current Tax Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Lock Tax Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Current Penalty Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Lock Penalty Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Current Interest Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Lock Interest Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Total Current Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Total Due</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Payoff Amount
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Payment Amount</span>
+                            </div>
+                            <input type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Print Contract
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Approved Date</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Create
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Approved By</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Approve
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Cancelled Date</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mt-3">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Complete Date</span>
+                            </div>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <a href="#" class="btn btn-secondary btn-block">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
