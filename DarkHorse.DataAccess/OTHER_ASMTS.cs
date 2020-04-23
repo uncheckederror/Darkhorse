@@ -35,7 +35,9 @@ namespace DarkHorse.DataAccess
                             AND RP_ACCT_YRS.RP_ACCT_YR_ID = {realAccountTaxYearId}
                             AND RP_ACCT_YRS.TAX_YR = {taxYear}";
 
-                return await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
+                var result = await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
+
+                return result ?? new OtherAssessment();
             }
             else
             {
@@ -50,7 +52,9 @@ namespace DarkHorse.DataAccess
                             AND RP_ACCT_YRS.RP_ACCT_YR_ID = {realAccountTaxYearId}
                             AND RP_ACCT_YRS.TAX_YR = {taxYear}";
 
-                return await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
+                var result = await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
+
+                return result ?? new OtherAssessment();
             }
         }
     }

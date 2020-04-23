@@ -174,11 +174,19 @@ namespace DarkHorse.Mvc.Controllers
                 });
             }
 
-            return View("Search", new AccountSearchResult
+            if (accounts.Count == 1)
             {
-                Query = accounts.FirstOrDefault(),
-                Accounts = accounts
-            });
+                // TODO: Figure out how to use the Redirect method so the URL doesn't look messed up.
+                return await Account(accounts.FirstOrDefault().ProcessNumber.ToString(), string.Empty);
+            }
+            else
+            {
+                return View("Search", new AccountSearchResult
+                {
+                    Query = accounts.FirstOrDefault(),
+                    Accounts = accounts
+                });
+            }
         }
 
         [Route("Real/ChangeHistory/{rpAcctId}")]
@@ -242,6 +250,7 @@ namespace DarkHorse.Mvc.Controllers
             }
 
             var otherAssessments = await OtherAssessment.GetAsync(taxYear.RP_ACCT_YR_ID, taxYear.TAX_YR, dbConnection);
+            var exemptions = await RealPropertyExemptions.GetAsync(searchAccount.RP_ACCT_OWNER_ID, taxYear.RP_ACCT_YR_ID, dbConnection);
 
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
@@ -249,7 +258,8 @@ namespace DarkHorse.Mvc.Controllers
                 TaxYears = taxYears,
                 TaxYear = taxYear,
                 SeniorCitizen = senior,
-                OtherAssessment = otherAssessments
+                OtherAssessment = otherAssessments,
+                RealPropertyExemptions = exemptions
             });
         }
 

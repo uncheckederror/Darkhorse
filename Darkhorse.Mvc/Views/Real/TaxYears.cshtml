@@ -626,18 +626,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
+                        @{
+                            foreach (var exemption in Model?.RealPropertyExemptions)
+                            {
+                                <tr>
+                                    <td>
+                                        @exemption.EXEMPT_TYPE
+                                    </td>
+                                    <td>
+                                        @exemption.DESCRIPTION
+                                    </td>
+                                    <td>
+                                        @exemption.EXEMPT_VALUE
+                                    </td>
+                                    <td>
+                                        @exemption.REVIEW_YR
+                                    </td>
+                                    <td>
+                                        <div class="btn-group-toggle" data-toggle="buttons">
+                                            @{
+                                                if (exemption.OVERRIDE_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Overridden
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Overridden
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -658,7 +683,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Total Exemptions</span>
                             </div>
-                            <input type="text" class="form-control">
+                            @{
+                                var exemptionsTotal = 0;
+                                foreach (var exemption in Model?.RealPropertyExemptions)
+                                {
+                                    exemptionsTotal += exemption.EXEMPT_VALUE;
+                                }
+                            }
+                            <input type="text" class="form-control" value="@exemptionsTotal">
                         </div>
                     </div>
                 </div>
