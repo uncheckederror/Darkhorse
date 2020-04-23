@@ -241,12 +241,15 @@ namespace DarkHorse.Mvc.Controllers
                 senior = await SeniorCitizenRate.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
             }
 
+            var otherAssessments = await OtherAssessment.GetAsync(taxYear.RP_ACCT_YR_ID, taxYear.TAX_YR, dbConnection);
+
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
                 Account = account,
                 TaxYears = taxYears,
                 TaxYear = taxYear,
-                SeniorCitizen = senior
+                SeniorCitizen = senior,
+                OtherAssessment = otherAssessments
             });
         }
 

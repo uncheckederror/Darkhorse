@@ -448,12 +448,16 @@
                                 Tax
                             </td>
                             <td>
+                                @Model?.TaxYear?.ADJ_TAX_BILLED
                             </td>
                             <td>
+                                @Model?.TaxYear?.RP_TAX_PAID
                             </td>
                             <td>
+                                @Model?.TaxYear?.RP_TAX_REFUND
                             </td>
                             <td>
+                                @Model?.TaxYear?.RP_ADVANCE_PAID
                             </td>
                         </tr>
                         <tr>
@@ -461,10 +465,13 @@
                                 Stormwater Management
                             </td>
                             <td>
+                                @Model?.TaxYear?.SSWM_ASMT_BILLED
                             </td>
                             <td>
+                                @Model?.TaxYear?.SSWM_ASMT_PAID
                             </td>
                             <td>
+                                @Model?.TaxYear?.SSWM_ASMT_REFUND
                             </td>
                             <td>
                             </td>
@@ -474,10 +481,13 @@
                                 FFP
                             </td>
                             <td>
+                                @Model?.TaxYear?.FFP_ASMT_BILLED
                             </td>
                             <td>
+                                @Model?.TaxYear?.FFP_ASMT_PAID
                             </td>
                             <td>
+                                @Model?.TaxYear?.FFP_ASMT_REFUND
                             </td>
                             <td>
                             </td>
@@ -487,10 +497,13 @@
                                 Nox Weed
                             </td>
                             <td>
+                                @Model?.TaxYear?.NOX_WEED_ASMT_BILLED
                             </td>
                             <td>
+                                @Model?.TaxYear?.NOX_WEED_ASMT_PAID
                             </td>
                             <td>
+                                @Model?.TaxYear?.NOX_WEED_ASMT_REFUND
                             </td>
                             <td>
                             </td>
@@ -500,10 +513,13 @@
                                 Other Assessments
                             </td>
                             <td>
+                                @Model?.OtherAssessment?.OTHER_ASMT_BILLED
                             </td>
                             <td>
+                                @Model?.OtherAssessment?.OTHER_ASMT_PAID
                             </td>
                             <td>
+                                @Model?.OtherAssessment?.OTHER_ASMT_REFUND
                             </td>
                             <td>
                             </td>
@@ -515,6 +531,7 @@
                             <td>
                             </td>
                             <td>
+                                @Model?.TaxYear?.RP_PENALTY_PAID
                             </td>
                             <td>
                             </td>
@@ -528,6 +545,7 @@
                             <td>
                             </td>
                             <td>
+                                @Model?.TaxYear?.RP_INTEREST_PAID
                             </td>
                             <td>
                             </td>
@@ -539,10 +557,22 @@
                                 Totals
                             </td>
                             <td>
+                                @{
+                                    var billedTotal = Model.TaxYear.ADJ_TAX_BILLED + Model.TaxYear.ADJ_SSWM_BILLED + Model.TaxYear.ADJ_FFP_BILLED + Model.TaxYear.NOX_WEED_ASMT_BILLED + Model.OtherAssessment.OTHER_ASMT_BILLED;
+                                }
+                                @billedTotal
                             </td>
                             <td>
+                                @{
+                                    var paidTotal = Model.TaxYear.RP_TAX_PAID + Model.TaxYear.SSWM_ASMT_PAID + Model.TaxYear.FFP_ASMT_BILLED + Model.TaxYear.NOX_WEED_ASMT_BILLED + Model.OtherAssessment.OTHER_ASMT_PAID;
+                                }
+                                @paidTotal
                             </td>
                             <td>
+                                @{
+                                    var refundedTotal = Model.TaxYear.RP_TAX_REFUND + Model.TaxYear.SSWM_ASMT_REFUND + Model.TaxYear.FFP_ASMT_REFUND + Model.TaxYear.NOX_WEED_ASMT_REFUND + Model.OtherAssessment.OTHER_ASMT_REFUND;
+                                }
+                                @refundedTotal
                             </td>
                             <td>
                             </td>
@@ -550,18 +580,28 @@
                     </tbody>
                 </table>
             </div>
-            <a class="btn btn-info text-light" role="button" herf="#">
-                Amount Owing
-            </a>
-            <a class="btn btn-secondary text-light" role="button" herf="#">
-                Receipts/Refunds
-            </a>
-            <a class="btn btn-danger text-light" role="button" herf="#">
-                Create Refund Record
-            </a>
-            <a class="btn btn-warning text-light" role="button" herf="#">
-                Calc Prepayments
-            </a>
+            <div class="row">
+                <div class="col">
+                    <a class="btn btn-info btn-block text-light" role="button" herf="#">
+                        Amount Owing
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-secondary btn-block text-light" role="button" herf="#">
+                        Receipts/Refunds
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-danger btn-block text-light" role="button" herf="#">
+                        Create Refund Record
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-warning btn-block text-light" role="button" herf="#">
+                        Calc Prepayments
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="tab-pane fade" id="exemptions" role="tabpanel" aria-labelledby="exemptions-tab">
             <div class="table-responsive pt-3">
