@@ -251,6 +251,10 @@ namespace DarkHorse.Mvc.Controllers
 
             var otherAssessments = await OtherAssessment.GetAsync(taxYear.RP_ACCT_YR_ID, taxYear.TAX_YR, dbConnection);
             var exemptions = await RealPropertyExemptions.GetAsync(searchAccount.RP_ACCT_OWNER_ID, taxYear.RP_ACCT_YR_ID, dbConnection);
+            // Example account 1685254
+            var stormwaterType = await StormwaterManagement.GetTypeAsync(taxYear.SSWM_ASMT_ID, dbConnection);
+            var ffpAssessmentId = await FFPRate.GetAsync(taxYear.FFP_ASMT_ID, dbConnection);
+            var noxWeed = await NoxiousWeedAssessment.GetAsync(taxYear.NOX_WEED_ASMT_ID, dbConnection);
 
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
@@ -259,7 +263,10 @@ namespace DarkHorse.Mvc.Controllers
                 TaxYear = taxYear,
                 SeniorCitizen = senior,
                 OtherAssessment = otherAssessments,
-                RealPropertyExemptions = exemptions
+                RealPropertyExemptions = exemptions,
+                StormwaterManagement = stormwaterType,
+                FFPRate = ffpAssessmentId,
+                NoxiousWeedAssessment = noxWeed
             });
         }
 

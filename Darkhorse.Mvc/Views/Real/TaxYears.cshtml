@@ -707,7 +707,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Stormwater Management Type</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.StormwaterManagement?.SSWM_TYPE">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -715,7 +715,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Impervious Surface Building</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.IMPERVIOUS_SURF_BLDG">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -723,7 +723,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_SSWM_BILLED">
                                     </div>
                                 </div>
                             </div>
@@ -734,7 +734,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Stormwater Management Type</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.StormwaterManagement?.SSWM_TYPE">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -742,7 +742,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Impervious Surface Other</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.IMPERVIOUS_SURF_OTHER">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -750,7 +750,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_PAID">
                                         </div>
                                     </div>
                                 </div>
@@ -760,9 +760,20 @@
                                     <div class="col-4 invisible">
                                         <div class="input-group">
                                             <div class="btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-secondary active">
-                                                    <input type="checkbox" checked> Overridden
-                                                </label>
+                                                @{
+                                                    if (Model?.TaxYear?.OVERRIDE_ASSESSED_FLAG == 'Y')
+                                                    {
+                                                        <label class="btn btn-secondary active">
+                                                            <input type="checkbox" checked> Overridden
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="btn btn-outline-secondary">
+                                                            <input type="checkbox"> Overridden
+                                                        </label>
+                                                    }
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -771,7 +782,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Measured Date</span>
                                             </div>
-                                            <input type="date" class="form-control">
+                                            <input type="date" class="form-control" value="@Model?.TaxYear?.MEASURED_DT">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -779,7 +790,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_REFUND">
                                         </div>
                                     </div>
                                 </div>
@@ -790,9 +801,20 @@
                                 <div class="col-6">
                                     <div class="input-group">
                                         <div class="btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="checkbox" checked>Stormwater Overridden
-                                            </label>
+                                            @{
+                                                if (Model?.TaxYear?.OVERRIDE_SSWM_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Stormwater Overridden
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Stormwater Overridden
+                                                    </label>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -819,9 +841,20 @@
                                 <div class="col-4">
                                     <div class="input-group">
                                         <div class="btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="checkbox" checked> FFP Agreement
-                                            </label>
+                                            @{
+                                                if (Model?.TaxYear?.FFP_AGRMT_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> FFP Agreement
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> FFP Agreement
+                                                    </label>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -830,7 +863,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">FFP Acres</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ACRES">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -838,7 +871,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_FFP_BILLED">
                                     </div>
                                 </div>
                             </div>
@@ -849,7 +882,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Stormwater Management Type</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.StormwaterManagement?.SSWM_TYPE">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -857,7 +890,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">FFP Rate</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.FFPRate?.TAX_RATE">
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -865,7 +898,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_PAID">
                                         </div>
                                     </div>
                                 </div>
@@ -894,7 +927,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_REFUND">
                                         </div>
                                     </div>
                                 </div>
@@ -905,9 +938,20 @@
                                 <div class="col-6">
                                     <div class="input-group">
                                         <div class="btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="checkbox" checked> FFP Overridden
-                                            </label>
+                                            @{
+                                                if (Model?.TaxYear?.OVERRIDE_FFP_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> FFP Overridden
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> FFP Overridden
+                                                    </label>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -936,7 +980,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Noxious Weed Type</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.NoxiousWeedAssessment?.NOX_WEED_TYPE">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -944,7 +988,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Parcel Acreage</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.PARCEL_ACREAGE">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -952,7 +996,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_NOX_WEED_BILLED">
                                     </div>
                                 </div>
                             </div>
@@ -979,7 +1023,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_PAID">
                                         </div>
                                     </div>
                                 </div>
@@ -989,9 +1033,6 @@
                                     <div class="col-4">
                                         <div class="input-group invisible">
                                             <div class="btn-group-toggle" data-toggle="buttons">
-                                                <label class="btn btn-secondary active">
-                                                    <input type="checkbox" checked> Noxious Weed Overridden
-                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -1008,7 +1049,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_REFUND">
                                         </div>
                                     </div>
                                 </div>
@@ -1019,9 +1060,20 @@
                                 <div class="col-6">
                                     <div class="input-group">
                                         <div class="btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="checkbox" checked> Noxious Weed Overridden
-                                            </label>
+                                            @{
+                                                if (Model?.TaxYear?.OVERRIDE_NOX_WEED_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Noxious Weed Overridden
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Noxious Weed Overridden
+                                                    </label>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                 </div>
