@@ -8,10 +8,13 @@ namespace DarkHorse.Mvc.Models
         public RealPropertyAccount Account { get; set; }
         public SeniorCitizenRate SeniorCitizen { get; set; }
         public RealPropertyAccountYear TaxYear { get; set; }
-        public OtherAssessment OtherAssessment { get; set; }
+        public IEnumerable<OtherAssessment> OtherAssessments { get; set; }
         public StormwaterManagement StormwaterManagement { get; set; }
         public FFPRate FFPRate { get; set; }
         public NoxiousWeedAssessment NoxiousWeedAssessment { get; set; }
+        public RealPropertyYearPayment RealPropertyYearPayment { get; set; }
+        public IEnumerable<RealPropertyPrepayment> RealPropertyPrepayments { get; set; }
+        public IEnumerable<RealPropertyAdjustment> RealPropertyAdjustments { get; set; }
         public IEnumerable<RealPropertyExemptions> RealPropertyExemptions { get; set; }
         public IEnumerable<RealPropertyAccountYear> TaxYears { get; set; }
     }

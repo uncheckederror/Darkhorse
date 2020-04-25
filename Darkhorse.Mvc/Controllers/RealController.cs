@@ -242,6 +242,12 @@ namespace DarkHorse.Mvc.Controllers
                 taxYear = taxYears.Where(x => x.TAX_YR == year).FirstOrDefault();
             }
 
+            if (taxYear == null)
+            {
+                var mostRecent = taxYears.Max(y => y.TAX_YR);
+                taxYear = taxYears.Where(x => x.TAX_YR == mostRecent).FirstOrDefault();
+            }
+
             var senior = new SeniorCitizenRate();
             // Check for Senior Citizen status
             if (taxYear.TAX_STATUS == "S")
@@ -255,6 +261,9 @@ namespace DarkHorse.Mvc.Controllers
             var stormwaterType = await StormwaterManagement.GetTypeAsync(taxYear.SSWM_ASMT_ID, dbConnection);
             var ffpAssessmentId = await FFPRate.GetAsync(taxYear.FFP_ASMT_ID, dbConnection);
             var noxWeed = await NoxiousWeedAssessment.GetAsync(taxYear.NOX_WEED_ASMT_ID, dbConnection);
+            var adjustments = await RealPropertyAdjustment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
+            var prepayment = await RealPropertyPrepayment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
+            var payments = await RealPropertyYearPayment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
 
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
@@ -262,11 +271,14 @@ namespace DarkHorse.Mvc.Controllers
                 TaxYears = taxYears,
                 TaxYear = taxYear,
                 SeniorCitizen = senior,
-                OtherAssessment = otherAssessments,
+                OtherAssessments = otherAssessments,
                 RealPropertyExemptions = exemptions,
                 StormwaterManagement = stormwaterType,
                 FFPRate = ffpAssessmentId,
-                NoxiousWeedAssessment = noxWeed
+                NoxiousWeedAssessment = noxWeed,
+                RealPropertyAdjustments = adjustments,
+                RealPropertyPrepayments = prepayment,
+                RealPropertyYearPayment = payments
             });
         }
 

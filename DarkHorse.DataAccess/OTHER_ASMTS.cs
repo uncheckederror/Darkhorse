@@ -19,7 +19,7 @@ namespace DarkHorse.DataAccess
         public string DESCRIPTION { get; set; }
         #endregion
 
-        public static async Task<OtherAssessment> GetAsync(int realAccountTaxYearId, int taxYear, IDbConnection dbConnection)
+        public static async Task<IEnumerable<OtherAssessment>> GetAsync(int realAccountTaxYearId, int taxYear, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
             {
@@ -35,9 +35,7 @@ namespace DarkHorse.DataAccess
                             AND RP_ACCT_YRS.RP_ACCT_YR_ID = {realAccountTaxYearId}
                             AND RP_ACCT_YRS.TAX_YR = {taxYear}";
 
-                var result = await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
-
-                return result ?? new OtherAssessment();
+                return await connection.QueryAsync<OtherAssessment>(sql).ConfigureAwait(false);
             }
             else
             {
@@ -52,9 +50,7 @@ namespace DarkHorse.DataAccess
                             AND RP_ACCT_YRS.RP_ACCT_YR_ID = {realAccountTaxYearId}
                             AND RP_ACCT_YRS.TAX_YR = {taxYear}";
 
-                var result = await connection.QueryFirstOrDefaultAsync<OtherAssessment>(sql).ConfigureAwait(false);
-
-                return result ?? new OtherAssessment();
+                return await connection.QueryAsync<OtherAssessment>(sql).ConfigureAwait(false);
             }
         }
     }
