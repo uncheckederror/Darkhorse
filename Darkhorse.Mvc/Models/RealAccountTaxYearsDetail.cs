@@ -6,6 +6,7 @@ namespace DarkHorse.Mvc.Models
     public class RealAccountTaxYearsDetail
     {
         public RealPropertyAccount Account { get; set; }
+        public RealPropertyAccountsFilter AccountsFilter { get; set; }
         public SeniorCitizenRate SeniorCitizen { get; set; }
         public RealPropertyAccountYear TaxYear { get; set; }
         public IEnumerable<OtherAssessment> OtherAssessments { get; set; }

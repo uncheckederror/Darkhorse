@@ -22,8 +22,8 @@ namespace DarkHorse.Mvc.Models
         public int AccountGroup { get; set; }
         public string QuarterSection { get; set; }
         public string Tags { get; set; }
-        public int PropertyClass { get; set; }
-        public decimal ParcelAcreage { get; set; }
-        public int TaxCode { get; set; }
+        public string PropertyClass { get; set; }
+        public decimal? ParcelAcreage { get; set; }
+        public string TaxCode { get; set; }
     }
 }

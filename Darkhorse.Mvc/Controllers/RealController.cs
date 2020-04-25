@@ -234,7 +234,7 @@ namespace DarkHorse.Mvc.Controllers
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
-            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
             // Get the current tax year by default.
             var taxYear = taxYears.Where(x => x.TAX_YR == DateTime.Now.Year).FirstOrDefault();
             if (year > 1970)
@@ -248,6 +248,12 @@ namespace DarkHorse.Mvc.Controllers
                 taxYear = taxYears.Where(x => x.TAX_YR == mostRecent).FirstOrDefault();
             }
 
+            foreach (var y in taxYears)
+            {
+                var taxRate = await TaxCodeRateYear.GetAsync(y.TAX_STATUS, y.TAX_CODE, y.TAX_YR, dbConnection);
+                y.TaxRate = taxRate.tax_rate;
+            }
+
             var senior = new SeniorCitizenRate();
             // Check for Senior Citizen status
             if (taxYear.TAX_STATUS == "S")
@@ -258,8 +264,8 @@ namespace DarkHorse.Mvc.Controllers
             var otherAssessments = await OtherAssessment.GetAsync(taxYear.RP_ACCT_YR_ID, taxYear.TAX_YR, dbConnection);
             var exemptions = await RealPropertyExemptions.GetAsync(searchAccount.RP_ACCT_OWNER_ID, taxYear.RP_ACCT_YR_ID, dbConnection);
             // Example account 1685254
-            var stormwaterType = await StormwaterManagement.GetTypeAsync(taxYear.SSWM_ASMT_ID, dbConnection);
-            var ffpAssessmentId = await FFPRate.GetAsync(taxYear.FFP_ASMT_ID, dbConnection);
+            var stormwaterType = await StormwaterManagement.GetTypeAsync(taxYear.SSWM_ASMT_ID ?? 0, dbConnection);
+            var ffpAssessmentId = await FFPRate.GetAsync(taxYear.FFP_ASMT_ID ?? 0, dbConnection);
             var noxWeed = await NoxiousWeedAssessment.GetAsync(taxYear.NOX_WEED_ASMT_ID, dbConnection);
             var adjustments = await RealPropertyAdjustment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
             var prepayment = await RealPropertyPrepayment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
@@ -268,6 +274,7 @@ namespace DarkHorse.Mvc.Controllers
             return View("TaxYears", new RealAccountTaxYearsDetail
             {
                 Account = account,
+                AccountsFilter = searchAccount,
                 TaxYears = taxYears,
                 TaxYear = taxYear,
                 SeniorCitizen = senior,
@@ -279,6 +286,63 @@ namespace DarkHorse.Mvc.Controllers
                 RealPropertyAdjustments = adjustments,
                 RealPropertyPrepayments = prepayment,
                 RealPropertyYearPayment = payments
+            });
+        }
+
+        [Route("Real/Prorate/{rpAcctId}")]
+        public async Task<IActionResult> StartProrateTaxYear(string rpAcctId, int year)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+
+            var taxYear = taxYears.Where(x => x.TAX_YR == year).FirstOrDefault();
+
+            return View("Prorate", new RealAccountProrate
+            {
+                RpAcctId = account.RP_ACCT_ID,
+                RpAcctYrId = taxYear.RP_ACCT_YR_ID,
+                TaxYear = taxYear.TAX_YR
+            });
+        }
+
+        [HttpPost]
+        [Route("Real/Prorate/{rpAcctId}")]
+        public async Task<IActionResult> CreateProrateTaxYear([Bind("RpAcctId", "RpAcctYrId", "TaxYear", "StartDate", "Reason")] RealAccountProrate prorate)
+        {
+            using var dbConnection = DbConnection;
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(prorate.RpAcctId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+
+            var taxYear = taxYears.Where(x => x.TAX_YR == prorate.TaxYear).FirstOrDefault();
+
+            // TODO: Actually save this data to the database at somepoint.
+
+            return View("Prorate", new RealAccountProrate
+            {
+                RpAcctId = account.RP_ACCT_ID,
+                RpAcctYrId = taxYear.RP_ACCT_YR_ID,
+                TaxYear = taxYear.TAX_YR,
+                Reason = prorate.Reason,
+                StartDate = prorate.StartDate
             });
         }
 

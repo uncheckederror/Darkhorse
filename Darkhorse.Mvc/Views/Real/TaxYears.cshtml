@@ -30,7 +30,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Taxpayer</span>
                 </div>
-                <input type="text" class="form-control" value="" readonly>
+                <input type="text" class="form-control" value="@Model.AccountsFilter.CONTACT_NAME" readonly>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
             <tbody>
                 @{ foreach (var year in Model?.TaxYears)
                     {
-                        <tr>
+                        <tr onclick="window.location='./@Model.Account.RP_ACCT_ID?year=@year.TAX_YR'">
                             <td>
                                 @year.TAX_YR
                             </td>
@@ -78,25 +78,25 @@
                                 @year.TAX_STATUS
                             </td>
                             <td>
-                                @year.TAX_CODE.ToString("D0")
+                                @year.TAX_CODE
                             </td>
                             <td>
-                                @*TODO: Tax Rate*@
+                                @year.TaxRate.ToString("N6")
                             </td>
                             <td>
-                                @year.TAXABLE_AV.ToString("D0")
+                                @year.TAXABLE_AV.ToString("N")
                             </td>
                             <td>
-                                @year.PRORATE_START_DT
+                                @year.PRORATE_START_DT.ToShortDateString()
                             </td>
                             <td>
-                                @year.PRORATE_END_DT
+                                @year?.PRORATE_END_DT?.ToShortDateString()
                             </td>
                             <td>
-                                @year.ADJ_TAX_BILLED
+                                @year?.ADJ_TAX_BILLED?.ToString("C")
                             </td>
                             <td>
-                                @year.RP_TAX_PAID
+                                @year.RP_TAX_PAID.ToString("C")
                             </td>
                         </tr>
                     }
@@ -284,7 +284,7 @@
                     </div>
                     <div class="col-6">
                         <div class="input-group">
-                            <a class="btn btn-block btn-secondary" href="#">Prorate Tax Year</a>
+                            <a class="btn btn-block btn-secondary" href="../Prorate/@Model.Account.RP_ACCT_ID?year=@Model.TaxYear.TAX_YR">Prorate Tax Year</a>
                         </div>
                     </div>
                 </div>
@@ -296,25 +296,25 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Land Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.LAND_AV">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.LAND_AV.ToString("N0")">
                         </div>
                         <div class="input-group  pb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Land Market Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.LAND_MKT_AV">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.LAND_MKT_AV.ToString("N0")">
                         </div>
                         <div class="input-group  pb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Improvements Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.IMPR_AV">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.IMPR_AV.ToString("N0")">
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">New Construction Amount</span>
                             </div>
-                            <input type="text" class="form-control" value="@Model?.TaxYear?.NEW_CONSTRUCTION_AMT">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.NEW_CONSTRUCTION_AMT.ToString("N0")">
                         </div>
                         <div class="input-group pt-3">
                             <a class="btn btn-danger" href="#">Override Values</a>
@@ -343,25 +343,25 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Frozen Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.FROZEN_VALUE">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.FROZEN_VALUE">
                         </div>
                         <div class="input-group pb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Market Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.MARKET_VALUE">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.MARKET_VALUE.ToString("N0")">
                         </div>
                         <div class="input-group pb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Assessed Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.ASSESSED_VALUE">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.ASSESSED_VALUE.ToString("N0")">
                         </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Taxable Average Value</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.TAXABLE_AV">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.TAXABLE_AV.ToString("N0")">
                         </div>
                         <div class="input-group pt-3">
                             <a class="btn btn-danger" href="#">Override Values</a>
@@ -392,7 +392,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Tax Billed</span>
                             </div>
-                            <input type="number" class="form-control" value="@Model?.TaxYear?.RP_TAX_BILLED">
+                            <input type="text" class="form-control" value="@Model?.TaxYear?.RP_TAX_BILLED.ToString("N2")">
                         </div>
                         <div class="input-group">
                             <a class="btn btn-danger" href="#">Override Values</a>
@@ -571,18 +571,27 @@
                             <td>
                                 @{
                                     var billedTotal = Model.TaxYear.ADJ_TAX_BILLED + Model.TaxYear.ADJ_SSWM_BILLED + Model.TaxYear.ADJ_FFP_BILLED + Model.TaxYear.NOX_WEED_ASMT_BILLED + otherBilled;
+                                    var balanceTotalBilled = Model.TaxYear.ADJ_TAX_BILLED + Model.TaxYear.ADJ_SSWM_BILLED +
+                                    Model.TaxYear.ADJ_FFP_BILLED + otherBilled +
+                                    Model.TaxYear.ADJ_NOX_WEED_BILLED;
                                 }
                                 @billedTotal
                             </td>
                             <td>
                                 @{
-                                    var paidTotal = Model.TaxYear.RP_TAX_PAID + Model.TaxYear.SSWM_ASMT_PAID + Model.TaxYear.FFP_ASMT_BILLED + Model.TaxYear.NOX_WEED_ASMT_BILLED + otherPaid;
+                                    var balanceTotalPaid = Model.TaxYear.RP_TAX_PAID + Model.TaxYear.SSWM_ASMT_PAID +
+                                    Model.TaxYear.FFP_ASMT_PAID + otherPaid +
+                                    Model.TaxYear.RP_PENALTY_PAID + Model.TaxYear.RP_INTEREST_PAID +
+                                    Model.TaxYear.NOX_WEED_ASMT_PAID;
                                 }
-                                @paidTotal
+                                @balanceTotalPaid
                             </td>
                             <td>
                                 @{
                                     var refundedTotal = Model.TaxYear.RP_TAX_REFUND + Model.TaxYear.SSWM_ASMT_REFUND + Model.TaxYear.FFP_ASMT_REFUND + Model.TaxYear.NOX_WEED_ASMT_REFUND + otherRefund;
+                                    var balanceTotalRefund = Model.TaxYear.RP_TAX_REFUND + Model.TaxYear.SSWM_ASMT_REFUND +
+                                    Model.TaxYear.FFP_ASMT_REFUND + otherRefund +
+                                    Model.TaxYear.NOX_WEED_ASMT_REFUND;
                                 }
                                 @refundedTotal
                             </td>

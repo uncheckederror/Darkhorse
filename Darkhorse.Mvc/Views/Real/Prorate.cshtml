@@ -1,0 +1,65 @@
+﻿@model DarkHorse.Mvc.Models.RealAccountProrate;
+@{
+    ViewData["Title"] = "Prorate";
+}
+
+<p class="display-4 pr-3">🏠 Real Property Account Tax Year Prorate</p>
+
+@{ 
+    if (!string.IsNullOrWhiteSpace(Model?.Reason))
+    {
+    <div class="alert alert-success" role="alert">
+        Tax Year @Model.TaxYear has been Prorated for Account @Model.RpAcctId!
+    </div>
+    }
+}
+
+<form asp-controller="Real" asp-action="Prorate" asp-route-id="@Model.RpAcctId" method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Prorate the following year:</span>
+                    </div>
+                    <input asp-for="@Model.TaxYear" type="number" class="form-control" value="@Model.TaxYear">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Please enter start date of prorated year:</span>
+                    </div>
+                    <input asp-for="@Model.StartDate" type="date" class="form-control">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Please enter reason that year is being prorated:</span>
+                    </div>
+                    <input asp-for="@Model.Reason" type="text" class="form-control" placeholder="Why are you prorating this tax year?">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-12">
+                <button class="btn btn-danger btn-block" type="submit">Continue</button>
+            </div>
+            <div class="col-12 invisible">
+                <input asp-for="@Model.RpAcctId" type="text" class="form-control" value="@Model.RpAcctId">
+                <input asp-for="@Model.RpAcctYrId" type="text" class="form-control" value="@Model.RpAcctYrId">
+            </div>
+        </div>
+    </div>
+</form>
