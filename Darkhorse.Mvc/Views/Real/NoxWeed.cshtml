@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.NoxiousWeedAssessment>
+@{
+    ViewData["Title"] = "Stormwater";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Noxious Weeds Assessment</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Asmt Type
+                </th>
+                <th scope="col">
+                    Tax Year
+                </th>
+                <th scope="col">
+                    Fund
+                </th>
+                <th scope="col">
+                    Assmt Per Parcel
+                </th>
+                <th scope="col">
+                    Rate Per Acre
+                </th>
+                <th scope="col">
+                    Description
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var assessment in Model)
+                {
+                    <tr>
+                        <td>@assessment.NOX_WEED_TYPE</td>
+                        <td>@assessment.TAX_YR</td>
+                        <td>@assessment.FUND_NO</td>
+                        <td>@assessment.ASMT_PER_PARCEL</td>
+                        <td>@assessment.ASMT_RATE_PER_ACRE</td>
+                        <td>@assessment.DESCRIPTION</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.FFPAssessment>
+@{
+    ViewData["Title"] = "Forest Fire Protection";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Forest Fire Protection Assessments</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Tax Year
+                </th>
+                <th scope="col">
+                    Fund
+                </th>
+                <th scope="col">
+                    FFP Rate
+                </th>
+                <th scope="col">
+                    Minimum Fee
+                </th>
+                <th scope="col">
+                    Admin Fee
+                </th>
+                <th scope="col">
+                    Acres
+                </th>
+                <th scope="col">
+                    Exempt
+                </th>
+                <th scope="col">
+                    Non Asmt Acres
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var assessment in Model)
+                {
+                    <tr>
+                        <td>@assessment.TAX_YR</td>
+                        <td>@assessment.FUND_NO</td>
+                        <td>@assessment.TAX_RATE</td>
+                        <td>@assessment.MIN_TAX</td>
+                        <td>@assessment.ADMIN_FEE</td>
+                        <td>@assessment.MIN_TAX_MAX_ACRES</td>
+                        <td>@assessment.EXEMPT_MAX_ACRES</td>
+                        <td>@assessment.NON_TAX_MAX_ACRES</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

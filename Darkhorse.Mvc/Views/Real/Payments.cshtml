@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Payments";
+}
+
+<p class="display-4 pr-3">Real Property Account Payments</p>
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Account Type</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option value="real" selected>Real Property</option>
+                    <option value="personal">Personal Property</option>
+                    <option value="lid">Local Improvement District</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Interest Month and Year</label>
+                </div>
+                <input type="date" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Account</span>
+                </div>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Process #</span>
+                </div>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">Taxpayer</label>
+                </div>
+                <input type="text" class="form-control" readonly>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,12 +5,12 @@
 
 <p class="display-4 pr-3">🏠 Real Property Account Tax Year Prorate</p>
 
-@{ 
+@{
     if (!string.IsNullOrWhiteSpace(Model?.Reason))
     {
-    <div class="alert alert-success" role="alert">
-        Tax Year @Model.TaxYear has been Prorated for Account @Model.RpAcctId!
-    </div>
+        <div class="alert alert-success" role="alert">
+            Tax Year @Model.TaxYear has been Prorated for Account @Model.RpAcctId!
+        </div>
     }
 }
 
@@ -25,11 +25,7 @@
                     <input asp-for="@Model.TaxYear" type="number" class="form-control" value="@Model.TaxYear">
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="col-12">
+            <div class="col">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Please enter start date of prorated year:</span>

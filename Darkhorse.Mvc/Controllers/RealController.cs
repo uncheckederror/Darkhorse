@@ -264,9 +264,9 @@ namespace DarkHorse.Mvc.Controllers
             var otherAssessments = await OtherAssessment.GetAsync(taxYear.RP_ACCT_YR_ID, taxYear.TAX_YR, dbConnection);
             var exemptions = await RealPropertyExemptions.GetAsync(searchAccount.RP_ACCT_OWNER_ID, taxYear.RP_ACCT_YR_ID, dbConnection);
             // Example account 1685254
-            var stormwaterType = await StormwaterManagement.GetTypeAsync(taxYear.SSWM_ASMT_ID ?? 0, dbConnection);
-            var ffpAssessmentId = await FFPRate.GetAsync(taxYear.FFP_ASMT_ID ?? 0, dbConnection);
-            var noxWeed = await NoxiousWeedAssessment.GetAsync(taxYear.NOX_WEED_ASMT_ID, dbConnection);
+            var stormwaterType = await SSWMAssessment.GetTypeAsync(taxYear.SSWM_ASMT_ID ?? 0, dbConnection);
+            var ffpAssessmentId = await FFPAssessment.GetRateAsync(taxYear.FFP_ASMT_ID ?? 0, dbConnection);
+            var noxWeed = await NoxiousWeedAssessment.GetTypeAsync(taxYear.NOX_WEED_ASMT_ID, dbConnection);
             var adjustments = await RealPropertyAdjustment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
             var prepayment = await RealPropertyPrepayment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
             var payments = await RealPropertyYearPayment.GetAsync(taxYear.RP_ACCT_YR_ID, dbConnection);
@@ -334,7 +334,7 @@ namespace DarkHorse.Mvc.Controllers
 
             var taxYear = taxYears.Where(x => x.TAX_YR == prorate.TaxYear).FirstOrDefault();
 
-            // TODO: Actually save this data to the database at somepoint.
+            // TODO: Actually save this prorate data to the database at somepoint.
 
             return View("Prorate", new RealAccountProrate
             {
@@ -344,6 +344,67 @@ namespace DarkHorse.Mvc.Controllers
                 Reason = prorate.Reason,
                 StartDate = prorate.StartDate
             });
+        }
+
+        [Route("Real/SSWM/Rates")]
+        public async Task<IActionResult> SSWMRates()
+        {
+            using var dbConnection = DbConnection;
+
+            var assessments = await SSWMAssessment.GetAllAsync(dbConnection);
+
+            return View("SSWM", assessments);
+        }
+
+        [Route("Real/FFP/Rates")]
+        public async Task<IActionResult> FFPRates()
+        {
+            using var dbConnection = DbConnection;
+
+            var assessments = await FFPAssessment.GetAllAsync(dbConnection);
+
+            return View("FFP", assessments);
+        }
+
+        [Route("Real/NoxWeed/Rates")]
+        public async Task<IActionResult> NoxWeeRates()
+        {
+            using var dbConnection = DbConnection;
+
+            var assessments = await NoxiousWeedAssessment.GetAllAsync(dbConnection);
+
+            return View("NoxWeed", assessments);
+        }
+
+        [Route("Real/Other/Rates")]
+        public async Task<IActionResult> OtherRates()
+        {
+            using var dbConnection = DbConnection;
+
+            var assessments = await OtherAssessmentTypes.GetAllAsync(dbConnection);
+
+            return View("Other", assessments);
+        }
+
+
+        [Route("Real/Payments/{rpAcctId}")]
+        public async Task<IActionResult> RealPropertyPayments(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            return View("Payments");
         }
 
         public IActionResult Privacy()

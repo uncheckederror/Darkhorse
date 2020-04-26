@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.SSWMAssessment>
+@{
+    ViewData["Title"] = "Stormwater";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Sustainable Sanitation and Water Management</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    SSWM Type
+                </th>
+                <th scope="col">
+                    Tax Year
+                </th>
+                <th scope="col">
+                    Fund
+                </th>
+                <th scope="col">
+                    Rate Per ESU
+                </th>
+                <th scope="col">
+                    Area Per ESU
+                </th>
+                <th scope="col">
+                    Description
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var assessment in Model)
+                {
+                    <tr>
+                        <td>@assessment.SSWM_TYPE</td>
+                        <td>@assessment.TAX_YR</td>
+                        <td>@assessment.FUND_NO</td>
+                        <td>@assessment.RATE_PER_ESU</td>
+                        <td>@assessment.AREA_PER_ESU</td>
+                        <td>@assessment.DESCRIPTION</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

@@ -284,7 +284,7 @@
                     </div>
                     <div class="col-6">
                         <div class="input-group">
-                            <a class="btn btn-block btn-secondary" href="../Prorate/@Model.Account.RP_ACCT_ID?year=@Model.TaxYear.TAX_YR">Prorate Tax Year</a>
+                            <a class="btn btn-block btn-secondary" asp-controller="Real" asp-action="Prorate" asp-route-id="@Model.Account.RP_ACCT_ID" asp-route-year="@Model.TaxYear.TAX_YR">Prorate Tax Year</a>
                         </div>
                     </div>
                 </div>
@@ -448,16 +448,16 @@
                                 Tax
                             </td>
                             <td>
-                                @Model?.TaxYear?.ADJ_TAX_BILLED
+                                @Model?.TaxYear?.ADJ_TAX_BILLED?.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.RP_TAX_PAID
+                                @Model?.TaxYear?.RP_TAX_PAID.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.RP_TAX_REFUND
+                                @Model?.TaxYear?.RP_TAX_REFUND.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.RP_ADVANCE_PAID
+                                @Model?.TaxYear?.RP_ADVANCE_PAID.ToString("N2")
                             </td>
                         </tr>
                         <tr>
@@ -465,13 +465,13 @@
                                 Stormwater Management
                             </td>
                             <td>
-                                @Model?.TaxYear?.SSWM_ASMT_BILLED
+                                @Model?.TaxYear?.SSWM_ASMT_BILLED.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.SSWM_ASMT_PAID
+                                @Model?.TaxYear?.SSWM_ASMT_PAID.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.SSWM_ASMT_REFUND
+                                @Model?.TaxYear?.SSWM_ASMT_REFUND.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -481,13 +481,13 @@
                                 FFP
                             </td>
                             <td>
-                                @Model?.TaxYear?.FFP_ASMT_BILLED
+                                @Model?.TaxYear?.FFP_ASMT_BILLED.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.FFP_ASMT_PAID
+                                @Model?.TaxYear?.FFP_ASMT_PAID.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.FFP_ASMT_REFUND
+                                @Model?.TaxYear?.FFP_ASMT_REFUND.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -497,13 +497,13 @@
                                 Nox Weed
                             </td>
                             <td>
-                                @Model?.TaxYear?.NOX_WEED_ASMT_BILLED
+                                @Model?.TaxYear?.NOX_WEED_ASMT_BILLED.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.NOX_WEED_ASMT_PAID
+                                @Model?.TaxYear?.NOX_WEED_ASMT_PAID.ToString("N2")
                             </td>
                             <td>
-                                @Model?.TaxYear?.NOX_WEED_ASMT_REFUND
+                                @Model?.TaxYear?.NOX_WEED_ASMT_REFUND.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -525,13 +525,13 @@
 
                             }
                             <td>
-                                @otherBilled
+                                @otherBilled.ToString("N2")
                             </td>
                             <td>
-                                @otherPaid
+                                @otherPaid.ToString("N2")
                             </td>
                             <td>
-                                @otherRefund
+                                @otherRefund.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -543,7 +543,7 @@
                             <td>
                             </td>
                             <td>
-                                @Model?.TaxYear?.RP_PENALTY_PAID
+                                @Model?.TaxYear?.RP_PENALTY_PAID.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -557,7 +557,7 @@
                             <td>
                             </td>
                             <td>
-                                @Model?.TaxYear?.RP_INTEREST_PAID
+                                @Model?.TaxYear?.RP_INTEREST_PAID.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -575,7 +575,7 @@
                                     Model.TaxYear.ADJ_FFP_BILLED + otherBilled +
                                     Model.TaxYear.ADJ_NOX_WEED_BILLED;
                                 }
-                                @billedTotal
+                                @billedTotal?.ToString("N2")
                             </td>
                             <td>
                                 @{
@@ -584,7 +584,7 @@
                                     Model.TaxYear.RP_PENALTY_PAID + Model.TaxYear.RP_INTEREST_PAID +
                                     Model.TaxYear.NOX_WEED_ASMT_PAID;
                                 }
-                                @balanceTotalPaid
+                                @balanceTotalPaid.ToString("N2")
                             </td>
                             <td>
                                 @{
@@ -593,7 +593,7 @@
                                     Model.TaxYear.FFP_ASMT_REFUND + otherRefund +
                                     Model.TaxYear.NOX_WEED_ASMT_REFUND;
                                 }
-                                @refundedTotal
+                                @refundedTotal.ToString("N2")
                             </td>
                             <td>
                             </td>
@@ -603,7 +603,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-info btn-block text-light" role="button" herf="#">
+                    <a class="btn btn-info btn-block text-light" role="button" asp-controller="Real" asp-action="Payments" asp-route-id="@Model.Account.RP_ACCT_ID">
                         Amount Owing
                     </a>
                 </div>
@@ -744,7 +744,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_SSWM_BILLED">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_SSWM_BILLED.ToString("N2")">
                                     </div>
                                 </div>
                             </div>
@@ -771,7 +771,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_PAID">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_PAID.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -811,7 +811,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_REFUND">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.SSWM_ASMT_REFUND.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -841,7 +841,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group">
-                                        <a class="btn btn-block btn-primary" role="button" href="#">Stormwater Rates</a>
+                                        <a class="btn btn-block btn-primary" role="button" asp-controller="Real" asp-action="SSWM" asp-route-id="Rates">Stormwater Rates</a>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -884,7 +884,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">FFP Acres</span>
                                         </div>
-                                        <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ACRES">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ACRES?.ToString("N2")">
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -892,7 +892,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_FFP_BILLED">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_FFP_BILLED.ToString("N2")">
                                     </div>
                                 </div>
                             </div>
@@ -919,7 +919,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_PAID">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_PAID.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -948,7 +948,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_REFUND">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.FFP_ASMT_REFUND.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -978,7 +978,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group">
-                                        <a class="btn btn-block btn-primary" role="button" href="#">FFP Rates</a>
+                                        <a class="btn btn-block btn-primary" role="button" asp-controller="Real" asp-action="FFP" asp-route-id="Rates">FFP Rates</a>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -1017,7 +1017,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Billed</span>
                                         </div>
-                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_NOX_WEED_BILLED">
+                                        <input type="text" class="form-control" value="@Model?.TaxYear?.ADJ_NOX_WEED_BILLED.ToString("N2")">
                                     </div>
                                 </div>
                             </div>
@@ -1044,7 +1044,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Paid</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_PAID">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_PAID.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -1070,7 +1070,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Refund</span>
                                             </div>
-                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_REFUND">
+                                            <input type="text" class="form-control" value="@Model?.TaxYear?.NOX_WEED_ASMT_REFUND.ToString("N2")">
                                         </div>
                                     </div>
                                 </div>
@@ -1100,7 +1100,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group">
-                                        <a class="btn btn-block btn-primary" role="button" href="#">Stormwater Rates</a>
+                                        <a class="btn btn-block btn-primary" role="button" asp-controller="Real" asp-action="NoxWeed" asp-route-id="Rates">Noxious Weed Rates</a>
                                     </div>
                                 </div>
                                 <div class="col-3">
@@ -1149,13 +1149,13 @@
                                                     @other.DESCRIPTION
                                                 </td>
                                                 <td>
-                                                    @other.OTHER_ASMT_BILLED
+                                                    @other.OTHER_ASMT_BILLED.ToString("N2")
                                                 </td>
                                                 <td>
-                                                    @other.OTHER_ASMT_PAID
+                                                    @other.OTHER_ASMT_PAID.ToString("N2")
                                                 </td>
                                                 <td>
-                                                    @other.OTHER_ASMT_REFUND
+                                                    @other.OTHER_ASMT_REFUND.ToString("N2")
                                                 </td>
                                             </tr>
                                         }
@@ -1168,13 +1168,13 @@
                                             <strong>Totals</strong>
                                         </td>
                                         <td>
-                                            @otherBilled
+                                            @otherBilled.ToString("N2")
                                         </td>
                                         <td>
-                                            @otherPaid
+                                            @otherPaid.ToString("N2")
                                         </td>
                                         <td>
-                                            @otherRefund
+                                            @otherRefund.ToString("N2")
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1193,7 +1193,7 @@
                                 </div>
                                 <div class="col-3">
                                     <div class="input-group">
-                                        <a class="btn btn-block btn-danger" role="button" href="#">Assessment Types</a>
+                                        <a class="btn btn-block btn-danger" role="button" asp-controller="Real" asp-action="Other" asp-route-id="Rates">Assessment Types</a>
                                     </div>
                                 </div>
                             </div>
@@ -1275,13 +1275,13 @@
                             {
                                 <tr>
                                     <td>@adjustment.TAX_ADJ_TYPE</td>
-                                    <td>@adjustment.TAX_ADJ_AMT</td>
+                                    <td>@adjustment.TAX_ADJ_AMT?.ToString("N2")</td>
                                     <td>@adjustment.SSWM_ADJ_TYPE</td>
-                                    <td>@adjustment.SSWM_ADJ_AMT</td>
+                                    <td>@adjustment.SSWM_ADJ_AMT?.ToString("N2")</td>
                                     <td>@adjustment.FFP_ADJ_TYPE</td>
-                                    <td>@adjustment.FFP_ADJ_AMT</td>
+                                    <td>@adjustment.FFP_ADJ_AMT?.ToString("N2")</td>
                                     <td>@adjustment.NOX_WEED_ADJ_TYPE</td>
-                                    <td>@adjustment.NOX_WEED_ADJ_AMT</td>
+                                    <td>@adjustment.NOX_WEED_ADJ_AMT?.ToString("N2")</td>
                                 </tr>
                             }
 
@@ -1582,3 +1582,4 @@
             </div>
         </div>
     </div>
+</div>

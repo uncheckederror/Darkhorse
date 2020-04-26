@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.OtherAssessmentTypes>
+@{
+    ViewData["Title"] = "Other";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Other Assessments</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Other Assessment Type
+                </th>
+                <th scope="col">
+                    Fund Number
+                </th>
+                <th scope="col">
+                    Fund Title
+                </th>
+                <th scope="col">
+                    Description
+                </th>
+                <th scope="col">
+                    Active
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var assessment in Model)
+                {
+                    <tr>
+                        <td>@assessment.OTHER_ASMT_TYPE</td>
+                        <td>@assessment.FUND_NO</td>
+                        <td>@assessment.FUND_TITLE</td>
+                        <td>@assessment.DESCRIPTION</td>
+                        <td>@assessment.ACTIVE</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
