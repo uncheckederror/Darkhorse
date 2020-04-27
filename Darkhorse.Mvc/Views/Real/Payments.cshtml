@@ -60,3 +60,268 @@
         </div>
     </div>
 </div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Include?
+                </th>
+                <th scope="col">
+                    Year
+                </th>
+                <th scope="col">
+                    Principal
+                </th>
+                <th scope="col">
+                    Interest
+                </th>
+                <th scope="col">
+                    Penalty
+                </th>
+                <th scope="col">
+                    Amount Due
+                </th>
+                <th scope="col">
+                    Payment Type
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="btn-group-toggle" data-toggle="buttons">
+                        @{
+                            if ('Y' == 'Y')
+                            {
+                                <label class="btn btn-secondary active">
+                                    <input type="checkbox" checked> Included
+                                </label>
+                            }
+                            else
+                            {
+                                <label class="btn btn-outline-secondary">
+                                    <input type="checkbox"> Not Included
+                                </label>
+                            }
+                        }
+                    </div>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="half" id="option1" checked> Half
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="full" id="option2"> Full
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="override" id="option3"> Override
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    Total
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <tbody>
+            <tr>
+                <td scope="col">
+                </td>
+                <td scope="col">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Total
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h5 class="display-4 pb-3">Payment Summary</h5>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Total Due</span>
+                </div>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Tax Clearing</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01">
+                    <option value="on">On</option>
+                    <option value="off" selected>Off</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Collection Cost</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Listing</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option value="on">On</option>
+                        <option value="off" selected>Off</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">NSF Cost</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Payment</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option value="on">On</option>
+                        <option value="off" selected>Off</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Delinquent Payment</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-danger">Post</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Advance Payment</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-primary">Review</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Overpayment Amount</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-secondary">Receipt</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Total Payment</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-info">Receipt and Refund Query</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cashier Number</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-warning">Re-Print</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <div class="form-row">
+            <div class="col-6">
+                <button class="btn btn-block btn-warning">Advance A Payment</button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-block btn-danger">Input an Overpayment</button>
+            </div>
+        </div>
+    </div>
+</div>
