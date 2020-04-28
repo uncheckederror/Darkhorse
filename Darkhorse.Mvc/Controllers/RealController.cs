@@ -404,7 +404,14 @@ namespace DarkHorse.Mvc.Controllers
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
-            return View("Payments");
+            // TODO: Verify this works and figure out where to get the Cashier record from.
+            var cashier = await Cashier.GetAsync("COUNTER1", dbConnection);
+
+            return View("Payments", new RealAccountPaymentsDetail
+            {
+                Account = account,
+                AccountsFilter = searchAccount
+            });
         }
 
         public IActionResult Privacy()

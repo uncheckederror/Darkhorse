@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DarkHorse.Mvc.RealAccountPaymentsDetail;
+@{
     ViewData["Title"] = "Payments";
 }
 
@@ -35,7 +36,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Account</span>
                 </div>
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" value="@Model.Account.ACCT_NO" readonly>
             </div>
         </div>
         <div class="col-6">
@@ -43,7 +44,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Process #</span>
                 </div>
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" value="@Model.Account.RP_ACCT_ID" readonly>
             </div>
         </div>
     </div>
@@ -55,7 +56,7 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text">Taxpayer</label>
                 </div>
-                <input type="text" class="form-control" readonly>
+                <input type="text" class="form-control" value="@Model.AccountsFilter.CONTACT_NAME" readonly>
             </div>
         </div>
     </div>
