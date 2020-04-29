@@ -418,7 +418,7 @@ namespace DarkHorse.Mvc.Controllers
 
 
         [Route("Real/Receipts/{rpAcctId}")]
-        public async Task<IActionResult> RealPropertyAccountReceipts(string rpAcctId)
+        public async Task<IActionResult> RealPropertyAccountReceipts(string rpAcctId, int? receipt)
         {
             using var dbConnection = DbConnection;
 
@@ -433,13 +433,41 @@ namespace DarkHorse.Mvc.Controllers
             var account = results.FirstOrDefault();
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
-            var recieptRefunds = ReceiptRefund.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            var recieptRefunds = await ReceiptRefund.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            var selected = recieptRefunds.FirstOrDefault();
+
+            if (receipt != null)
+            {
+                selected = recieptRefunds.Where(x => x.RECEIPT_ID == receipt).FirstOrDefault();
+            }
 
             return View("Receipts", new RealAccountReceiptsDetail
             {
                 Account = account,
                 AccountsFilter = searchAccount,
+                SelectedReceiptRefund = selected,
                 ReceiptRefunds = recieptRefunds
+            });
+        }
+
+        [Route("Real/Receipt/{receiptId}")]
+        public async Task<IActionResult> RealPropertyAccountReceipt(int receiptId)
+        {
+            using var dbConnection = DbConnection;
+
+            var transactions = await Transaction.GetAsync(receiptId, dbConnection);
+            foreach (var transaction in transactions)
+            {
+                var fund = GetCollectionFundDescriptionFromId(transaction.COLLECT_FUND);
+                transaction.FundDescription = fund;
+            }
+
+            var receipt = await ReceiptRefund.GetSingleReceiptAsync(receiptId, dbConnection);
+
+            return View("Transactions", new ReceieptRefundTransactionDetails
+            {
+                ReceiptRefund = receipt,
+                Transactions = transactions
             });
         }
 
@@ -468,6 +496,107 @@ namespace DarkHorse.Mvc.Controllers
                 default:
                     return string.Empty;
             }
+        }
+
+        public static string GetCollectionFundDescriptionFromId(string collectionFundId)
+        {
+            switch (collectionFundId)
+            {
+                case "R99901":
+                    return "Real Property Taxes Paid";
+                case "R99902":
+                    return "Real Property Interest Paid";
+                case "R99903":
+                    return "Real Property Penalty Paid";
+                case "R99905":
+                    return "Real Property Advance Payment";
+                case "R99906":
+                    return "Real Property Prepayment";
+                case "P99901":
+                    return "Personal Property Taxes Paid";
+                case "P99902":
+                    return "Personal Property Interest Paid";
+                case "P99903":
+                    return "Personal Property Penalty Paid";
+                case "P99904":
+                    return "Late Filing Penalty Paid";
+                // This bug is verbatim from the PL/SQL source code.
+                //case "P99905":
+                //    return "Personal Property Advance Payment";
+                case "P99905":
+                    return "Personal Property Prepayment";
+                case "P00901":
+                    return "PP Cert Othr Cnty Paid";
+                case "P00902":
+                    return "PP Cert Othr Interest Paid";
+                case "F99901":
+                    return "FFP Paid";
+                case "A00801":
+                    return "Noxious Weed Asmt Paid";
+                case "A00802":
+                    return "Noxious Weed Interest Paid";
+                default:
+                    break;
+            }
+
+            // TODO: Maybe Regex here?
+            // This won't work because Contains doesn't support wildcard chars.
+            //if (collectionFundId.Contains("A%01"))
+            //{
+            //    return "SSWM/Abatement Paid";
+            //}
+            //if (collectionFundId.Contains("A%02"))
+            //{
+            //    return "SSWM/Abatement Interest Paid";
+            //}
+            //if (collectionFundId.Contains("L%01"))
+            //{
+            //    return "LID Taxes Paid";
+            //}
+            //if (collectionFundId.Contains("L%02"))
+            //{
+            //    return "LID Taxes Paid";
+            //}
+            //if (collectionFundId.Contains("L%03"))
+            //{
+            //    return "LID Penalty Paid";
+            //}
+
+            if (collectionFundId.Contains("A") && collectionFundId.Contains("01"))
+            {
+                return "SSWM/Abatement Paid";
+            }
+            if (collectionFundId.Contains("A") && collectionFundId.Contains("02"))
+            {
+                return "SSWM/Abatement Interest Paid";
+            }
+            if (collectionFundId.Contains("L") && collectionFundId.Contains("01"))
+            {
+                return "LID Taxes Paid";
+            }
+            if (collectionFundId.Contains("L") && collectionFundId.Contains("02"))
+            {
+                return "LID Taxes Paid";
+            }
+            if (collectionFundId.Contains("L") && collectionFundId.Contains("03"))
+            {
+                return "LID Penalty Paid";
+            }
+
+            switch (collectionFundId)
+            {
+                case "D99901":
+                    return "Collection Costs";
+                case "N99901":
+                    return "NSF Cost";
+                case "E99901":
+                    return "Prepayment Fee";
+                default:
+                    break;
+            }
+
+            // If none of these switch statements and if statements have returned yet, then give back nothing.
+            return string.Empty;
         }
     }
 }

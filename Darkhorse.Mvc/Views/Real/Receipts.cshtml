@@ -1,6 +1,6 @@
 ﻿@model DarkHorse.Mvc.RealAccountReceiptsDetail
 @{
-    ViewData["Title"] = "Stormwater";
+    ViewData["Title"] = "Receipts And Refunds";
 }
 
 <p class="display-4 pr-3">🏊‍♀️ Receipts And Refunds</p>
@@ -42,39 +42,107 @@
             @{
                 foreach (var receiptRefund in Model.ReceiptRefunds)
                 {
-                    <tr>
+                    <tr onclick="window.location='./@Model.Account.RP_ACCT_ID?receipt=@receiptRefund?.RECEIPT_ID'">
                         <td>
-                            @receiptRefund.RECEIPT_BATCH_ID
+                            @receiptRefund?.RECEIPT_BATCH_ID
                         </td>
                         <td>
-                            @receiptRefund.RECEIPT_NO
+                            @receiptRefund?.RECEIPT_NO
                         </td>
                         <td>
-                            @receiptRefund.REFUND_ID
+                            @receiptRefund?.REFUND_ID
                         </td>
                         <td>
-                            @receiptRefund.REFUND_TYPE_SUB
+                            @receiptRefund?.REFUND_TYPE_SUB
                         </td>
                         <td>
-                            @receiptRefund.RECEIPT_REFUND_DT
+                            @receiptRefund?.RECEIPT_REFUND_DT?.ToShortDateString()
                         </td>
                         <td>
-                            @Model.Account.ACCT_NO
+                            @Model.Account?.ACCT_NO
                         </td>
                         <td>
-                            @receiptRefund.RECEIPT_REFUND_AMT
+                            @receiptRefund?.RECEIPT_REFUND_AMT?.ToString("N2")
                         </td>
                         <td>
-                            @receiptRefund.CANCEL_DT
+                            @receiptRefund?.CANCEL_DT
                         </td>
                         <td>
-                            @receiptRefund.SENT_TO_QB_DT
+                            @receiptRefund?.SENT_TO_QB_DT
                         </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">RP Process Number</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.SelectedReceiptRefund?.RP_ACCT_OWNER_ID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Petition Number</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.SelectedReceiptRefund?.REFUND_PETITION_NO" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Petition Sent</span>
+                    </div>
+                    <input type="date" class="form-control" value="@Model?.SelectedReceiptRefund?.PETITION_SENT_DT" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group mt-3">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cashier Number</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.SelectedReceiptRefund?.CASHIER_ID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cancel Cashier Number</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.SelectedReceiptRefund?.CANCEL_CASHIER_ID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">RP Process Number</span>
+                    </div>
+                    <input type="date" class="form-control" value="@Model?.SelectedReceiptRefund?.PETITION_RECEIVED_DT" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="form-group">
     <div class="form-row">
@@ -99,7 +167,7 @@
     <div class="form-row">
         <div class="col-4">
             <div class="input-group">
-                <a class="btn btn-block btn-secondary" href="#">Transactions</a>
+                <a class="btn btn-block btn-secondary" asp-controller="Real" asp-action="Receipt" asp-route-id="@Model?.SelectedReceiptRefund?.RECEIPT_ID">Transactions</a>
             </div>
         </div>
         <div class="col-4">

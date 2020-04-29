@@ -1,8 +1,6 @@
 ﻿using DarkHorse.DataAccess;
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DarkHorse.Mvc
 {
@@ -10,6 +8,7 @@ namespace DarkHorse.Mvc
     {
         public RealPropertyAccount Account { get; set; }
         public RealPropertyAccountsFilter AccountsFilter { get; set; }
+        public ReceiptRefund SelectedReceiptRefund { get; set; }
         public IEnumerable<ReceiptRefund> ReceiptRefunds { get; set; }
     }
 }

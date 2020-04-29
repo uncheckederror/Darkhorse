@@ -1,0 +1,86 @@
+﻿@model DarkHorse.Mvc.ReceieptRefundTransactionDetails
+@{
+    ViewData["Title"] = "Stormwater";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Receipt And Refund Transactions</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Tax Year
+                </th>
+                <th scope="col">
+                    Collect Fund
+                </th>
+                <th scope="col">
+                    Fund Description
+                </th>
+                <th scope="col">
+                    Transaction Amount
+                </th>
+                <th scope="col">
+                    Tax Clearing
+                </th>
+                <th scope="col">
+                    Override Payment
+                </th>
+                <th scope="col">
+                    Advance Payment
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var transaction in Model.Transactions)
+                {
+                    <tr>
+                        <td>@transaction.TAX_YR</td>
+                        <td>@transaction.COLLECT_FUND</td>
+                        <td>@transaction.FundDescription</td>
+                        <td>@transaction?.TRANS_AMT_PAID.ToString("N2")</td>
+                        <td>@transaction.TAX_CLEARING</td>
+                        <td>@transaction.OVERRIDE_PAYMENT_FLAG</td>
+                        <td>@transaction.ADVANCE_PAYMENT_FLAG</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">RP Process Number</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.ReceiptRefund?.RP_ACCT_OWNER_ID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Reciept Id</span>
+                    </div>
+                    <input type="number" class="form-control" value="@Model?.ReceiptRefund?.RECEIPT_ID" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Reciept Number</span>
+                    </div>
+                    <input type="text" class="form-control" value="@Model?.ReceiptRefund?.RECEIPT_NO" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
