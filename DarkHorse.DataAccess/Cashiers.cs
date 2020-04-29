@@ -31,7 +31,7 @@ namespace DarkHorse.DataAccess
                                        csh.default_interest_year
                                 FROM   cashiers csh,
                                        lis_users luser
-                                WHERE  luser.logon_name     = '{userName}'
+                                WHERE  luser.logon_name     = {userName}
                                 AND    luser.cashier_id     = csh.cashier_id;";
 
                 return await connection.QueryFirstOrDefaultAsync<Cashier>(sql).ConfigureAwait(false);
@@ -47,7 +47,7 @@ namespace DarkHorse.DataAccess
                                        csh.default_interest_year
                                 FROM   cashiers csh,
                                        lis_users luser
-                                WHERE  luser.logon_name     = '{userName}'
+                                WHERE  luser.logon_name     = {userName}
                                 AND    luser.cashier_id     = csh.cashier_id;";
 
                 return await connection.QueryFirstOrDefaultAsync<Cashier>(sql).ConfigureAwait(false);

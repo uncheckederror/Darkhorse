@@ -386,7 +386,6 @@ namespace DarkHorse.Mvc.Controllers
             return View("Other", assessments);
         }
 
-
         [Route("Real/Payments/{rpAcctId}")]
         public async Task<IActionResult> RealPropertyPayments(string rpAcctId)
         {
@@ -404,10 +403,42 @@ namespace DarkHorse.Mvc.Controllers
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
+            var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+
+
             // TODO: Verify this works and figure out where to get the Cashier record from.
-            var cashier = await Cashier.GetAsync("COUNTER1", dbConnection);
+            //var cashier = await Cashier.GetAsync("COUNTER1", dbConnection);
 
             return View("Payments", new RealAccountPaymentsDetail
+            {
+                Account = account,
+                AccountsFilter = searchAccount
+            });
+        }
+
+
+        [Route("Real/Receipts/{rpAcctId}")]
+        public async Task<IActionResult> RealPropertyAccountReceipts(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+
+            // TODO: Verify this works and figure out where to get the Cashier record from.
+            //var cashier = await Cashier.GetAsync("COUNTER1", dbConnection);
+
+            return View("Receipts", new RealAccountReceiptsDetail
             {
                 Account = account,
                 AccountsFilter = searchAccount
