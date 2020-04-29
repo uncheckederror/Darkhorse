@@ -21,17 +21,28 @@ namespace DarkHorse.DataAccess
         public string REMARKS { get; set; }
         public char ACTIVE { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public int PP_ACCT_ID { get; set; }
-        public int APPLICATION_ID { get; set; }
-        public int RP_ACCT_ID { get; set; }
+        public int? PP_ACCT_ID { get; set; }
+        public int? APPLICATION_ID { get; set; }
+        public int? RP_ACCT_ID { get; set; }
         public string LINK_TEXT { get; set; }
         public string LINK_OBJECT { get; set; }
-        public DateTime END_DT { get; set; }
-        public int HOLD_CODE_ID { get; set; }
+        public DateTime? END_DT { get; set; }
+        public int? HOLD_CODE_ID { get; set; }
         public string COLUMN_NAME { get; set; }
         public string LINK_FILE { get; set; }
 
         #endregion
+
+        public static async Task<IEnumerable<Remark>> GetPlatsFormAsync(int platId, IDbConnection dbConnection)
+        {
+            var sql = $@"SELECT TABLE_NAME, TABLE_PRIMARY_ID, REMARKS, ACTIVE, CREATED_BY, MODIFIED_BY
+                         FROM LIS.REMARKS
+                         WHERE TABLE_NAME = 'PLATS' AND TABLE_PRIMARY_ID = {platId}";
+
+            using var cn = dbConnection.Connect();
+
+            return await cn.QueryAsync<Remark>(sql).ConfigureAwait(false);
+        }
 
         public static async Task<IEnumerable<Remark>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {

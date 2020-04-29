@@ -17,7 +17,7 @@ namespace DarkHorse.DataAccess
         public DateTime CREATED_DT { get; set; }
 
         public string MODIFIED_BY { get; set; }
-        public DateTime MODIFIED_DT { get; set; }
+        public DateTime? MODIFIED_DT { get; set; }
 
         #endregion
 

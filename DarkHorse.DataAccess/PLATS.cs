@@ -16,8 +16,8 @@ namespace DarkHorse.DataAccess
         public string PLAT_NAME { get; set; }
         public short TAX_YR { get; set; }
         public string AUDITOR_FILE_NO { get; set; }
-        public DateTime RECORDED_DT { get; set; }
-        public short VOLUME { get; set; }
+        public DateTime? RECORDED_DT { get; set; }
+        public short? VOLUME { get; set; }
         public string PAGE_NOS { get; set; }
 
         #endregion
