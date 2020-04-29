@@ -10,5 +10,6 @@ namespace DarkHorse.Mvc
     {
         public RealPropertyAccount Account { get; set; }
         public RealPropertyAccountsFilter AccountsFilter { get; set; }
+        public IEnumerable<ReceiptRefund> ReceiptRefunds { get; set; }
     }
 }

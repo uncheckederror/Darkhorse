@@ -433,15 +433,13 @@ namespace DarkHorse.Mvc.Controllers
             var account = results.FirstOrDefault();
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
-
-
-            // TODO: Verify this works and figure out where to get the Cashier record from.
-            //var cashier = await Cashier.GetAsync("COUNTER1", dbConnection);
+            var recieptRefunds = ReceiptRefund.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
 
             return View("Receipts", new RealAccountReceiptsDetail
             {
                 Account = account,
-                AccountsFilter = searchAccount
+                AccountsFilter = searchAccount,
+                ReceiptRefunds = recieptRefunds
             });
         }
 

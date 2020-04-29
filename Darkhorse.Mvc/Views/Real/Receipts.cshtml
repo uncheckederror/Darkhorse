@@ -39,26 +39,40 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
+            @{
+                foreach (var receiptRefund in Model.ReceiptRefunds)
+                {
+                    <tr>
+                        <td>
+                            @receiptRefund.RECEIPT_BATCH_ID
+                        </td>
+                        <td>
+                            @receiptRefund.RECEIPT_NO
+                        </td>
+                        <td>
+                            @receiptRefund.REFUND_ID
+                        </td>
+                        <td>
+                            @receiptRefund.REFUND_TYPE_SUB
+                        </td>
+                        <td>
+                            @receiptRefund.RECEIPT_REFUND_DT
+                        </td>
+                        <td>
+                            @Model.Account.ACCT_NO
+                        </td>
+                        <td>
+                            @receiptRefund.RECEIPT_REFUND_AMT
+                        </td>
+                        <td>
+                            @receiptRefund.CANCEL_DT
+                        </td>
+                        <td>
+                            @receiptRefund.SENT_TO_QB_DT
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
