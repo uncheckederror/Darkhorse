@@ -172,7 +172,7 @@
         </div>
         <div class="col-4">
             <div class="input-group">
-                <a class="btn btn-block btn-secondary" href="#">Payments</a>
+                <a class="btn btn-block btn-secondary" asp-controller="Real" asp-action="ReceiptBatch" asp-route-id="@Model?.SelectedReceiptRefund?.RECEIPT_BATCH_ID">Payments</a>
             </div>
         </div>
         <div class="col-4">
@@ -196,7 +196,16 @@
         </div>
         <div class="col-4">
             <div class="input-group">
-                <a class="btn btn-block btn-secondary" href="#">Account Year</a>
+                @{
+                    if (Model?.AccountsFilter?.RP_ACCT_OWNER_ID != null)
+                    {
+                        <a class="btn btn-block btn-secondary" asp-controller="Real" asp-action="TaxYears" asp-route-id="@Model?.AccountsFilter?.RP_ACCT_ID">Account Year</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-block btn-outline-secondary" href="#" disabled>Account Year</button>
+                    }
+                }
             </div>
         </div>
     </div>

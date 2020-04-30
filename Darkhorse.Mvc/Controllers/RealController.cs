@@ -471,6 +471,58 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
+        [Route("Real/ReceiptBatch/{receiptBatchId}")]
+        public async Task<IActionResult> RealPropertyAccountReceiptBatchPayments(int receiptBatchId)
+        {
+            using var dbConnection = DbConnection;
+
+            var payments = await PaymentReceipt.GetAsync(receiptBatchId, dbConnection);
+
+            return View("ReceiptBatchPayments", payments);
+        }
+
+        [Route("Real/CalcPrepayments/{rpAcctId}")]
+        public async Task<IActionResult> RealPropertyCalculatePrepayment(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+
+            return View("CalculatePrepayment", new CalculatePrepaymentDetail
+            {
+                RealPropertyAccountId = account.RP_ACCT_ID
+            });
+        }
+
+        [HttpPost]
+        [Route("Real/CalcPrepayments/{rpAcctId}")]
+        public async Task<IActionResult> RealPropertyCalculatePrepayment(string rpAcctId, [Bind("Month")] CalculatePrepaymentDetail Result)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+
+            return View("CalculatePrepayment", Result);
+        }
+
         public IActionResult Privacy()
         {
             return View();

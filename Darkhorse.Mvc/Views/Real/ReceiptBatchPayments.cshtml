@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.PaymentReceipt>
+@{
+    ViewData["Title"] = "Receipt Batch Payments";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Receipt Batch Payments</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Payment Method
+                </th>
+                <th scope="col">
+                    Payment Amount
+                </th>
+                <th scope="col">
+                    Check Number
+                </th>
+                <th scope="col">
+                    Receipt Batch Number
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var payment in Model)
+                {
+                    <tr>
+                        <td>
+                            @payment?.PAYMENT_METHOD
+                        </td>
+                        <td>
+                            @payment?.PAYMENT_AMT.ToString("N2")
+                        </td>
+                        <td>
+                            @payment?.CHECK_NO
+                        </td>
+                        <td>
+                            @payment?.RECEIPT_BATCH_ID
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

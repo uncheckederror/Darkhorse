@@ -11,28 +11,17 @@ namespace DarkHorse.DataAccess
     public class PaymentReceipt : BaseTableClass
     {
         #region Fields
-        public int? RECEIPT_BATCH_ID { get; set; }
-        public string RECEIPT_NO { get; set; }
-        public int? RECEIPT_ID { get; set; }
-        public int? REFUND_ID { get; set; }
-        public int? RP_ACCT_OWNER_ID { get; set; }
-        public int? PP_ACCT_OWNER_ID { get; set; }
-        public int? LID_ACCT_ID { get; set; }
-        public DateTime? RECEIPT_REFUND_DT { get; set; }
-        public DateTime? CANCEL_DT { get; set; }
-        public int? CASHIER_ID { get; set; }
-        public string REFUND_TYPE { get; set; }
-        public string REFUND_TYPE_SUB { get; set; }
-        public string REFUND_PETITION_NO { get; set; }
-        public DateTime? PETITION_SENT_DT { get; set; }
-        public DateTime? PETITION_RECEIVED_DT { get; set; }
-        public DateTime? SENT_TO_QB_DT { get; set; }
-        public decimal? RECEIPT_REFUND_AMT { get; set; }
+        public int PAYMENT_RECEIPT_ID { get; set; }
+        public string PAYMENT_METHOD { get; set; }
+        public decimal PAYMENT_AMT { get; set; }
         public string CREATED_BY { get; set; }
-        public DateTime? CREATED_DT { get; set; }
+        public DateTime CREATED_DT { get; set; }
+        public string CHECK_NO { get; set; }
         public string MODIFIED_BY { get; set; }
         public DateTime? MODIFIED_DT { get; set; }
-        public int CANCEL_CASHIER_ID { get; set; }
+        public int RECEIPT_BATCH_ID { get; set; }
+        public int REFUND_ID { get; set; }
+        public int CANCELLED_RECEIPT_ID { get; set; }
         #endregion
 
         public static async Task<IEnumerable<PaymentReceipt>> GetAsync(int receiptBatchId, IDbConnection dbConnection)
