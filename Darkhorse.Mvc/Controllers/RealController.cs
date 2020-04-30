@@ -520,6 +520,14 @@ namespace DarkHorse.Mvc.Controllers
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
+            var amounts = await CalculatePrepaymentAmounts.GetAsync(account.ACCT_NO, dbConnection);
+            var calculated = CalculatePrepaymentAmounts.Calculate(amounts, Result.Month);
+
+            Result.TotalDue = calculated.SignUpDue;
+            Result.MonthlyFee = calculated.FEE;
+            Result.MonthlyPayment = calculated.MontlyDue;
+            Result.RealPropertyAccountId = account.RP_ACCT_ID;
+
             return View("CalculatePrepayment", Result);
         }
 
