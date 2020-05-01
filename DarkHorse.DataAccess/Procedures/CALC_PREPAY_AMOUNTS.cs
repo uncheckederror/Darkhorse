@@ -53,25 +53,50 @@ namespace DarkHorse.DataAccess
 
         public static async Task<CalculatePrepaymentAmounts> GetStoredProcAsync(string accountType, string accountNumber, string month, IDbConnection dbConnection)
         {
-            using var connection = new OracleConnection(dbConnection.ConnectionString);
-
-            var p = new DynamicParameters();
-            p.Add(":P_ACCT_TYPE", "RP");
-            p.Add(":P_ACCT", accountNumber);
-            p.Add(":P_START_MONTH", month);
-            p.Add(":P_MONTHLY_DUE", 0M);
-            p.Add(":P_TOTAL_DUE", 0M);
-
-            var result = await connection.ExecuteAsync("CALC_PREPAY_AMOUNTS", p, commandType: CommandType.StoredProcedure);
-
-            var monthlyDue = p.Get<Decimal>(":P_MONTHLY_DUE");
-            var totalDue = p.Get<Decimal>(":P_TOTAL_DUE");
-
-            return new CalculatePrepaymentAmounts
+            if (dbConnection is SqlConnection)
             {
-                MontlyDue = monthlyDue,
-                SignUpDue = totalDue,
-            };
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var p = new DynamicParameters();
+                p.Add("@P_ACCT_TYPE", "RP");
+                p.Add("@P_ACCT", accountNumber);
+                p.Add("@P_START_MONTH", month);
+                p.Add("@P_MONTHLY_DUE", 0M);
+                p.Add("@P_TOTAL_DUE", 0M);
+
+                var result = await connection.ExecuteAsync("CALC_PREPAY_AMOUNTS", p, commandType: CommandType.StoredProcedure);
+
+                var monthlyDue = p.Get<Decimal>("@P_MONTHLY_DUE");
+                var totalDue = p.Get<Decimal>("@P_TOTAL_DUE");
+
+                return new CalculatePrepaymentAmounts
+                {
+                    MontlyDue = monthlyDue,
+                    SignUpDue = totalDue,
+                };
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var p = new DynamicParameters();
+                p.Add(":P_ACCT_TYPE", "RP");
+                p.Add(":P_ACCT", accountNumber);
+                p.Add(":P_START_MONTH", month);
+                p.Add(":P_MONTHLY_DUE", 0M);
+                p.Add(":P_TOTAL_DUE", 0M);
+
+                var result = await connection.ExecuteAsync("CALC_PREPAY_AMOUNTS", p, commandType: CommandType.StoredProcedure);
+
+                var monthlyDue = p.Get<Decimal>(":P_MONTHLY_DUE");
+                var totalDue = p.Get<Decimal>(":P_TOTAL_DUE");
+
+                return new CalculatePrepaymentAmounts
+                {
+                    MontlyDue = monthlyDue,
+                    SignUpDue = totalDue,
+                };
+            }
         }
 
         public void Calculate(int month)
