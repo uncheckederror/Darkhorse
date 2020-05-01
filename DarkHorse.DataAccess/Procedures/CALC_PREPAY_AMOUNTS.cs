@@ -48,11 +48,11 @@ namespace DarkHorse.DataAccess
             };
         }
 
-        public static CalculatePrepaymentAmounts Calculate(CalculatePrepaymentAmounts amounts, int month)
+        public void Calculate(int month)
         {
-            var totalBilled = amounts.TOTAL_BILLED + (amounts.TOTAL_OTHER_BILLED ?? 0M);
-            var totalPaid = amounts.TOTAL_PAID + (amounts.TOTAL_OTHER_PAID ?? 0M);
-            var totalDue = amounts.TOTAL_DUE + (amounts.TOTAL_OTHER_BILLED ?? 0M) + (amounts.TOTAL_OTHER_REFUND ?? 0M) - amounts.TOTAL_PAID;
+            var totalBilled = TOTAL_BILLED + (TOTAL_OTHER_BILLED ?? 0M);
+            var totalPaid = TOTAL_PAID + (TOTAL_OTHER_PAID ?? 0M);
+            var totalDue = TOTAL_DUE + (TOTAL_OTHER_BILLED ?? 0M) + (TOTAL_OTHER_REFUND ?? 0M) - TOTAL_PAID;
             var monthlyDue = 0M;
             var signupDue = 0M;
 
@@ -74,10 +74,8 @@ namespace DarkHorse.DataAccess
                 }
             }
 
-            amounts.SignUpDue = signupDue + amounts.FEE;
-            amounts.MontlyDue = monthlyDue;
-
-            return amounts;
+            SignUpDue = signupDue + FEE;
+            MontlyDue = monthlyDue;
         }
 
         public static async Task<CalculatePrepaymentAmounts> GetYearlyAsync(string accountNumber, IDbConnection dbConnection)
