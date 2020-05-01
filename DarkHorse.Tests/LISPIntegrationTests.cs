@@ -253,6 +253,15 @@ namespace DarkHorse.Tests
             accounts.ForEach(a => output.WriteLine(a.ToString()));
         }
 
+        [Fact]
+        public async Task RealPropertyAccountByPatternASas()
+        {
+            var results = await CalculatePrepaymentAmounts.GetStoredProcAsync("RP", "5432-000-061-0003", "April", oracleDbConnection);
+
+            Assert.True(results.SignUpDue > 0M);
+            Assert.True(results.MontlyDue > 0M);
+        }
+
         [Theory]
         [MemberData(nameof(TestData.GetZonesFromDataGenerator), MemberType = typeof(TestData))]
         [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]

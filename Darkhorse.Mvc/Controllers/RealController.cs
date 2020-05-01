@@ -13,6 +13,7 @@ using Oracle.ManagedDataAccess.Client;
 
 using DarkHorse.DataAccess;
 using DarkHorse.Mvc.Models;
+using System.Globalization;
 
 namespace DarkHorse.Mvc.Controllers
 {
@@ -520,11 +521,15 @@ namespace DarkHorse.Mvc.Controllers
             var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
-            var calculated = await CalculatePrepaymentAmounts.GetAsync(account.ACCT_NO, dbConnection);
-            calculated.Calculate(Result.Month);
+            // This is the C# version
+            //var calculated = await CalculatePrepaymentAmounts.GetAsync(account.ACCT_NO, dbConnection);
+            //calculated.Calculate(Result.Month);
+
+            // This is the Stored Proc
+            var calculated = await CalculatePrepaymentAmounts.GetStoredProcAsync("RP", account.ACCT_NO, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Result.Month), dbConnection);
 
             Result.TotalDue = calculated.SignUpDue;
-            Result.MonthlyFee = calculated.FEE;
+            Result.MonthlyFee = 2.00M;
             Result.MonthlyPayment = calculated.MontlyDue;
             Result.RealPropertyAccountId = account.RP_ACCT_ID;
 

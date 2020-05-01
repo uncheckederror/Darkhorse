@@ -2,7 +2,9 @@ using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DarkHorse.DataAccess
@@ -27,6 +29,7 @@ namespace DarkHorse.DataAccess
         // Display Values
         public decimal SignUpDue { get; set; }
         public decimal MontlyDue { get; set; }
+
         #endregion
 
         public static async Task<CalculatePrepaymentAmounts> GetAsync(string accountNumber, IDbConnection dbConnection)
@@ -45,6 +48,29 @@ namespace DarkHorse.DataAccess
                 TOTAL_OTHER_PAID = other.TOTAL_OTHER_PAID,
                 TOTAL_OTHER_REFUND = other.TOTAL_OTHER_REFUND,
                 FEE = fee.FEE
+            };
+        }
+
+        public static async Task<CalculatePrepaymentAmounts> GetStoredProcAsync(string accountType, string accountNumber, string month, IDbConnection dbConnection)
+        {
+            using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+            var p = new DynamicParameters();
+            p.Add(":P_ACCT_TYPE", "RP");
+            p.Add(":P_ACCT", accountNumber);
+            p.Add(":P_START_MONTH", month);
+            p.Add(":P_MONTHLY_DUE", 0M);
+            p.Add(":P_TOTAL_DUE", 0M);
+
+            var result = await connection.ExecuteAsync("CALC_PREPAY_AMOUNTS", p, commandType: CommandType.StoredProcedure);
+
+            var monthlyDue = p.Get<Decimal>(":P_MONTHLY_DUE");
+            var totalDue = p.Get<Decimal>(":P_TOTAL_DUE");
+
+            return new CalculatePrepaymentAmounts
+            {
+                MontlyDue = monthlyDue,
+                SignUpDue = totalDue,
             };
         }
 
