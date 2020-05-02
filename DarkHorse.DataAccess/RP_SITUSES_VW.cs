@@ -12,11 +12,10 @@ namespace DarkHorse.DataAccess
     public class RealPropertySiteAddress : BaseTableClass
     {
         #region Fields
-
-        public int OBJECTID { get; set; }
-        public int SITUS_ID { get; set; }
-        public int RP_ACCT_ID { get; set; }
-        public int LAND_ACCT_ID { get; set; }
+        public int? OBJECTID { get; set; }
+        public int? SITUS_ID { get; set; }
+        public int? RP_ACCT_ID { get; set; }
+        public int? LAND_ACCT_ID { get; set; }
         public string JURISDICTION { get; set; }
         public string ST_NO { get; set; }
         public string PREFIX { get; set; }
@@ -31,9 +30,8 @@ namespace DarkHorse.DataAccess
         public string IN_USE_FLAG { get; set; }
         public string STREET_ADDR { get; set; }
         public string VERIFIED_BY { get; set; }
-        public DateTime VERIFIED_DT { get; set; }
-        public DateTime INACTIVE_DT { get; set; }
-
+        public DateTime? VERIFIED_DT { get; set; }
+        public DateTime? INACTIVE_DT { get; set; }
         #endregion
 
         public static async Task<IEnumerable<RealPropertySiteAddress>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)

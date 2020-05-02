@@ -11,10 +11,10 @@ namespace DarkHorse.DataAccess
     {
         #region Fields
 
-        public char ACCT_STATUS { get; set; }
+        public char? ACCT_STATUS { get; set; }
         public int RP_ACCT_ID { get; set; }
         public string ACCT_NO { get; set; }
-        public int CONTACT_ID { get; set; }
+        public int? CONTACT_ID { get; set; }
         public string CONTACT_NAME { get; set; }
         public string MISC_LINE1 { get; set; }
         public string CONTACT_TYPE { get; set; }

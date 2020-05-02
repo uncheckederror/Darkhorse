@@ -15,23 +15,23 @@ namespace DarkHorse.DataAccess
         public string DESCRIPTION { get; set; }
         public string NAME { get; set; }
         public int NOTICE_ID { get; set; }
-        public int RP_ACCT_OWNER_ID { get; set; }
-        public int PP_ACCT_OWNER_ID { get; set; }
+        public int? RP_ACCT_OWNER_ID { get; set; }
+        public int? PP_ACCT_OWNER_ID { get; set; }
         public char SUPPRESS_FLAG { get; set; }
         public int MODULE_ID { get; set; }
         public string SUBMISSION_TYPE { get; set; }
         public string GENERATION_TYPE { get; set; }
         public string STOCK_TYPE { get; set; }
         public int TAX_YR { get; set; }
-        public int LID_ACCT_ID { get; set; }
-        public int CONTACT_ID { get; set; }
-        public int TAX_SERVICE_ID { get; set; }
+        public int? LID_ACCT_ID { get; set; }
+        public int? CONTACT_ID { get; set; }
+        public int? TAX_SERVICE_ID { get; set; }
         public string INTEREST_MONTH { get; set; }
-        public int BATCH_NO { get; set; }
-        public int ACCT_GROUP_ID { get; set; }
-        public DateTime NOTICE_GENERATION_DT { get; set; }
-        public DateTime NOTICE_DT { get; set; }
-        public int INTEREST_YR { get; set; }
+        public int? BATCH_NO { get; set; }
+        public int? ACCT_GROUP_ID { get; set; }
+        public DateTime? NOTICE_GENERATION_DT { get; set; }
+        public DateTime? NOTICE_DT { get; set; }
+        public int? INTEREST_YR { get; set; }
         public string NON_OWING_FLAG { get; set; }
 
         #endregion

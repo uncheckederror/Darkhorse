@@ -11,7 +11,7 @@ namespace DarkHorse.DataAccess
     public class TaxCodeRateYear : BaseTableClass
     {
         #region Fields
-        public decimal tax_rate { get; set; }
+        public decimal? tax_rate { get; set; }
         #endregion
 
         public static async Task<TaxCodeRateYear> GetAsync(string taxStatus, string taxCode, int taxYear, IDbConnection dbConnection)

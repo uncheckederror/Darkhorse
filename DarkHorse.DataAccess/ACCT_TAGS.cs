@@ -15,7 +15,7 @@ namespace DarkHorse.DataAccess
         public string TAG_CODE { get; set; }
         public string DESCRIPTION { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public DateTime END_DT { get; set; }
+        public DateTime? END_DT { get; set; }
         public string REMOVED_BY { get; set; }
         public char LOCK_ACCT_FLAG { get; set; }
         public char ALERT_FLAG { get; set; }
@@ -23,8 +23,8 @@ namespace DarkHorse.DataAccess
         public char NO_STATEMENT_FLAG { get; set; }
         public char PROGRAM_GEN_FLAG { get; set; }
         public char TEMP_FLAG { get; set; }
-        public char QUE_STATEMENT_FLAG { get; set; }
-        public char TRANSFER_FLAG { get; set; }
+        public char? QUE_STATEMENT_FLAG { get; set; }
+        public char? TRANSFER_FLAG { get; set; }
 
         #endregion
 

@@ -61,7 +61,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Reference Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model.Account.REFERENCE_DT.ToString("yyyy-MM-ddThh:ss")">
+                <input type="datetime-local" class="form-control" value="@Model?.Account?.REFERENCE_DT?.ToString("yyyy-MM-ddThh:ss")">
             </div>
         </div>
         <div class="col-4">
@@ -70,7 +70,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Inactive Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model.Account.INACTIVE_DT.ToString("yyyy-MM-ddThh:ss")">
+                <input type="datetime-local" class="form-control" value="@Model?.Account?.INACTIVE_DT?.ToString("yyyy-MM-ddThh:ss")">
             </div>
         </div>
     </div>

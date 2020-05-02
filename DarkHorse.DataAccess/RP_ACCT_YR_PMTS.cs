@@ -14,10 +14,10 @@ namespace DarkHorse.DataAccess
         public int RP_ACCT_YR_PMT_ID { get; set; }
         public int RP_ACCT_YR_ID { get; set; }
         public DateTime LOCK_DT { get; set; }
-        public DateTime APPROVED_DT { get; set; }
+        public DateTime? APPROVED_DT { get; set; }
         public string APPROVED_BY { get; set; }
-        public DateTime CANCELLED_DT { get; set; }
-        public DateTime COMPLETE_DT { get; set; }
+        public DateTime? CANCELLED_DT { get; set; }
+        public DateTime? COMPLETE_DT { get; set; }
         public decimal LOCK_TAX_DUE { get; set; }
         public decimal LOCK_FFP_DUE { get; set; }
         public decimal LOCK_SSWM_DUE { get; set; }
@@ -42,7 +42,7 @@ namespace DarkHorse.DataAccess
         public decimal CURR_INT_SSWM_DUE { get; set; }
         public decimal CURR_INT_NW_DUE { get; set; }
         public decimal CURR_INT_ASMT_DUE { get; set; }
-        public DateTime LAST_PAID_DT { get; set; }
+        public DateTime? LAST_PAID_DT { get; set; }
         public decimal INTEREST_RATE { get; set; }
         //public string CREATED_BY { get; set; }
         //public DateTime CREATED_DT { get; set; }

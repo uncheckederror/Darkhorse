@@ -14,7 +14,7 @@ namespace DarkHorse.DataAccess
         public string CRM_EMAIL { get; set; }
         public string CRM_LASTNAME { get; set; }
         public string CRM_FIRSTNAME { get; set; }
-        public char CRM_NOTIFY_FLAG { get; set; }
+        public char? CRM_NOTIFY_FLAG { get; set; }
 
         #endregion
 

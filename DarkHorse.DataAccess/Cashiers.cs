@@ -12,10 +12,10 @@ namespace DarkHorse.DataAccess
     public class Cashier : BaseTableClass
     {
         public int CASHIER_ID { get; set; }
-        public DateTime OPEN_DT { get; set; }
+        public DateTime? OPEN_DT { get; set; }
         public char EXTEND_HALF_PAYMENT_FLAG { get; set; }
         public string DEFAULT_INTEREST_MONTH { get; set; }
-        public int DEFAULT_INTEREST_YEAR { get; set; }
+        public int? DEFAULT_INTEREST_YEAR { get; set; }
 
         public static async Task<Cashier> GetAsync(string userName, IDbConnection dbConnection)
         {

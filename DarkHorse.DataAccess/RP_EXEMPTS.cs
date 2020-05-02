@@ -15,13 +15,11 @@ namespace DarkHorse.DataAccess
     public class RealPropertyExemptions : BaseTableClass
     {
         #region Fields
-
         public string EXEMPT_TYPE { get; set; }
         public string DESCRIPTION { get; set; }
-        public int EXEMPT_VALUE { get; set; }
+        public int? EXEMPT_VALUE { get; set; }
         public int REVIEW_YR { get; set; }
         public char OVERRIDE_FLAG { get; set; }
-
         #endregion
 
         public static async Task<IEnumerable<RealPropertyExemptions>> GetAsync(int realAccountOwnerId, int realAccountYearId, IDbConnection dbConnection)

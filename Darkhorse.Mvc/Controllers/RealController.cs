@@ -252,7 +252,7 @@ namespace DarkHorse.Mvc.Controllers
             foreach (var y in taxYears)
             {
                 var taxRate = await TaxCodeRateYear.GetAsync(y.TAX_STATUS, y.TAX_CODE, y.TAX_YR, dbConnection);
-                y.TaxRate = taxRate.tax_rate;
+                y.TaxRate = taxRate.tax_rate ?? 0M;
             }
 
             var senior = new SeniorCitizenRate();
@@ -482,8 +482,8 @@ namespace DarkHorse.Mvc.Controllers
             return View("ReceiptBatchPayments", payments);
         }
 
-        [Route("Real/CalcPrepayments/{rpAcctId}")]
-        public async Task<IActionResult> RealPropertyCalculatePrepayment(string rpAcctId)
+        [Route("Real/EnterPrepayment/{rpAcctId}")]
+        public async Task<IActionResult> RealPropertyEnterPrepayment(string rpAcctId)
         {
             using var dbConnection = DbConnection;
 
@@ -503,8 +503,7 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
-        [HttpPost]
-        [Route("Real/CalcPrepayments/{rpAcctId}")]
+        [Route("Real/CalcPrepayment/{rpAcctId}")]
         public async Task<IActionResult> RealPropertyCalculatePrepayment(string rpAcctId, [Bind("Month")] CalculatePrepaymentDetail Result)
         {
             using var dbConnection = DbConnection;

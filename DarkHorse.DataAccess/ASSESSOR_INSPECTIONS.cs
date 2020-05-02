@@ -16,10 +16,10 @@ namespace DarkHorse.DataAccess
         public int NEW_CONSTRUCTION_ID { get; set; }
         public string NC_STATUS { get; set; }
         public int NC_VALUE { get; set; }
-        public DateTime INSPECTION_DT { get; set; }
+        public DateTime? INSPECTION_DT { get; set; }
         public string INSPECTOR { get; set; }
-        public DateTime POSTED_DT { get; set; }
-        public char POSTED_FLAG { get; set; }
+        public DateTime? POSTED_DT { get; set; }
+        public char? POSTED_FLAG { get; set; }
 
         #endregion
 

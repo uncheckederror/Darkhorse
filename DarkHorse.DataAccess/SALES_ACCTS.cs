@@ -11,15 +11,13 @@ namespace DarkHorse.DataAccess
     public class SalesAccount : BaseTableClass
     {
         #region Fields
-
         public string EXCISE_NO { get; set; }
-        public DateTime DOCUMENT_DT { get; set; }
+        public DateTime? DOCUMENT_DT { get; set; }
         public string INVALID_CODE { get; set; }
         public DateTime DATA_ENTRY_DT { get; set; }
         public int PRICE { get; set; }
         public int SALES_ID { get; set; }
         public string PRIMARY_PARCEL { get; set; }
-
         #endregion
 
         public static async Task<IEnumerable<SalesAccount>> GetAsync(int realAccountId, IDbConnection dbConnection)

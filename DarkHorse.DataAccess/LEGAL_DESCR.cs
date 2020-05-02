@@ -11,12 +11,11 @@ namespace DarkHorse.DataAccess
     public class LegalDescription : BaseTableClass
     {
         #region Fields
-
         public int LEGAL_DESCR_ID { get; set; }
         public int RP_ACCT_ID { get; set; }
         public string LEGAL_TEXT { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public DateTime END_DT { get; set; }
+        public DateTime? END_DT { get; set; }
 
         #endregion
 

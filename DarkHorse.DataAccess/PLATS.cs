@@ -10,7 +10,6 @@ namespace DarkHorse.DataAccess
     public class Plat : BaseTableClass
     {
         #region Fields
-
         public int PLAT_ID { get; set; }
         public string PLAT_NO { get; set; }
         public string PLAT_NAME { get; set; }
@@ -19,7 +18,6 @@ namespace DarkHorse.DataAccess
         public DateTime? RECORDED_DT { get; set; }
         public short? VOLUME { get; set; }
         public string PAGE_NOS { get; set; }
-
         #endregion
 
         public static async Task<Plat> GetNameAsync(string accountNumber, IDbConnection dbConnection)

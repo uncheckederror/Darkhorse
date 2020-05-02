@@ -17,10 +17,10 @@ namespace DarkHorse.DataAccess
         public int ACCT_GROUP_ID { get; set; }
         public int RP_ACCT_OWNER_ID { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public DateTime END_DT { get; set; }
+        public DateTime? END_DT { get; set; }
         public string GRP_ACCT_NO { get; set; }
         public string GROUP_NAME { get; set; }
-        public string ACTIVE { get; set; }
+        public char ACTIVE { get; set; }
         public string CONTACT_NAME { get; set; }
         public string STREET_ADDR { get; set; }
         public string MISC_LINE1 { get; set; }

@@ -20,8 +20,8 @@ namespace DarkHorse.DataAccess
         public string MODIFIED_BY { get; set; }
         public DateTime? MODIFIED_DT { get; set; }
         public int RECEIPT_BATCH_ID { get; set; }
-        public int REFUND_ID { get; set; }
-        public int CANCELLED_RECEIPT_ID { get; set; }
+        public int? REFUND_ID { get; set; }
+        public int? CANCELLED_RECEIPT_ID { get; set; }
         #endregion
 
         public static async Task<IEnumerable<PaymentReceipt>> GetAsync(int receiptBatchId, IDbConnection dbConnection)

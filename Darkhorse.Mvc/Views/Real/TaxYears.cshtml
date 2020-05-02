@@ -518,11 +518,10 @@
                                 var otherRefund = 0M;
                                 foreach (var other in Model.OtherAssessments)
                                 {
-                                    otherBilled += other.OTHER_ASMT_BILLED;
-                                    otherPaid += other.OTHER_ASMT_PAID;
+                                    otherBilled += other.OTHER_ASMT_BILLED ?? 0M;
+                                    otherPaid += other.OTHER_ASMT_PAID ?? 0M;
                                     otherRefund += other.OTHER_ASMT_REFUND;
                                 }
-
                             }
                             <td>
                                 @otherBilled.ToString("N2")
@@ -618,7 +617,7 @@
                     </a>
                 </div>
                 <div class="col">
-                    <a class="btn btn-warning btn-block text-light" role="button" asp-controller="Real" asp-action="CalcPrepayments" asp-route-id="@Model.AccountsFilter.RP_ACCT_ID">
+                    <a class="btn btn-warning btn-block text-light" role="button" asp-controller="Real" asp-action="EnterPrepayment" asp-route-id="@Model.AccountsFilter.RP_ACCT_ID">
                         Calc Prepayments
                     </a>
                 </div>
@@ -708,7 +707,7 @@
                                 var exemptionsTotal = 0;
                                 foreach (var exemption in Model?.RealPropertyExemptions)
                                 {
-                                    exemptionsTotal += exemption.EXEMPT_VALUE;
+                                    exemptionsTotal += exemption?.EXEMPT_VALUE ?? 0;
                                 }
                             }
                             <input type="text" class="form-control" value="@exemptionsTotal">
@@ -1149,10 +1148,10 @@
                                                     @other.DESCRIPTION
                                                 </td>
                                                 <td>
-                                                    @other.OTHER_ASMT_BILLED.ToString("N2")
+                                                    @other?.OTHER_ASMT_BILLED?.ToString("N2")
                                                 </td>
                                                 <td>
-                                                    @other.OTHER_ASMT_PAID.ToString("N2")
+                                                    @other?.OTHER_ASMT_PAID?.ToString("N2")
                                                 </td>
                                                 <td>
                                                     @other.OTHER_ASMT_REFUND.ToString("N2")

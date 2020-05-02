@@ -11,18 +11,14 @@ namespace DarkHorse.DataAccess
     public class RealPropertyContact : BaseTableClass
     {
         #region Fields
-
-        public int RP_CONTACT_ID { get; set; }
-        public int RP_ACCT_OWNER_ID { get; set; }
-        public int CONTACT_ID { get; set; }
-        public string CHG_CODE { get; set; }
-        public string CONTACT_TYPE { get; set; }
-        public DateTime BEGIN_DT { get; set; }
-        public DateTime END_DT { get; set; }
-        public char MAIL_TS_FLAG { get; set; }
-        public char MAIL_NOTICE_FLAG { get; set; }
-        public char MAIL_COPY_FLAG { get; set; }
-
+        public string ZIP_EXTENSION { get; set; }
+        public string ZIP_CODE { get; set; }
+        public string STATE { get; set; }
+        public string CITY { get; set; }
+        public string STREET_ADDR { get; set; }
+        public string NAME { get; set; }
+        public string MISC_LINE1 { get; set; }
+        public string MISC_LINE2 { get; set; }
         #endregion
 
         public static async Task<IEnumerable<RealPropertyContact>> GetAsync(int contactId, IDbConnection dbConnection)

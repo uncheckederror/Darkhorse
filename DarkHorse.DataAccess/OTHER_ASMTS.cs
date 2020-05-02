@@ -11,8 +11,9 @@ namespace DarkHorse.DataAccess
     public class OtherAssessment : BaseTableClass
     {
         #region Fields
-        public decimal OTHER_ASMT_BILLED { get; set; }
-        public decimal OTHER_ASMT_PAID { get; set; }
+        public decimal? OTHER_ASMT_BILLED { get; set; }
+        public decimal? OTHER_ASMT_PAID { get; set; }
+        // This is not nullable and a default value of 0 in LISP.
         public decimal OTHER_ASMT_REFUND { get; set; }
         public string OTHER_ASMT_TYPE { get; set; }
         public string ACTIVE { get; set; }

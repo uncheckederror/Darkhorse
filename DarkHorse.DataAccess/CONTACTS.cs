@@ -11,12 +11,11 @@ namespace DarkHorse.DataAccess
     public class Contact : BaseTableClass
     {
         #region Fields
-
         public string NAME { get; set; }
         public string CONTACT_TYPE { get; set; }
         public string CHG_CODE { get; set; }
         public DateTime BEGIN_DT { get; set; }
-        public DateTime END_DT { get; set; }
+        public DateTime? END_DT { get; set; }
         public string MISC_LINE1 { get; set; }
         public string STREET_ADDR { get; set; }
         public string MISC_LINE2 { get; set; }
@@ -27,7 +26,6 @@ namespace DarkHorse.DataAccess
         public char MAIL_NOTICE_FLAG { get; set; }
         public char MAIL_TS_FLAG { get; set; }
         public char MAIL_COPY_FLAG { get; set; }
-
         #endregion
 
         public static async Task<IEnumerable<Contact>> GetAsync(int realPropertyAccountOwnersId, IDbConnection dbConnection)
