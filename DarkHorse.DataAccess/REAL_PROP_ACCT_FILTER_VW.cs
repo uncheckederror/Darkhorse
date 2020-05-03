@@ -83,6 +83,10 @@ namespace DarkHorse.DataAccess
 
         public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByNameAsync(string contact, IDbConnection dbConnection)
         {
+
+            // Lower case names don't existing in the DB.
+            contact = contact.ToUpperInvariant();
+
             if (dbConnection is SqlConnection)
             {
                 using var connection = new SqlConnection(dbConnection.ConnectionString);
@@ -101,7 +105,8 @@ namespace DarkHorse.DataAccess
                                       QUARTER_SECTION,
                                       RP_ACCT_OWNER_ID
                                     FROM LIS.REAL_PROP_ACCT_FILTER_VW
-                                    WHERE CONTACT_NAME LIKE '{contact}%'";
+                                    WHERE rp_acct_owner_id IN 
+                                    (SELECT rp_acct_owner_id FROM contacts c, rp_contacts rc WHERE c.contact_id = rc.contact_id AND c.name LIKE '{contact}%')";
 
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }
@@ -123,7 +128,8 @@ namespace DarkHorse.DataAccess
                                       QUARTER_SECTION,
                                       RP_ACCT_OWNER_ID
                                     FROM LIS.REAL_PROP_ACCT_FILTER_VW
-                                    WHERE CONTACT_NAME LIKE '{contact}%'";
+                                    WHERE rp_acct_owner_id IN 
+                                    (SELECT rp_acct_owner_id FROM contacts c, rp_contacts rc WHERE c.contact_id = rc.contact_id AND c.name LIKE '{contact}%')";
 
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }
@@ -149,8 +155,8 @@ namespace DarkHorse.DataAccess
                                       QUARTER_SECTION,
                                       RP_ACCT_OWNER_ID
                                     FROM LIS.REAL_PROP_ACCT_FILTER_VW
-                                    WHERE STREET_NO LIKE '{streetNumber}%'
-                                    AND STREET_NAME LIKE '{streetName}%'";
+                                    WHERE RP_ACCT_ID IN
+                                    (SELECT rp_acct_id FROM rp_situses_vw WHERE street_name LIKE '{streetName}%' AND ST_NO = {streetNumber})";
 
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }
@@ -172,11 +178,77 @@ namespace DarkHorse.DataAccess
                                       QUARTER_SECTION,
                                       RP_ACCT_OWNER_ID
                                     FROM LIS.REAL_PROP_ACCT_FILTER_VW
-                                    WHERE STREET_NO LIKE '{streetNumber}%'
-                                    AND STREET_NAME LIKE '{streetName}%'";
+                                    WHERE RP_ACCT_ID IN
+                                    (SELECT rp_acct_id FROM rp_situses_vw WHERE street_name LIKE '{streetName}%' AND ST_NO = {streetNumber})";
 
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }
         }
+
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByTagAsync(IEnumerable<string> tags, IDbConnection dbConnection)
+        {
+            string outputTags = string.Empty;
+            foreach (var tag in tags)
+            {
+                outputTags += $"'{tag}', ";
+            }
+            outputTags = outputTags.Substring(0, outputTags.Length - 2);
+
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE rp_acct_owner_id IN
+                                      (SELECT rp_acct_owner_id
+                                      FROM acct_tags at
+                                      WHERE at.end_dt IS NULL
+                                      AND at.tag_code IN ({outputTags})
+                                      )";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE rp_acct_owner_id IN
+                                      (SELECT rp_acct_owner_id
+                                      FROM acct_tags at
+                                      WHERE at.end_dt IS NULL
+                                      AND at.tag_code IN ({outputTags})
+                                      )";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+        }
+
     }
 }

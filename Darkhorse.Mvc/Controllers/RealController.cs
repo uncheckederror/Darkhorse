@@ -143,9 +143,14 @@ namespace DarkHorse.Mvc.Controllers
             {
                 results = await RealPropertyAccountsFilter.GetByNameAsync(query.Contact, dbConnection);
             }
-            else if (!string.IsNullOrWhiteSpace(query?.StreetNumber.ToString()) || !string.IsNullOrWhiteSpace(query?.StreetName) || !string.IsNullOrWhiteSpace(query?.StreetNumber.ToString()) && !string.IsNullOrWhiteSpace(query?.StreetName.ToString()))
+            else if (query?.StreetNumber > 0 || !string.IsNullOrWhiteSpace(query?.StreetName) || query?.StreetNumber > 0 && !string.IsNullOrWhiteSpace(query?.StreetName.ToString()))
             {
                 results = await RealPropertyAccountsFilter.GetByAddressAsync(query.StreetNumber.ToString(), query.StreetName, dbConnection);
+            }
+            else if (!string.IsNullOrWhiteSpace(query?.Tags))
+            {
+                var tags = query?.Tags.Replace(" ", "").Split(',').ToList();
+                results = await RealPropertyAccountsFilter.GetByTagAsync(tags, dbConnection);
             }
             else
             {
