@@ -57,7 +57,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             // Tabbed data
@@ -133,11 +133,19 @@ namespace DarkHorse.Mvc.Controllers
             IEnumerable<RealPropertyAccountsFilter> results;
             if (query?.ProcessNumber > 100000)
             {
-                results = await RealPropertyAccountsFilter.GetAsync(query.ProcessNumber, dbConnection);
+                results = await RealPropertyAccountsFilter.GetByRpAcctIdAsync(query.ProcessNumber, dbConnection);
             }
             else if (!string.IsNullOrWhiteSpace(query?.AccountNumber))
             {
-                results = await RealPropertyAccountsFilter.GetAsync(query.AccountNumber, dbConnection);
+                results = await RealPropertyAccountsFilter.GetByAccountNumberAsync(query.AccountNumber, dbConnection);
+            }
+            else if (!string.IsNullOrWhiteSpace(query?.Contact))
+            {
+                results = await RealPropertyAccountsFilter.GetByNameAsync(query.Contact, dbConnection);
+            }
+            else if (!string.IsNullOrWhiteSpace(query?.StreetNumber.ToString()) || !string.IsNullOrWhiteSpace(query?.StreetName) || !string.IsNullOrWhiteSpace(query?.StreetNumber.ToString()) && !string.IsNullOrWhiteSpace(query?.StreetName.ToString()))
+            {
+                results = await RealPropertyAccountsFilter.GetByAddressAsync(query.StreetNumber.ToString(), query.StreetName, dbConnection);
             }
             else
             {
@@ -174,20 +182,20 @@ namespace DarkHorse.Mvc.Controllers
                     TaxCode = realAccountYear.TAX_CODE
                 });
             }
-
-            if (accounts.Count == 1)
+            // TODO: Find a way to do this that doesn't maintain the original URL.
+            //if (accounts.Count == 1)
+            //{
+            //    // TODO: Figure out how to use the Redirect method so the URL doesn't look messed up.
+            //    return await Account(accounts.FirstOrDefault().ProcessNumber.ToString(), string.Empty);
+            //}
+            //else
+            //{
+            return View("Search", new AccountSearchResult
             {
-                // TODO: Figure out how to use the Redirect method so the URL doesn't look messed up.
-                return await Account(accounts.FirstOrDefault().ProcessNumber.ToString(), string.Empty);
-            }
-            else
-            {
-                return View("Search", new AccountSearchResult
-                {
-                    Query = accounts.FirstOrDefault(),
-                    Accounts = accounts
-                });
-            }
+                Query = accounts.FirstOrDefault(),
+                Accounts = accounts
+            });
+            //}
         }
 
         [Route("Real/ChangeHistory/{rpAcctId}")]
@@ -204,7 +212,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             // Change history specific data.
@@ -232,7 +240,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
@@ -304,7 +312,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
@@ -328,7 +336,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(prorate.RpAcctId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
@@ -401,7 +409,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             var taxYears = await RealPropertyAccountYear.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
@@ -432,7 +440,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
             var recieptRefunds = await ReceiptRefund.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
             var selected = recieptRefunds.FirstOrDefault();
@@ -517,7 +525,7 @@ namespace DarkHorse.Mvc.Controllers
             // Top panel data
             var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
             var account = results.FirstOrDefault();
-            var search = await RealPropertyAccountsFilter.GetAsync(account.ACCT_NO, dbConnection);
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
 
             // This is the C# version

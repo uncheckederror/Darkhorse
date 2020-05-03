@@ -309,10 +309,10 @@
                                     @contact.CHG_CODE
                                 </td>
                                 <td>
-                                    @contact.BEGIN_DT
+                                    @contact?.BEGIN_DT.ToShortDateString()
                                 </td>
                                 <td>
-                                    @contact.END_DT
+                                    @contact?.END_DT?.ToShortDateString()
                                 </td>
                             </tr>
 

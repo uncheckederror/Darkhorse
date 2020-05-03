@@ -33,7 +33,7 @@ namespace DarkHorse.DataAccess
         /// <param name="accountNumber"></param>
         /// <param name="connectionString"></param>
         /// <returns></returns>
-        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetAsync(string accountNumber, IDbConnection dbConnection)
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByAccountNumberAsync(string accountNumber, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
             {
@@ -57,7 +57,7 @@ namespace DarkHorse.DataAccess
             }
         }
 
-        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetAsync(int realPropertyAccountId, IDbConnection dbConnection)
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByRpAcctIdAsync(int realPropertyAccountId, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
             {
@@ -76,6 +76,104 @@ namespace DarkHorse.DataAccess
                 var sql = $@"SELECT  ACCT_STATUS, RP_ACCT_ID, ACCT_NO, CONTACT_ID, CONTACT_NAME, MISC_LINE1, CONTACT_TYPE, STREET_NO, STREET_NAME, STREET_ADDR, SEC_TWN_RNG, QUARTER_SECTION, RP_ACCT_OWNER_ID
                              FROM    REAL_PROP_ACCT_FILTER_VW 
                              WHERE   REAL_PROP_ACCT_FILTER_VW.RP_ACCT_ID = {realPropertyAccountId}";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByNameAsync(string contact, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE CONTACT_NAME LIKE '{contact}%'";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE CONTACT_NAME LIKE '{contact}%'";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetByAddressAsync(string streetNumber, string streetName, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE STREET_NO LIKE '{streetNumber}%'
+                                    AND STREET_NAME LIKE '{streetName}%'";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE STREET_NO LIKE '{streetNumber}%'
+                                    AND STREET_NAME LIKE '{streetName}%'";
 
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }

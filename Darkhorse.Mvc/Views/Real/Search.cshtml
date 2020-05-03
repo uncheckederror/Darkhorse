@@ -32,7 +32,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Active Indicator</span>
                     </div>
-                    <select asp-for="Query.ActiveIndicatior" class="form-control" id="accountActive" title="Active Indicator" value="@Model?.Query?.ActiveIndicatior">
+                    <select asp-for="Query.ActiveIndicatior" class="form-control" id="accountActive" title="Active Indicator" value="@Model?.Query?.ActiveIndicatior" readonly>
                         <option></option>
                         <option>Active</option>
                         <option>Reference</option>
@@ -49,7 +49,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Contact</span>
                     </div>
-                    <input asp-for="Query.Contact" type="text" class="form-control" id="contact" placeholder="Contact" title="Contact" value="@Model?.Query?.Contact" readonly>
+                    <input asp-for="Query.Contact" type="text" class="form-control" id="contact" placeholder="Contact" title="Contact" value="@Model?.Query?.Contact">
                 </div>
             </div>
             <div class="col-4">
@@ -77,7 +77,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">Situs Street Name</span>
                     </div>
-                    <input asp-for="Query.StreetName" type="text" class="form-control" id="streetName" placeholder="Situs Street Name" title="Situs Street Name" value="@Model?.Query?.StreetName" readonly>
+                    <input asp-for="Query.StreetName" type="text" class="form-control" id="streetName" placeholder="Situs Street Name" title="Situs Street Name" value="@Model?.Query?.StreetName">
                 </div>
             </div>
         </div>
