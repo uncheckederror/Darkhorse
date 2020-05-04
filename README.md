@@ -1,5 +1,22 @@
 # DarkHorse
  A modern front-end for the Land Information System.
+ 
+# Update 5/3/2020
+This week we rebuilt the Real Property Prepayment Calculator. This is the first page that directly calls to a stored procedure. 
+
+Stored procedures are complex chunks of code written in SQL. It would take significant effort to rewrite these stored procedures in C#.
+
+Initially we had planning on not rewritten them, and this week were sucessfully able to prove that we won't have to rewrite them. This should shave about a month off of the schedule for this project.
+
+Although it's purposely disabled at the moement, we built out the pages for prorating a tax year.
+
+We also built out the payments page and the receiepts and refunds pages. The goal here was to make all of the buttons on the tax years page work. These can all be found on the "Balance" tab of the tax years page.
+
+To that end we also completed the SSWM, FFP, Nox Weed, and Other Assessments type lookup pages which can be found on the "Assessments" tab on the tax years page.
+
+There are still some buttons that don't do anything on the tax years page. This is because they are editing operations, which is a feature we are going to ignore for now because we don't want to change any values in the database yet.
+
+We also completed significant work on the Real Account Filtering page. Searching by contact name, account group, address, and section, township, and range, and tag codes are now enabled.
 
 # Update 4/26/2020
 This week the Real Account Tax Year page was largely completed.
