@@ -139,6 +139,10 @@ namespace DarkHorse.Mvc.Controllers
             {
                 results = await RealPropertyAccountsFilter.GetByAccountNumberAsync(query.AccountNumber, dbConnection);
             }
+            else if (!string.IsNullOrWhiteSpace(query?.SectionTownshipRange) && !string.IsNullOrWhiteSpace(query?.QuarterSection))
+            {
+                results = await RealPropertyAccountsFilter.GetBySTRAsync(query.SectionTownshipRange, query.QuarterSection, dbConnection);
+            }
             else if (!string.IsNullOrWhiteSpace(query?.Contact))
             {
                 results = await RealPropertyAccountsFilter.GetByNameAsync(query.Contact, dbConnection);

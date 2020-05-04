@@ -68,37 +68,73 @@
                 </tr>
             </thead>
             <tbody>
-                @{ foreach (var year in Model?.TaxYears)
+                @{
+                    foreach (var year in Model?.TaxYears)
                     {
-                        <tr onclick="window.location='./@Model.Account.RP_ACCT_ID?year=@year.TAX_YR'">
-                            <td>
-                                @year.TAX_YR
-                            </td>
-                            <td>
-                                @year.TAX_STATUS
-                            </td>
-                            <td>
-                                @year.TAX_CODE
-                            </td>
-                            <td>
-                                @year.TaxRate.ToString("N6")
-                            </td>
-                            <td>
-                                @year.TAXABLE_AV.ToString("N")
-                            </td>
-                            <td>
-                                @year.PRORATE_START_DT.ToShortDateString()
-                            </td>
-                            <td>
-                                @year?.PRORATE_END_DT?.ToShortDateString()
-                            </td>
-                            <td>
-                                @year?.ADJ_TAX_BILLED?.ToString("C")
-                            </td>
-                            <td>
-                                @year.RP_TAX_PAID.ToString("C")
-                            </td>
-                        </tr>
+                        if (year.TAX_YR == Model?.TaxYear?.TAX_YR)
+                        {
+                            <tr class="table-success">
+                                <td>
+                                    @year.TAX_YR
+                                </td>
+                                <td>
+                                    @year.TAX_STATUS
+                                </td>
+                                <td>
+                                    @year.TAX_CODE
+                                </td>
+                                <td>
+                                    @year.TaxRate.ToString("N6")
+                                </td>
+                                <td>
+                                    @year.TAXABLE_AV.ToString("N")
+                                </td>
+                                <td>
+                                    @year.PRORATE_START_DT.ToShortDateString()
+                                </td>
+                                <td>
+                                    @year?.PRORATE_END_DT?.ToShortDateString()
+                                </td>
+                                <td>
+                                    @year?.ADJ_TAX_BILLED?.ToString("C")
+                                </td>
+                                <td>
+                                    @year.RP_TAX_PAID.ToString("C")
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr onclick="window.location='./@Model.Account.RP_ACCT_ID?year=@year.TAX_YR'">
+                                <td>
+                                    @year.TAX_YR
+                                </td>
+                                <td>
+                                    @year.TAX_STATUS
+                                </td>
+                                <td>
+                                    @year.TAX_CODE
+                                </td>
+                                <td>
+                                    @year.TaxRate.ToString("N6")
+                                </td>
+                                <td>
+                                    @year.TAXABLE_AV.ToString("N")
+                                </td>
+                                <td>
+                                    @year.PRORATE_START_DT.ToShortDateString()
+                                </td>
+                                <td>
+                                    @year?.PRORATE_END_DT?.ToShortDateString()
+                                </td>
+                                <td>
+                                    @year?.ADJ_TAX_BILLED?.ToString("C")
+                                </td>
+                                <td>
+                                    @year.RP_TAX_PAID.ToString("C")
+                                </td>
+                            </tr>
+                        }
                     }
                 }
             </tbody>
@@ -1290,41 +1326,53 @@
             </div>
         </div>
         <div class="tab-pane fade" id="prepayment" role="tabpanel" aria-labelledby="prepayment-tab">
-            <div class="table-responsive pt-3">
-                <table class="table table-striped table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                Monthly Tax Payment
-                            </th>
-                            <th>
-                                Begin Date
-                            </th>
-                            <th>
-                                End Date
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (var prepayment in Model?.RealPropertyPrepayments)
-                            {
+            @{
+                if (Model.RealPropertyPrepayments.Any())
+                {
+                    <div class="table-responsive pt-3">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @prepayment.MONTHLY_PAYMENT
-                                    </td>
-                                    <td>
-                                        @prepayment.BEGIN_DT
-                                    </td>
-                                    <td>
-                                        @prepayment.END_DT
-                                    </td>
+                                    <th>
+                                        Monthly Tax Payment
+                                    </th>
+                                    <th>
+                                        Begin Date
+                                    </th>
+                                    <th>
+                                        End Date
+                                    </th>
                                 </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var prepayment in Model?.RealPropertyPrepayments)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @prepayment.MONTHLY_PAYMENT
+                                            </td>
+                                            <td>
+                                                @prepayment.BEGIN_DT
+                                            </td>
+                                            <td>
+                                                @prepayment.END_DT
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="alert alert-warning mt-3" role="alert">
+                        No prepayments found for this Tax year.
+                    </div>
+                }
+            }
         </div>
         <div class="tab-pane fade" id="delinquent" role="tabpanel" aria-labelledby="delinquent-tab">
             <div class="form-group mt-3">

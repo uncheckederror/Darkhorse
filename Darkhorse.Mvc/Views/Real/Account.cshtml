@@ -274,67 +274,583 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
         @{
-            foreach (var contact in Model?.Contacts)
+            if (Model.Contacts.Any())
             {
-                <table class="table table-bordered table-hover table-striped mt-3">
-                    <thead>
-                        <tr>
-                            <th scope="col">
-                                Name
-                            </th>
-                            <th scope="col">
-                                Type
-                            </th>
-                            <th scope="col">
-                                Reason
-                            </th>
-                            <th scope="col">
-                                Begin Date
-                            </th>
-                            <th scope="col">
-                                End Date
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            <tr onclick="showContact(@contact.GetHashCode())">
-                                <td scope="row">
-                                    @contact.NAME
-                                </td>
-                                <td>
-                                    @contact.CONTACT_TYPE
-                                </td>
-                                <td>
-                                    @contact.CHG_CODE
-                                </td>
-                                <td>
-                                    @contact?.BEGIN_DT.ToShortDateString()
-                                </td>
-                                <td>
-                                    @contact?.END_DT?.ToShortDateString()
-                                </td>
+                foreach (var contact in Model?.Contacts)
+                {
+                    <table class="table table-bordered table-hover table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Name
+                                </th>
+                                <th scope="col">
+                                    Type
+                                </th>
+                                <th scope="col">
+                                    Reason
+                                </th>
+                                <th scope="col">
+                                    Begin Date
+                                </th>
+                                <th scope="col">
+                                    End Date
+                                </th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                <tr onclick="showContact(@contact.GetHashCode())">
+                                    <td scope="row">
+                                        @contact.NAME
+                                    </td>
+                                    <td>
+                                        @contact.CONTACT_TYPE
+                                    </td>
+                                    <td>
+                                        @contact.CHG_CODE
+                                    </td>
+                                    <td>
+                                        @contact?.BEGIN_DT.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @contact?.END_DT?.ToShortDateString()
+                                    </td>
+                                </tr>
 
-                        }
-                    </tbody>
-                </table>
-                <div class="contactDetail" id="@contact.GetHashCode()">
+                            }
+                        </tbody>
+                    </table>
+                    <div class="contactDetail" id="@contact.GetHashCode()">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Name Continued</span>
+                                        </div>
+                                        <input type="text" class="form-control" value="@contact.MISC_LINE1">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            @{
+                                                if (contact.MAIL_TS_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement
+                                                    </label>
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement
+                                                    </label>
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Street Address</span>
+                                        </div>
+                                        <input type="text" class="form-control" value="@contact.STREET_ADDR">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            @{
+                                                if (contact.MAIL_COPY_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
+                                                    </label>
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
+                                                    </label>
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@contact.MISC_LINE2">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            @{
+                                                if (contact.MAIL_NOTICE_FLAG == 'Y')
+                                                {
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option1" checked> Mail Notice
+                                                    </label>
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option2"> Don't Mail Notice
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="btn btn-dark">
+                                                        <input type="radio" name="options" id="option1"> Mail Notice
+                                                    </label>
+                                                    <label class="btn btn-dark active">
+                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Notice
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">City</span>
+                                        </div>
+                                        <input type="text" class="form-control" value="@contact.CITY">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-secondary col-12">Link Contact</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">State</span>
+                                        </div>
+                                        <input type="text" class="form-control" value="@contact.STATE">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Zip Code</span>
+                                        </div>
+                                        <input type="text" class="form-control" value="@contact.ZIP_CODE">
+                                    </div>
+                                </div>
+                                <div class="col-1">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" value="@contact.ZIP_EXTENSION">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-secondary col-12">Add Contact</button>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-secondary col-12">Review Contact Info</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No contacts found for this account.
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="legal" role="tabpanel" aria-labelledby="legal-tab">
+        @{
+            if (Model.LegalDescriptions.Any())
+            {
+                foreach (var legal in Model.LegalDescriptions)
+                {
+                    <div class="form-group mt-3">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Begin Date</span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" value="@legal?.BEGIN_DT.ToString("yyyy-MM-ddThh:ss")">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">End Date</span>
+                                    </div>
+                                    <input type="datetime-local" class="form-control" value="@legal?.END_DT?.ToString("yyyy-MM-ddThh:ss")">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-primary col-12" onclick="window.print()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" value="@Model.Plat.PLAT_NAME" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <textarea class="form-control" aria-label="With textarea">@legal.LEGAL_TEXT</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No legal description found for this account.
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="situs" role="tabpanel" aria-labelledby="situs-tab">
+        @{
+            if (Model.SiteAddresses.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Jurisdiction
+                                </th>
+                                <th>
+                                    Street Address
+                                </th>
+                                <th>
+                                    Zip Code
+                                </th>
+                                <th>
+                                    In Use
+                                </th>
+                                <th>
+                                    Primary
+                                </th>
+                                <th>
+                                    Verified Date
+                                </th>
+                                <th>
+                                    Unit Number
+                                </th>
+                                <th>
+                                    Address Label
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var address in Model.SiteAddresses)
+                                {
+                                    <tr>
+                                        <td>
+                                            @address.JURISDICTION
+                                        </td>
+                                        <td>
+                                            @address.STREET_ADDR
+                                        </td>
+                                        <td>
+                                            @address.ZIP_CODE
+                                        </td>
+                                        <td>
+                                            @address.IN_USE_FLAG
+                                        </td>
+                                        <td>
+                                            @address.PRIMARY_FLAG
+                                        </td>
+                                        <td>
+                                            @address.VERIFIED_DT
+                                        </td>
+                                        <td>
+                                            @address.SUITE_UNIT
+                                        </td>
+                                        <td>
+                                            @*What are address labels???*@
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No site addresses found for this account.
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">
+        @{
+            if (Model.Inspections.Any())
+            {
+                foreach (var permit in Model?.Inspections)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Date Created
+                                    </th>
+                                    <th>
+                                        Jurisdiction
+                                    </th>
+                                    <th>
+                                        Source
+                                    </th>
+                                    <th>
+                                        Application #
+                                    </th>
+                                    <th>
+                                        Permit Type
+                                    </th>
+                                    <th>
+                                        Date Issued
+                                    </th>
+                                    <th>
+                                        Permit Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+
+                                    <tr>
+                                        <td>
+                                            @permit.NewConstruction?.CREATED_DT
+                                        </td>
+                                        <td>
+                                            @permit.NewConstruction?.JURISDICTION
+                                        </td>
+                                        <td>
+                                            @permit.NewConstruction?.ROW_SOURCE
+                                        </td>
+                                        <td>
+                                            @permit.NewConstruction?.APPLICATION_ID
+                                        </td>
+                                        <td>
+                                            @permit.NewConstruction?.PERMIT_TYPE_CODE
+                                        </td>
+                                        <td>
+                                            @*date issued*@
+                                        </td>
+                                        <td>
+                                            @*permit  status*@
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Inspection Date
+                                    </th>
+                                    <th>
+                                        Inspector
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th>
+                                        Posted Date
+                                    </th>
+                                    <th>
+                                        Value
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var inspect in permit?.Inspections)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @inspect?.INSPECTION_DT
+                                            </td>
+                                            <td>
+                                                @inspect?.INSPECTOR
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var status = string.Empty;
+                                                    switch (inspect?.NC_STATUS)
+                                                    {
+                                                        case "C":
+                                                            status = "Complete";
+                                                            break;
+                                                        case "P":
+                                                            status = "Partial";
+                                                            break;
+                                                        default:
+                                                            status = inspect?.NC_STATUS;
+                                                            break;
+
+                                                    }
+                                                    @status
+                                                }
+                                            </td>
+                                            <td>
+                                                @inspect?.POSTED_DT
+                                            </td>
+                                            <td>
+                                                @inspect?.NC_VALUE
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No inspections found for this account.
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">
+        @{
+            if (Model.AccountGroups.Any())
+            {
+                foreach (var group in Model?.AccountGroups)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Group Name
+                                    </th>
+                                    <th>
+                                        Group Number
+                                    </th>
+                                    <th>
+                                        Begin Date
+                                    </th>
+                                    <th>
+                                        End Date
+                                    </th>
+                                    <th>
+                                        Mortgage or Account Number
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @group.GROUP_NAME
+                                    </td>
+                                    <td>
+                                        @group.GROUP_NO
+                                    </td>
+                                    <td>
+                                        @group.BEGIN_DT
+                                    </td>
+                                    <td>
+                                        @group.END_DT
+                                    </td>
+                                    <td>
+                                        @group.GRP_ACCT_NO
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-6">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Name Continued</span>
+                                        <span class="input-group-text">Contact</span>
                                     </div>
-                                    <input type="text" class="form-control" value="@contact.MISC_LINE1">
+                                    <input type="text" class="form-control" value="@group.CONTACT_NAME">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Phone</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@group.PHONE">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Street Address</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@group.STREET_ADDR">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         @{
-                                            if (contact.MAIL_TS_FLAG == 'Y')
+                                            if (group.MAIL_TS_FLAG == 'Y')
                                             {
                                                 <label class="btn btn-dark active">
                                                     <input type="radio" name="options" id="option1" checked> Mail Tax Statement
@@ -362,67 +878,29 @@
                         <div class="form-row">
                             <div class="col-6">
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Street Address</span>
-                                    </div>
-                                    <input type="text" class="form-control" value="@contact.STREET_ADDR">
+                                    <input type="text" class="form-control" value="@group.MISC_LINE2">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         @{
-                                            if (contact.MAIL_COPY_FLAG == 'Y')
+                                            if (group.MORTGAGE_FLAG == 'Y')
                                             {
                                                 <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
+                                                    <input type="radio" name="options" id="option1" checked> Mortgage Company
                                                 </label>
                                                 <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
+                                                    <input type="radio" name="options" id="option2"> No Mortgage Company
                                                 </label>
                                             }
                                             else
                                             {
                                                 <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
+                                                    <input type="radio" name="options" id="option1"> Mortgage Comapny
                                                 </label>
                                                 <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
-                                                </label>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-row">
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="@contact.MISC_LINE2">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                        @{
-                                            if (contact.MAIL_NOTICE_FLAG == 'Y')
-                                            {
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option1" checked> Mail Notice
-                                                </label>
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option2"> Don't Mail Notice
-                                                </label>
-                                            }
-                                            else
-                                            {
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option1"> Mail Notice
-                                                </label>
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option2" checked> Don't Mail Notice
+                                                    <input type="radio" name="options" id="option2" checked> No Mortgage Company
                                                 </label>
                                             }
                                         }
@@ -438,12 +916,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">City</span>
                                     </div>
-                                    <input type="text" class="form-control" value="@contact.CITY">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-secondary col-12">Link Contact</button>
+                                    <input type="text" class="form-control" value="@group.CITY">
                                 </div>
                             </div>
                         </div>
@@ -455,269 +928,146 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">State</span>
                                     </div>
-                                    <input type="text" class="form-control" value="@contact.STATE">
+                                    <input type="text" class="form-control" value="@group.STATE">
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Zip Code</span>
                                     </div>
-                                    <input type="text" class="form-control" value="@contact.ZIP_CODE">
-                                </div>
-                            </div>
-                            <div class="col-1">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="@contact.ZIP_EXTENSION">
+                                    <input type="text" class="form-control" value="@group.ZIP_CODE">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-secondary col-12">Add Contact</button>
+                                    <button type="button" class="btn btn-secondary col-12">Tax Service</button>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="input-group">
-                                    <button type="button" class="btn btn-secondary col-12">Review Contact Info</button>
+                                    <button type="button" class="btn btn-secondary col-12">Add</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+
             }
-        }
-    </div>
-    <div class="tab-pane fade" id="legal" role="tabpanel" aria-labelledby="legal-tab">
-        @{
-            foreach (var legal in Model.LegalDescriptions)
+            else
             {
-                <div class="form-group mt-3">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Begin Date</span>
-                                </div>
-                                <input type="datetime-local" class="form-control" value="@legal?.BEGIN_DT.ToString("yyyy-MM-ddThh:ss")">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">End Date</span>
-                                </div>
-                                <input type="datetime-local" class="form-control" value="@legal?.END_DT?.ToString("yyyy-MM-ddThh:ss")">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-primary col-12" onclick="window.print()">Print</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input class="form-control" type="text" value="@Model.Plat.PLAT_NAME" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <textarea class="form-control" aria-label="With textarea">@legal.LEGAL_TEXT</textarea>
-                            </div>
-                        </div>
-                    </div>
+                <div class="alert alert-warning mt-3" role="alert">
+                    No account group found for this account.
                 </div>
             }
         }
     </div>
-    <div class="tab-pane fade" id="situs" role="tabpanel" aria-labelledby="situs-tab">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Jurisdiction
-                        </th>
-                        <th>
-                            Street Address
-                        </th>
-                        <th>
-                            Zip Code
-                        </th>
-                        <th>
-                            In Use
-                        </th>
-                        <th>
-                            Primary
-                        </th>
-                        <th>
-                            Verified Date
-                        </th>
-                        <th>
-                            Unit Number
-                        </th>
-                        <th>
-                            Address Label
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var address in Model.SiteAddresses)
-                        {
-                            <tr>
-                                <td>
-                                    @address.JURISDICTION
-                                </td>
-                                <td>
-                                    @address.STREET_ADDR
-                                </td>
-                                <td>
-                                    @address.ZIP_CODE
-                                </td>
-                                <td>
-                                    @address.IN_USE_FLAG
-                                </td>
-                                <td>
-                                    @address.PRIMARY_FLAG
-                                </td>
-                                <td>
-                                    @address.VERIFIED_DT
-                                </td>
-                                <td>
-                                    @address.SUITE_UNIT
-                                </td>
-                                <td>
-                                    @*What are address labels???*@
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="inspections" role="tabpanel" aria-labelledby="inspections-tab">
+    <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">
         @{
-            foreach (var permit in Model?.Inspections)
+            if (Model.Notices.Any())
             {
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered mt-3">
                         <thead>
                             <tr>
                                 <th>
-                                    Date Created
+                                    Notice type
                                 </th>
                                 <th>
-                                    Jurisdiction
+                                    Destination
                                 </th>
                                 <th>
-                                    Source
+                                    Notice Date
                                 </th>
                                 <th>
-                                    Application #
+                                    Notice Generation Date
                                 </th>
                                 <th>
-                                    Permit Type
-                                </th>
-                                <th>
-                                    Date Issued
-                                </th>
-                                <th>
-                                    Permit Status
+                                    Suppress
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
+                                foreach (var notice in Model?.Notices)
+                                {
 
-                                <tr>
-                                    <td>
-                                        @permit.NewConstruction?.CREATED_DT
-                                    </td>
-                                    <td>
-                                        @permit.NewConstruction?.JURISDICTION
-                                    </td>
-                                    <td>
-                                        @permit.NewConstruction?.ROW_SOURCE
-                                    </td>
-                                    <td>
-                                        @permit.NewConstruction?.APPLICATION_ID
-                                    </td>
-                                    <td>
-                                        @permit.NewConstruction?.PERMIT_TYPE_CODE
-                                    </td>
-                                    <td>
-                                        @*date issued*@
-                                    </td>
-                                    <td>
-                                        @*permit  status*@
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            @notice.DESCRIPTION
+                                        </td>
+                                        <td>
+                                            @notice.NAME
+                                        </td>
+                                        <td>
+                                            @notice.NOTICE_DT
+                                        </td>
+                                        <td>
+                                            @notice.NOTICE_GENERATION_DT
+                                        </td>
+                                        <td>
+                                            @notice.SUPPRESS_FLAG
+                                        </td>
+                                    </tr>
 
+                                }
                             }
                         </tbody>
                     </table>
-                    <table class="table table-bordered table-hover table-striped">
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No notices found for this account.
+                </div>
+            }
+        }
+    </div>
+    <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+        @{
+            if (Model.Sales.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped mt-3">
                         <thead>
                             <tr>
                                 <th>
-                                    Inspection Date
+                                    Excise Number
                                 </th>
                                 <th>
-                                    Inspector
+                                    Excise Document Date
                                 </th>
                                 <th>
-                                    Status
+                                    Price
                                 </th>
                                 <th>
-                                    Posted Date
+                                    Invalid Code
                                 </th>
                                 <th>
-                                    Value
+                                    Primary Parcel
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             @{
-                                foreach (var inspect in permit?.Inspections)
+                                foreach (var sale in Model?.Sales)
                                 {
                                     <tr>
                                         <td>
-                                            @inspect?.INSPECTION_DT
+                                            @sale.EXCISE_NO
                                         </td>
                                         <td>
-                                            @inspect?.INSPECTOR
+                                            @sale.DOCUMENT_DT
                                         </td>
                                         <td>
-                                            @{
-                                                var status = string.Empty;
-                                                switch (inspect?.NC_STATUS)
-                                                {
-                                                    case "C":
-                                                        status = "Complete";
-                                                        break;
-                                                    case "P":
-                                                        status = "Partial";
-                                                        break;
-                                                    default:
-                                                        status = inspect?.NC_STATUS;
-                                                        break;
-
-                                                }
-                                                @status
-                                            }
+                                            @sale.PRICE
                                         </td>
                                         <td>
-                                            @inspect?.POSTED_DT
+                                            @sale.INVALID_CODE
                                         </td>
                                         <td>
-                                            @inspect?.NC_VALUE
+                                            @sale.PRIMARY_PARCEL
                                         </td>
                                     </tr>
                                 }
@@ -725,22 +1075,30 @@
                         </tbody>
                     </table>
                 </div>
+
             }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No sales found for this account.
+                </div>
+            }
+
         }
     </div>
-    <div class="tab-pane fade" id="acctgroup" role="tabpanel" aria-labelledby="acctgroup-tab">
+    <div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags-tab">
         @{
-            foreach (var group in Model?.AccountGroups)
+            if (Model.Tags.Any())
             {
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped table-bordered mt-3">
+                    <table class="table table-hover table-bordered table-striped mt-3">
                         <thead>
                             <tr>
                                 <th>
-                                    Group Name
+                                    Tag Code
                                 </th>
                                 <th>
-                                    Group Number
+                                    Description
                                 </th>
                                 <th>
                                     Begin Date
@@ -749,565 +1107,313 @@
                                     End Date
                                 </th>
                                 <th>
-                                    Mortgage or Account Number
+                                    Removed Flag
+                                </th>
+                                <th>
+                                    Temp
+                                </th>
+                                <th>
+                                    No State
+                                </th>
+                                <th>
+                                    Que State
+                                </th>
+                                <th>
+                                    Transfer
+                                </th>
+                                <th>
+                                    Alert
+                                </th>
+                                <th>
+                                    Lock Account
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    @group.GROUP_NAME
-                                </td>
-                                <td>
-                                    @group.GROUP_NO
-                                </td>
-                                <td>
-                                    @group.BEGIN_DT
-                                </td>
-                                <td>
-                                    @group.END_DT
-                                </td>
-                                <td>
-                                    @group.GRP_ACCT_NO
-                                </td>
-                            </tr>
+                            @{
+                                foreach (var tag in Model?.Tags)
+                                {
+                                    <tr>
+                                        <td>
+                                            @tag.TAG_CODE
+                                        </td>
+                                        <td>
+                                            @tag.DESCRIPTION
+                                        </td>
+                                        <td>
+                                            @tag.BEGIN_DT
+                                        </td>
+                                        <td>
+                                            @tag.END_DT
+                                        </td>
+                                        <td>
+                                            @tag.REMOVED_BY
+                                        </td>
+                                        <td>
+                                            @tag.TEMP_FLAG
+                                        </td>
+                                        <td>
+                                            @tag.NO_STATEMENT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag.QUE_STATEMENT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag.TRANSFER_FLAG
+                                        </td>
+                                        <td>
+                                            @tag.ALERT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag.LOCK_ACCT_FLAG
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Contact</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.CONTACT_NAME">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Phone</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.PHONE">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Street Address</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.STREET_ADDR">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    @{
-                                        if (group.MAIL_TS_FLAG == 'Y')
-                                        {
-                                            <label class="btn btn-dark active">
-                                                <input type="radio" name="options" id="option1" checked> Mail Tax Statement
-                                            </label>
-                                            <label class="btn btn-dark">
-                                                <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
-                                            </label>
-                                        }
-                                        else
-                                        {
-                                            <label class="btn btn-dark">
-                                                <input type="radio" name="options" id="option1"> Mail Tax Statement
-                                            </label>
-                                            <label class="btn btn-dark active">
-                                                <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
-                                            </label>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <input type="text" class="form-control" value="@group.MISC_LINE2">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    @{
-                                        if (group.MORTGAGE_FLAG == 'Y')
-                                        {
-                                            <label class="btn btn-dark active">
-                                                <input type="radio" name="options" id="option1" checked> Mortgage Company
-                                            </label>
-                                            <label class="btn btn-dark">
-                                                <input type="radio" name="options" id="option2"> No Mortgage Company
-                                            </label>
-                                        }
-                                        else
-                                        {
-                                            <label class="btn btn-dark">
-                                                <input type="radio" name="options" id="option1"> Mortgage Comapny
-                                            </label>
-                                            <label class="btn btn-dark active">
-                                                <input type="radio" name="options" id="option2" checked> No Mortgage Company
-                                            </label>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">City</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.CITY">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-2">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">State</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.STATE">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Zip Code</span>
-                                </div>
-                                <input type="text" class="form-control" value="@group.ZIP_CODE">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="input-group">
-                                <button type="button" class="btn btn-secondary col-12">Tax Service</button>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="input-group">
-                                <button type="button" class="btn btn-secondary col-12">Add</button>
-                            </div>
-                        </div>
-                    </div>
+
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No tags found on this account.
                 </div>
             }
         }
     </div>
-    <div class="tab-pane fade" id="notices" role="tabpanel" aria-labelledby="notices-tab">
-        <div class="table-responsive">
-            <table class="table table-hover table-striped table-bordered mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Notice type
-                        </th>
-                        <th>
-                            Destination
-                        </th>
-                        <th>
-                            Notice Date
-                        </th>
-                        <th>
-                            Notice Generation Date
-                        </th>
-                        <th>
-                            Suppress
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var notice in Model?.Notices)
-                        {
-
-                            <tr>
-                                <td>
-                                    @notice.DESCRIPTION
-                                </td>
-                                <td>
-                                    @notice.NAME
-                                </td>
-                                <td>
-                                    @notice.NOTICE_DT
-                                </td>
-                                <td>
-                                    @notice.NOTICE_GENERATION_DT
-                                </td>
-                                <td>
-                                    @notice.SUPPRESS_FLAG
-                                </td>
-                            </tr>
-
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Excise Number
-                        </th>
-                        <th>
-                            Excise Document Date
-                        </th>
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            Invalid Code
-                        </th>
-                        <th>
-                            Primary Parcel
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var sale in Model?.Sales)
-                        {
-                            <tr>
-                                <td>
-                                    @sale.EXCISE_NO
-                                </td>
-                                <td>
-                                    @sale.DOCUMENT_DT
-                                </td>
-                                <td>
-                                    @sale.PRICE
-                                </td>
-                                <td>
-                                    @sale.INVALID_CODE
-                                </td>
-                                <td>
-                                    @sale.PRIMARY_PARCEL
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="tags" role="tabpanel" aria-labelledby="tags-tab">
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Tag Code
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Begin Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                        <th>
-                            Removed Flag
-                        </th>
-                        <th>
-                            Temp
-                        </th>
-                        <th>
-                            No State
-                        </th>
-                        <th>
-                            Que State
-                        </th>
-                        <th>
-                            Transfer
-                        </th>
-                        <th>
-                            Alert
-                        </th>
-                        <th>
-                            Lock Account
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var tag in Model?.Tags)
-                        {
-                            <tr>
-                                <td>
-                                    @tag.TAG_CODE
-                                </td>
-                                <td>
-                                    @tag.DESCRIPTION
-                                </td>
-                                <td>
-                                    @tag.BEGIN_DT
-                                </td>
-                                <td>
-                                    @tag.END_DT
-                                </td>
-                                <td>
-                                    @tag.REMOVED_BY
-                                </td>
-                                <td>
-                                    @tag.TEMP_FLAG
-                                </td>
-                                <td>
-                                    @tag.NO_STATEMENT_FLAG
-                                </td>
-                                <td>
-                                    @tag.QUE_STATEMENT_FLAG
-                                </td>
-                                <td>
-                                    @tag.TRANSFER_FLAG
-                                </td>
-                                <td>
-                                    @tag.ALERT_FLAG
-                                </td>
-                                <td>
-                                    @tag.LOCK_ACCT_FLAG
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
     <div class="tab-pane fade" id="buildings" role="tabpanel" aria-labelledby="buildings-tab">
         @{
-            foreach (var dwelling in Model?.Buildings)
+            if (Model.Buildings.Any())
             {
-                <div class="form-group mt-3">
-                    <div class="form-row">
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Building</span>
+                foreach (var dwelling in Model?.Buildings)
+                {
+                    <div class="form-group mt-3">
+                        <div class="form-row">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Building</span>
+                                    </div>
+                                    @{
+                                        var count = $"{dwelling.BLDGNO} of {dwelling.BLDGS}";
+                                    }
+                                    <input type="text" class="form-control" value="@count">
                                 </div>
-                                @{
-                                    var count = $"{dwelling.BLDGNO} of {dwelling.BLDGS}";
-                                }
-                                <input type="text" class="form-control" value="@count">
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Tax Value</span>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Tax Value</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.TAX_VALUE">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.TAX_VALUE">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Year Built</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.YEAR_BUILT">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Bedroom</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.DECKSF">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Deck Area</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Building Type</span>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Year Built</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.YEAR_BUILT">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.BLDGTYPE">
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Basement Area</span>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Bedroom</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.DECKSF">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.BSMTAREA">
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Half Bathroom</span>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Deck Area</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Stories</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.STORIES">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Finished Basement Area</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.BSMTFIN">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Full Bathroom</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.FBATHS">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Roof Material</span>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Building Type</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.BLDGTYPE">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.ROOFMATD">
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Detacted Garage Area</span>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Basement Area</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.BSMTAREA">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.DETGARSF">
                             </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Fireplace</span>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Half Bathroom</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.NUMBDRMS">
                                 </div>
-                                <input type="text" class="form-control" value="@dwelling.FIREPLACES">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Wall Cover</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.WALL_COVER">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Attached Garage Area</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.ATTGARSF">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Heating</span>
-                                </div>
-                                <input type="text" class="form-control" value="@dwelling.HEATDESC">
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Stories</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.STORIES">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Finished Basement Area</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.BSMTFIN">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Full Bathroom</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.FBATHS">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Roof Material</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.ROOFMATD">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Detacted Garage Area</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.DETGARSF">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Fireplace</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.FIREPLACES">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Wall Cover</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.WALL_COVER">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Attached Garage Area</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.ATTGARSF">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Heating</span>
+                                    </div>
+                                    <input type="text" class="form-control" value="@dwelling.HEATDESC">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No buildings found for this account.
                 </div>
             }
         }
     </div>
     <div class="tab-pane fade" id="prepaycontact" role="tabpanel" aria-labelledby="prepaycontact-tab">
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>
-                            Email Address
-                        </th>
-                        <th>
-                            Last Name
-                        </th>
-                        <th>
-                            First Name
-                        </th>
-                        <th>
-                            Active
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var crm in Model?.CrmContacts)
-                        {
+        @{
+            if (Model.CrmContacts.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped mt-3">
+                        <thead>
                             <tr>
-                                <td>
-                                    @crm.CRM_EMAIL
-                                </td>
-                                <td>
-                                    @crm.CRM_LASTNAME
-                                </td>
-                                <td>
-                                    @crm.CRM_FIRSTNAME
-                                </td>
-                                <td>
-                                    @crm.CRM_NOTIFY_FLAG
-                                </td>
+                                <th>
+                                    Email Address
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Active
+                                </th>
                             </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var crm in Model?.CrmContacts)
+                                {
+                                    <tr>
+                                        <td>
+                                            @crm.CRM_EMAIL
+                                        </td>
+                                        <td>
+                                            @crm.CRM_LASTNAME
+                                        </td>
+                                        <td>
+                                            @crm.CRM_FIRSTNAME
+                                        </td>
+                                        <td>
+                                            @crm.CRM_NOTIFY_FLAG
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No prepayments found for this account.
+                </div>
+            }
+        }
     </div>
 </div>

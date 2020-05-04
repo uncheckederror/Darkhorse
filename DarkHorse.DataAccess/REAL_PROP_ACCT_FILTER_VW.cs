@@ -312,5 +312,56 @@ namespace DarkHorse.DataAccess
                 return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
             }
         }
+
+        public static async Task<IEnumerable<RealPropertyAccountsFilter>> GetBySTRAsync(string sectionTownshipRange, string quarterSection, IDbConnection dbConnection)
+        {
+            // Account values are numbers, but in the DB they are stored as varchars.
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE QUARTER_SECTION = '{quarterSection}' 
+                                    AND SEC_TWN_RNG = '{sectionTownshipRange}'";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_STATUS,
+                                      RP_ACCT_ID,
+                                      ACCT_NO,
+                                      CONTACT_ID,
+                                      CONTACT_NAME,
+                                      MISC_LINE1,
+                                      CONTACT_TYPE,
+                                      STREET_NO,
+                                      STREET_NAME,
+                                      STREET_ADDR,
+                                      SEC_TWN_RNG,
+                                      QUARTER_SECTION,
+                                      RP_ACCT_OWNER_ID
+                                    FROM LIS.REAL_PROP_ACCT_FILTER_VW
+                                    WHERE QUARTER_SECTION = '{quarterSection}' 
+                                    AND SEC_TWN_RNG = '{sectionTownshipRange}'";
+
+                return await connection.QueryAsync<RealPropertyAccountsFilter>(sql).ConfigureAwait(false);
+            }
+        }
     }
 }
