@@ -152,6 +152,10 @@ namespace DarkHorse.Mvc.Controllers
                 var tags = query?.Tags.Replace(" ", "").Split(',').ToList();
                 results = await RealPropertyAccountsFilter.GetByTagAsync(tags, dbConnection);
             }
+            else if (query?.AccountGroup != null && query?.AccountGroup > 0)
+            {
+                results = await RealPropertyAccountsFilter.GetByAccountGroupAsync(query.AccountGroup, dbConnection);
+            }
             else
             {
                 return View("Search");
@@ -181,7 +185,7 @@ namespace DarkHorse.Mvc.Controllers
                     SectionTownshipRange = result?.SEC_TWN_RNG,
                     AccountGroup = accountGroup.GROUP_NO,
                     QuarterSection = result?.QUARTER_SECTION,
-                    Tags = outTags,
+                    Tags = outTags.Length > 0 ? outTags.Substring(0, outTags.Length - 2) : outTags,
                     PropertyClass = realAccountYear.PROPERTY_CLASS,
                     ParcelAcreage = realAccountYear.PARCEL_ACREAGE,
                     TaxCode = realAccountYear.TAX_CODE
