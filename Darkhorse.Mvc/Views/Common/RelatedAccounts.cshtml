@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DarkHorse.DataAccess.ContactAccount>
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<p class="display-4 pr-3">🏠 Contacts Related Accounts</p>
+@{
+    if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Account Number
+                        </th>
+                        <th scope="col">
+                            Account Type
+                        </th>
+                        <th scope="col">
+                            Contact Type
+                        </th>
+                        <th scope="col">
+                            Contact Begin Date
+                        </th>
+                        <th scope="col">
+                            Account Inactive Date
+                        </th>
+                        <th>
+                            Mail Tax Statement
+                        </th>
+                        <th>
+                            Mail Notice
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var contact in Model)
+                        {
+                            <tr>
+                                <td>@contact.ACCT_NO</td>
+                                <td>@contact.ACCT_TYPE</td>
+                                <td>@contact.CONTACT_TYPE</td>
+                                <td>@contact.BEGIN_DT</td>
+                                <td>@contact.ACCT_INACTIVE_DT</td>
+                                <td>@contact.MAIL_TS_FLAG</td>
+                                <td>@contact.MAIL_NOTICE_FLAG</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No related accounts found for this contact.
+        </div>
+    }
+}

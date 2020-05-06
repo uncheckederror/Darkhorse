@@ -1,0 +1,414 @@
+﻿@model DarkHorse.Mvc.CommonContactDetail
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<p class="display-4 pr-3">🏠 Contacts</p>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">REETs Contact Street Address</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STREET_ADDR" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Contact Name
+                </th>
+                <th scope="col">
+                    Street Address
+                </th>
+                <th scope="col">
+                    City
+                </th>
+                <th scope="col">
+                    Source
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var contact in Model.Contacts)
+                {
+                    if (contact.CONTACT_ID == Model?.SelectedContact?.CONTACT_ID)
+                    {
+                        <tr class="table-success">
+                            <td>
+                                @contact.NAME
+                            </td>
+                            <td>
+                                @contact.STREET_ADDR
+                            </td>
+                            <td>
+                                @contact.CITY
+                            </td>
+                            <td>
+                                @contact.ROW_SOURCE
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @contact.NAME
+                            </td>
+                            <td>
+                                @contact.STREET_ADDR
+                            </td>
+                            <td>
+                                @contact.CITY
+                            </td>
+                            <td>
+                                @contact.ROW_SOURCE
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact Last Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.L_NAME">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact First Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.F_NAME">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Street Number</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STREET_NO">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Extension</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STREET_EXTENSION">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Pre Directional</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.PRE_DIRECTIONAL">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Street Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STREET_NAME">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Designator</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.DESIGNATOR">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Post Directional</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.POST_DIRECTIONAL">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Suite or Apartment Number</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.SUITE_APT">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Unit Number</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.UNIT_NO">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Misc Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.MISC_LINE1">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if ('Y' == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Include Invalid Contacts
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Include Invalid Contacts
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if ('Y' == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Notes
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Notes
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Street Address</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.SelectedContact?.STREET_ADDR">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model?.SelectedContact?.INVALID_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Invalid
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Invalid
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model?.SelectedContact?.HALF_YEAR_REMINDER_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Half Year Reminder
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Half Year Reminder
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Misc</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.MISC_LINE2">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">City</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.CITY">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">State</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STATE">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zip Code</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.ZIP_CODE">
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.ZIP_EXTENSION">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">County</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.COUNTRY">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Carrier</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.CARRIER">
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    if (Model.PhoneNumbers.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @*<th scope="col">
+                                Order
+                            </th>*@
+                        <th scope="col">
+                            Number Type
+                        </th>
+                        <th scope="col">
+                            Number Value
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var number in Model.PhoneNumbers)
+                        {
+                            <tr>
+                                @*<td>
+                                        @number.ORDER_BY
+                                    </td>*@
+                                <td>
+                                    @number.DESCRIPTION
+                                </td>
+                                <td>
+                                    @number.VALUE
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No phone numbers found for this Contact.
+        </div>
+    }
+}
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-3">
+            <div class="input-group">
+                <button type="button" class="btn btn-secondary btn-block">New Contact Address</button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <button type="button" class="btn btn-secondary btn-block">Set Contact Invalid</button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a type="button" class="btn btn-secondary btn-block" asp-controller="Common" asp-action="ContactRelatedAccounts" asp-route-id="@Model?.SelectedContact?.CONTACT_ID">Related Accounts</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Related Accounts</span>
+                </div>
+                <input type="number" class="form-control">
+            </div>
+        </div>
+    </div>
+</div>
