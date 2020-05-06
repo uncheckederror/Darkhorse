@@ -556,6 +556,22 @@ namespace DarkHorse.Mvc.Controllers
             return View("CalculatePrepayment", Result);
         }
 
+        [Route("Real/Contact/{contactId}")]
+        public async Task<IActionResult> RealPropertyAccountContact(int contactId)
+        {
+            using var dbConnection = DbConnection;
+
+            var contacts = await Contact.GetRealContactsByIdAsync(contactId, dbConnection);
+            var numbers = await ContactNumber.GetAsync(contactId, dbConnection);
+
+            return View("Contact", new RealAccountContactDetail
+            {
+                Contacts = contacts,
+                SelectedContact = contacts.FirstOrDefault(),
+                PhoneNumbers = numbers
+            });
+        }
+
         public IActionResult Privacy()
         {
             return View();

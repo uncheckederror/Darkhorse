@@ -1,0 +1,310 @@
+﻿@model RealAccountContactDetail
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<p class="display-4 pr-3">🏠 Real Property Contacts</p>
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Contact Name
+                </th>
+                <th scope="col">
+                    Street Address
+                </th>
+                <th scope="col">
+                    City
+                </th>
+                <th scope="col">
+                    State
+                </th>
+                <th scope="col">
+                    Zip
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var contact in Model?.Contacts)
+                {
+                    if (contact.CONTACT_ID == Model?.SelectedContact?.CONTACT_ID)
+                    {
+                        <tr class="table-success">
+                            <td>
+                                @contact.NAME
+                            </td>
+                            <td>
+                                @contact.STREET_ADDR
+                            </td>
+                            <td>
+                                @contact.CITY
+                            </td>
+                            <td>
+                                @contact.STATE
+                            </td>
+                            <td>
+                                @contact.ZIP_CODE
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @contact.NAME
+                            </td>
+                            <td>
+                                @contact.STREET_ADDR
+                            </td>
+                            <td>
+                                @contact.CITY
+                            </td>
+                            <td>
+                                @contact.ROW_SOURCE
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact Last Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.NAME">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.MISC_LINE1">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Street Address</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STREET_ADDR">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.MISC_LINE2">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">City</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.CITY">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">State</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.STATE">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zip Code</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.ZIP_CODE">
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.ZIP_EXTENSION">
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    if (Model.PhoneNumbers.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @*<th scope="col">
+                                Order
+                            </th>*@
+                        <th scope="col">
+                            Number Type
+                        </th>
+                        <th scope="col">
+                            Number Value
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var number in Model.PhoneNumbers)
+                        {
+                            <tr>
+                                @*<td>
+                                        @number.ORDER_BY
+                                    </td>*@
+                                <td>
+                                    @number.DESCRIPTION
+                                </td>
+                                <td>
+                                    @number.VALUE
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No phone numbers found for this Contact.
+        </div>
+    }
+}
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact Type</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.CONTACT_TYPE">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Begin Date</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.BEGIN_DT.ToShortDateString()">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model?.SelectedContact?.MAIL_TS_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Mail Tax Statement
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Mail Tax Statement
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Reason</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.CHG_CODE">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">End Date</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedContact?.END_DT?.ToShortDateString()">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model?.SelectedContact?.MAIL_COPY_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Mail Copy
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Mail Copy
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <a class="btn btn-block btn-primary" asp-controller="Common" asp-action="Contact" asp-route-id="@Model?.SelectedContact?.CONTACT_ID">Contact Details</a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <a class="btn btn-block btn-danger" asp-controller="Real" asp-action="LinkContact" asp-route-id="@Model?.SelectedContact?.RP_ACCT_OWNER_ID">Link to Account</a>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model?.SelectedContact?.MAIL_NOTICE_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Mail Notice
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Mail Notice
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

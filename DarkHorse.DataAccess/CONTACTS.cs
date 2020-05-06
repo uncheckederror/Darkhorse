@@ -12,6 +12,7 @@ namespace DarkHorse.DataAccess
     {
         #region Fields
         public string NAME { get; set; }
+        public int RP_ACCT_OWNER_ID { get; set; }
         public string CONTACT_TYPE { get; set; }
         public string CHG_CODE { get; set; }
         public DateTime BEGIN_DT { get; set; }
@@ -79,6 +80,34 @@ namespace DarkHorse.DataAccess
                              WHERE   RP_CONTACTS.RP_ACCT_OWNER_ID = {realPropertyAccountOwnersId}
                              AND     RP_CONTACTS.CONTACT_ID = CONTACTS.CONTACT_ID
                              ORDER BY RP_CONTACTS.BEGIN_DT DESC";
+
+                return await connection.QueryAsync<Contact>(sql).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<IEnumerable<Contact>> GetRealContactsByIdAsync(int contactId, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT     C.CONTACT_ID, C.NAME, RC.RP_ACCT_OWNER_ID, RC.CONTACT_TYPE, RC.CHG_CODE, RC.BEGIN_DT, RC.END_DT, C.MISC_LINE1, C.STREET_ADDR, C.MISC_LINE2, C.CITY, C.STATE, C.ZIP_CODE, C.ZIP_EXTENSION, RC.MAIL_NOTICE_FLAG, RC.MAIL_TS_FLAG, RC.MAIL_COPY_FLAG
+                             FROM       LIS.RP_CONTACTS RC
+                             INNER JOIN LIS.CONTACTS C ON (RC.CONTACT_ID = C.CONTACT_ID)
+                             WHERE      RC.CONTACT_ID = {contactId}
+                             ORDER BY   RC.BEGIN_DT DESC";
+
+                return await connection.QueryAsync<Contact>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT     C.CONTACT_ID, C.NAME, RC.RP_ACCT_OWNER_ID, RC.CONTACT_TYPE, RC.CHG_CODE, RC.BEGIN_DT, RC.END_DT, C.MISC_LINE1, C.STREET_ADDR, C.MISC_LINE2, C.CITY, C.STATE, C.ZIP_CODE, C.ZIP_EXTENSION, RC.MAIL_NOTICE_FLAG, RC.MAIL_TS_FLAG, RC.MAIL_COPY_FLAG
+                             FROM       LIS.RP_CONTACTS RC
+                             INNER JOIN LIS.CONTACTS C ON (RC.CONTACT_ID = C.CONTACT_ID)
+                             WHERE      RC.CONTACT_ID = {contactId}
+                             ORDER BY   RC.BEGIN_DT DESC";
 
                 return await connection.QueryAsync<Contact>(sql).ConfigureAwait(false);
             }

@@ -340,41 +340,5 @@ namespace DarkHorse.Tests
             Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
             Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));
         }
-
-        [Fact]
-        public async Task RealPropertyContactGetComparison()
-        {
-            var contactId = 1000488;
-
-            var oracleAccounts = (await RealPropertyContact.GetAsync(contactId, oracleDbConnection)).ToArray();
-            var mssqlAccounts = (await RealPropertyContact.GetAsync(contactId, mssqlDbConnection)).ToArray();
-
-            Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
-            Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));
-        }
-
-        [Fact]
-        public async Task RealPropertySiteAddressGetComparison()
-        {
-            var rpAcctId = 2361145;
-
-            var oracleAccounts = (await RealPropertyContact.GetAsync(rpAcctId, oracleDbConnection)).ToArray();
-            var mssqlAccounts = (await RealPropertyContact.GetAsync(rpAcctId, mssqlDbConnection)).ToArray();
-
-            Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
-            Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));
-        }
-
-        [Fact]
-        public async Task SalesGetComparison()
-        {
-            var rpAcctId = 2361145;
-
-            var oracleAccounts = (await RealPropertyContact.GetAsync(rpAcctId, oracleDbConnection)).ToArray();
-            var mssqlAccounts = (await RealPropertyContact.GetAsync(rpAcctId, mssqlDbConnection)).ToArray();
-
-            Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
-            Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));
-        }
     }
 }
