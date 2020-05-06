@@ -63,6 +63,7 @@ namespace DarkHorse.Mvc.Controllers
             // Tabbed data
             var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
             var legal = await LegalDescription.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
+            var zone = await RealAccountParcel.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
 
             // Create an empty plat, in case there's not one for this account.
             var plat = new Plat();
@@ -111,6 +112,7 @@ namespace DarkHorse.Mvc.Controllers
                 Account = account,
                 Contacts = contacts,
                 LegalDescriptions = legal,
+                Parcels = zone,
                 Plat = plat,
                 SiteAddresses = situses,
                 Inspections = ncPairs,

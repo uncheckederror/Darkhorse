@@ -32,7 +32,7 @@
                         switch (Model.Account.WORK_GROUP)
                         {
                             case "RS":
-                                <label class="btn btn-secondary">
+                                <label class="btn btn-outline-secondary">
                                     <input type="radio" name="options" id="option1"> Commerical
                                 </label>
                                 <label class="btn btn-secondary active">
@@ -43,7 +43,7 @@
                                 <label class="btn btn-secondary active">
                                     <input type="radio" name="options" id="option1" checked> Commerical
                                 </label>
-                                <label class="btn btn-secondary">
+                                <label class="btn btn-outline-secondary">
                                     <input type="radio" name="options" id="option2"> Residential
                                 </label>
                                 break;
@@ -61,7 +61,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Reference Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model?.Account?.REFERENCE_DT?.ToString("yyyy-MM-ddThh:ss")">
+                <input type="text" class="form-control" value="@Model?.Account?.REFERENCE_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
@@ -70,7 +70,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Inactive Date</span>
                 </div>
-                <input type="datetime-local" class="form-control" value="@Model?.Account?.INACTIVE_DT?.ToString("yyyy-MM-ddThh:ss")">
+                <input type="text" class="form-control" value="@Model?.Account?.INACTIVE_DT?.ToShortDateString()">
             </div>
         </div>
     </div>
@@ -180,18 +180,44 @@
         </div>
         <div class="col-2">
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Zone</span>
-                </div>
-                <input type="text" class="form-control" value="" readonly>
+                @{
+                    var outputZones = string.Empty;
+                    foreach (var parcel in Model?.Parcels)
+                    {
+                        outputZones += $"{parcel?.Z_CODE}, ";
+                    }
+                    outputZones = outputZones.Length > 2 ? outputZones.Substring(0, outputZones.Length - 2) : outputZones;
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Zone</span>
+                    </div>
+                    <input type="text" class="form-control" value="@outputZones" readonly>
+                }
             </div>
         </div>
         <div class="col-4">
+            @*<div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Personal Property</span>
+                    </div>
+                    <input type="text" class="form-control" value="@Model.Account.PP_AS_RP_FLAG">
+                </div>*@
             <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Personal Property</span>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if (Model.Account.PP_AS_RP_FLAG == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Personal Property
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Personal Property
+                            </label>
+                        }
+                    }
                 </div>
-                <input type="text" class="form-control" value="@Model.Account.PP_AS_RP_FLAG">
             </div>
         </div>
     </div>
@@ -338,20 +364,14 @@
                                             @{
                                                 if (contact.MAIL_TS_FLAG == 'Y')
                                                 {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Mail Tax Statement
                                                     </label>
                                                 }
                                                 else
                                                 {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Mail Tax Statement
                                                     </label>
                                                 }
                                             }
@@ -376,20 +396,14 @@
                                             @{
                                                 if (contact.MAIL_COPY_FLAG == 'Y')
                                                 {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Tax Statement Copy
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Mail Tax Statement Copy
                                                     </label>
                                                 }
                                                 else
                                                 {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Tax Statement Copy
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Tax Statement Copy
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Mail Tax Statement Copy
                                                     </label>
                                                 }
                                             }
@@ -411,20 +425,14 @@
                                             @{
                                                 if (contact.MAIL_NOTICE_FLAG == 'Y')
                                                 {
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option1" checked> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option2"> Don't Mail Notice
+                                                    <label class="btn btn-secondary active">
+                                                        <input type="checkbox" checked> Mail Notice
                                                     </label>
                                                 }
                                                 else
                                                 {
-                                                    <label class="btn btn-dark">
-                                                        <input type="radio" name="options" id="option1"> Mail Notice
-                                                    </label>
-                                                    <label class="btn btn-dark active">
-                                                        <input type="radio" name="options" id="option2" checked> Don't Mail Notice
+                                                    <label class="btn btn-outline-secondary">
+                                                        <input type="checkbox"> Mail Notice
                                                     </label>
                                                 }
                                             }
