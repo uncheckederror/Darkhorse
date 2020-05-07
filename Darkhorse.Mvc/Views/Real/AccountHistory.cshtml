@@ -1,0 +1,279 @@
+﻿@model RealAccountHistoryDetail
+@{
+    ViewData["Title"] = "Real Account History";
+}
+
+<p class="display-4 pr-3">🏠 Real Property Account History</p>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Account</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.ACCT_NO" readonly>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Process #</span>
+                </div>
+                <input type="text" class="form-control" value="@Model.Account.RP_ACCT_ID" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Taxpayer
+                </th>
+                <th>
+                    Acquire Date
+                </th>
+                <th>
+                    Transfer Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="btn-group col-4">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Details
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" asp-controller="Real" asp-action="TaxYears" asp-route-id="@Model.Account.RP_ACCT_ID">Tax Year</a>
+                <a class="dropdown-item" href="#">Senior Citizen</a>
+                <a class="dropdown-item" href="#">Destroyed Property Exemption</a>
+                <a class="dropdown-item" href="#">Three Year Exemption</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="contacts-tab" data-toggle="tab" href="#contacts" role="tab" aria-controls="home" aria-selected="true">
+            Contacts History
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="accountgroups-tab" data-toggle="tab" href="#accountgroups" role="tab" aria-controls="home" aria-selected="true">
+            Account Groups
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="notices-tab" data-toggle="tab" href="#notices" role="tab" aria-controls="home" aria-selected="true">
+            Notices
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="accounttags-tab" data-toggle="tab" href="#accounttags" role="tab" aria-controls="home" aria-selected="true">
+            Account Tags
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+        <div class="table-responsive pt-3">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Contact Name
+                        </th>
+                        <th>
+                            Contact Type
+                        </th>
+                        <th>
+                            Change Reason
+                        </th>
+                        <th>
+                            Begin Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="accountgroups" role="tabpanel" aria-labelledby="accountgroups-tab">
+        <div class="table-responsive pt-3">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Account Group
+                        </th>
+                        <th>
+                            Begin Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Details
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="tab-pane fade show" id="notices" role="tabpanel" aria-labelledby="notices-tab">
+        <div class="table-responsive pt-3">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Notice Type
+                        </th>
+                        <th>
+                            Destination
+                        </th>
+                        <th>
+                            Notice Date
+                        </th>
+                        <th>
+                            Notice Generation Date
+                        </th>
+                        <th>
+                            Suppress
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="accounttags" role="tabpanel" aria-labelledby="accounttags-tab">
+        <div class="table-responsive pt-3">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Tag Code
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Begin Date
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+                            Removed By
+                        </th>
+                        <th>
+                            Temp
+                        </th>
+                        <th>
+                            No State
+                        </th>
+                        <th>
+                            Que State
+                        </th>
+                        <th>
+                            Transfer
+                        </th>
+                        <th>
+                            Alert
+                        </th>
+                        <th>
+                            Lock Account
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

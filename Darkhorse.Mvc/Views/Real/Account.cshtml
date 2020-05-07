@@ -230,7 +230,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" asp-controller="Real" asp-action="TaxYears" asp-route-id="@Model.Account.RP_ACCT_ID">Tax Year</a>
-                <a class="dropdown-item" href="#">Account History by Owner</a>
+                <a class="dropdown-item" asp-controller="Real" asp-action="AccountHistory" asp-route-id="@Model.Account.RP_ACCT_ID">Account History by Owner</a>
                 <a class="dropdown-item" href="#">Associated Accounts</a>
                 <a class="dropdown-item" href="#">Cadastral</a>
                 <a class="dropdown-item" href="#">Foreclosure</a>

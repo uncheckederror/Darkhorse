@@ -271,6 +271,31 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
+        [Route("Real/AccountHistory/{rpAcctId}")]
+        public async Task<IActionResult> RealAccountAccountHistory(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+            var owner = await RealAccountOwner.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+
+            return View("AccountHistory", new RealAccountHistoryDetail
+            {
+                Account = account,
+                AccountsFilter = searchAccount
+            });
+        }
+
         [Route("Real/TaxYears/{rpAcctId}")]
         public async Task<IActionResult> TaxYears(string rpAcctId, int year)
         {
