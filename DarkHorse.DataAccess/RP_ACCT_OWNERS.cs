@@ -15,7 +15,7 @@ namespace DarkHorse.DataAccess
         public int RP_ACCT_OWNER_ID { get; set; }
         public string ACCT_NO { get; set; }
         public int RP_ACCT_ID { get; set; }
-        public int? TAX_SERVICE_ID { get; set; }
+        public string TAX_SERVICE_ID { get; set; }
         public DateTime BEGIN_DT { get; set; }
         public DateTime? END_DT { get; set; }
         public string CREATED_BY { get; set; }

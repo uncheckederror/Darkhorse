@@ -203,8 +203,8 @@ namespace DarkHorse.Tests
         {
             var accountnumber = "4852";
 
-            var oracleAccounts = (await RealPropertyAccountsFilter.GetAsync(accountnumber, oracleDbConnection)).ToArray();
-            var mssqlAccounts = (await RealPropertyAccountsFilter.GetAsync(accountnumber, mssqlDbConnection)).ToArray();
+            var oracleAccounts = (await RealPropertyAccountsFilter.GetByAccountNumberAsync(accountnumber, oracleDbConnection)).ToArray();
+            var mssqlAccounts = (await RealPropertyAccountsFilter.GetByAccountNumberAsync(accountnumber, mssqlDbConnection)).ToArray();
 
             Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
             Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));
@@ -215,8 +215,8 @@ namespace DarkHorse.Tests
         {
             var rpacctid = 1477108;
 
-            var oracleAccounts = (await RealPropertyAccountsFilter.GetAsync(rpacctid, oracleDbConnection)).ToArray();
-            var mssqlAccounts = (await RealPropertyAccountsFilter.GetAsync(rpacctid, mssqlDbConnection)).ToArray();
+            var oracleAccounts = (await RealPropertyAccountsFilter.GetByRpAcctIdAsync(rpacctid, oracleDbConnection)).ToArray();
+            var mssqlAccounts = (await RealPropertyAccountsFilter.GetByRpAcctIdAsync(rpacctid, mssqlDbConnection)).ToArray();
 
             Assert.Equal(oracleAccounts.Length, mssqlAccounts.Length);
             Assert.Equal(0, compareLists(oracleAccounts, mssqlAccounts));

@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark nav-color">
+        <nav class="navbar navbar-expand-md navbar-dark nav-color d-print-none">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -68,7 +68,7 @@
                                 <span class="ml-auto">⮟</span>
                             </div>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="smallerscreenmenu">
+                        <div class="dropdown-menu d-print-none" aria-labelledby="smallerscreenmenu">
                             <a class="dropdown-item" href="#top">Accounts</a>
                             <a class="dropdown-item" href="#top">Plats</a>
                             <a class="dropdown-item" href="#top">Section Township Range</a>
@@ -87,10 +87,10 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <div id="sidebar-container" class="sidebar-expanded col-3 col-md-4 col-lg-4 col-xl-3 d-md-block d-sm-none d-none">
+            <div id="sidebar-container" class="sidebar-expanded col-3 col-md-4 col-lg-4 col-xl-3 d-md-block d-sm-none d-none d-print-none">
                 <!-- d-* hiddens the sidebar in smaller devices. its itens can be kept on the navbar 'menu' -->
                 <!-- bootstrap list group -->
-                <ul class="list-group">
+                <ul class="list-group no-print">
                     <!-- separator with title -->
                     <!-- /end separator -->
                     <!-- menu with submenu -->
@@ -501,7 +501,7 @@
                     </div>
                 </ul><!-- list group end-->
             </div>
-            <main role="main" class="col-12 col-md-8 col-lg-8 col-xl-9 p-1 p-md-3">
+            <main role="main" class="col-sm-12 col-md-8 col-lg-8 col-xl-9 p-1 p-md-3">
                 @RenderBody()
             </main>
         </div>

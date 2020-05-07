@@ -438,7 +438,7 @@ namespace DarkHorse.Tests
         [MemberData(nameof(TestData.GetWeirdAccountsFromDataGenerator), MemberType = typeof(TestData))]
         public async Task RealPropertyAccountsFilterGet(string accountNumber)
         {
-            var results = await RealPropertyAccountsFilter.GetAsync(accountNumber, oracleDbConnection);
+            var results = await RealPropertyAccountsFilter.GetByAccountNumberAsync(accountNumber, oracleDbConnection);
 
             Assert.NotNull(results);
             foreach (var result in results)
@@ -454,7 +454,7 @@ namespace DarkHorse.Tests
         [MemberData(nameof(TestData.GetDesignDistrictsFromDataGenerator), MemberType = typeof(TestData))]
         public async Task RealPropertyAccountsFilterGetById(int rpAcctId)
         {
-            var results = await RealPropertyAccountsFilter.GetAsync(rpAcctId, oracleDbConnection);
+            var results = await RealPropertyAccountsFilter.GetByRpAcctIdAsync(rpAcctId, oracleDbConnection);
 
             Assert.NotNull(results);
             foreach (var result in results)

@@ -44,7 +44,7 @@ namespace DarkHorse.Mvc.Controllers
         }
 
         [Route("Real/Account/{rpAcctId}")]
-        public async Task<IActionResult> Account(string rpAcctId, string page)
+        public async Task<IActionResult> Account(string rpAcctId)
         {
             using var dbConnection = DbConnection;
 
@@ -240,6 +240,34 @@ namespace DarkHorse.Mvc.Controllers
                 Account = account,
                 Histories = history,
                 Remarks = remarks
+            });
+        }
+
+
+        [Route("Real/TaxService/{rpAcctId}")]
+        public async Task<IActionResult> RealAccountTaxService(string rpAcctId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(rpAcctId, out int realAccountId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            // Top panel data
+            var results = await RealPropertyAccount.GetAsync(realAccountId, dbConnection);
+            var account = results.FirstOrDefault();
+            var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
+            var searchAccount = search.FirstOrDefault();
+            var owner = await RealAccountOwner.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+
+            // Change history specific data.
+            var service = await TaxService.GetAsync(owner?.TAX_SERVICE_ID, dbConnection);
+            return View("TaxService", new TaxServiceDetail
+            {
+                Account = account,
+                TaxService = service
             });
         }
 
