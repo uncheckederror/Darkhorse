@@ -59,6 +59,7 @@ namespace DarkHorse.Mvc.Controllers
             var account = results.FirstOrDefault();
             var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
+            var owner = await RealAccountOwner.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
 
             // Tabbed data
             var contacts = await Contact.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
@@ -110,6 +111,7 @@ namespace DarkHorse.Mvc.Controllers
             return View("Account", new RealAccountDetail
             {
                 Account = account,
+                TaxService = owner,
                 Contacts = contacts,
                 LegalDescriptions = legal,
                 Parcels = zone,
