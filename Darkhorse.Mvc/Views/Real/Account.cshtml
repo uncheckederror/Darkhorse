@@ -452,8 +452,8 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="input-group">
-                                        <button type="button" class="btn btn-secondary col-12">Link Contact</button>
+                                    <div class="input-group invisible">
+                                        <a class="nav-link btn btn-secondary col-12" id="prepaycontact-tab" data-toggle="tab" href="#prepaycontact" role="tab" aria-controls="home" aria-selected="true">Link Contact</a>
                                     </div>
                                 </div>
                             </div>
@@ -860,20 +860,14 @@
                                         @{
                                             if (group.MAIL_TS_FLAG == 'Y')
                                             {
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option1" checked> Mail Tax Statement
-                                                </label>
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option2"> Don't Mail Tax Statement
+                                                <label class="btn btn-secondary active">
+                                                    <input type="checkbox" checked> Mail Tax Statement
                                                 </label>
                                             }
                                             else
                                             {
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option1"> Mail Tax Statement
-                                                </label>
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option2" checked> Don't Mail Tax Statement
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="checkbox"> Mail Tax Statement
                                                 </label>
                                             }
                                         }
@@ -893,22 +887,16 @@
                                 <div class="input-group">
                                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         @{
-                                            if (group.MORTGAGE_FLAG == 'Y')
+                                            if (group.MAIL_TS_FLAG == 'Y')
                                             {
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option1" checked> Mortgage Company
-                                                </label>
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option2"> No Mortgage Company
+                                                <label class="btn btn-secondary active">
+                                                    <input type="checkbox" checked> Mortgage Company
                                                 </label>
                                             }
                                             else
                                             {
-                                                <label class="btn btn-dark">
-                                                    <input type="radio" name="options" id="option1"> Mortgage Comapny
-                                                </label>
-                                                <label class="btn btn-dark active">
-                                                    <input type="radio" name="options" id="option2" checked> No Mortgage Company
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="checkbox"> Mortgage Company
                                                 </label>
                                             }
                                         }
