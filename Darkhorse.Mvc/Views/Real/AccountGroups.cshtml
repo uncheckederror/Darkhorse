@@ -1,0 +1,155 @@
+﻿@model RealAccountGroupsDetail
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<p class="display-4 pr-3">🏠 Real Property Account Groups</p>
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Group Number
+                </th>
+                <th scope="col">
+                    Group Name
+                </th>
+                <th scope="col">
+                    Mail Tax Statement
+                </th>
+                <th scope="col">
+                    Mortgage Company
+                </th>
+                <th scope="col">
+                    Active
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var group in Model?.AccountGroups)
+                {
+                    if (group.ACCT_GROUP_ID == Model?.SelectedAccountGroup?.ACCT_GROUP_ID)
+                    {
+                        <tr class="table-success">
+                            <td>
+                                @group.GROUP_NO
+                            </td>
+                            <td>
+                                @group.GROUP_NAME
+                            </td>
+                            <td>
+                                @group.MAIL_TS_FLAG
+                            </td>
+                            <td>
+                                @group.MORTGAGE_FLAG
+                            </td>
+                            <td>
+                                @group.ACTIVE
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @group.GRP_ACCT_NO
+                            </td>
+                            <td>
+                                @group.GROUP_NAME
+                            </td>
+                            <td>
+                                @group.MAIL_TS_FLAG
+                            </td>
+                            <td>
+                                @group.MORTGAGE_FLAG
+                            </td>
+                            <td>
+                                @group.ACTIVE
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-8">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Contact Name</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.CONTACT_NAME">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Phone Number</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.PHONE">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.MISC_LINE1">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Street Address</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.STREET_ADDR">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.MISC_LINE2">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">City</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.CITY">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">State</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.STATE">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Zip Code</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccountGroup?.ZIP_CODE">
+            </div>
+        </div>
+    </div>
+</div>

@@ -61,7 +61,7 @@ namespace DarkHorse.DataAccess
             }
         }
 
-        public static async Task<IEnumerable<RealPropertyAccountGroup>> GetAsync(int realAccountOwnerId, IDbConnection dbConnection)
+        public static async Task<IEnumerable<RealPropertyAccountGroup>> GetByRpAcctOwnerIdAsync(int realAccountOwnerId, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
             {
@@ -86,6 +86,64 @@ namespace DarkHorse.DataAccess
                              WHERE   RP_ACCT_GROUPS.ACCT_GROUP_ID = ACCT_GROUPS.ACCT_GROUP_ID
                              AND     RP_ACCT_GROUPS.RP_ACCT_OWNER_ID = {realAccountOwnerId}
                              ORDER BY RP_ACCT_GROUPS.BEGIN_DT DESC";
+
+                return await connection.QueryAsync<RealPropertyAccountGroup>(sql).ConfigureAwait(false);
+            }
+        }
+
+        public static async Task<IEnumerable<RealPropertyAccountGroup>> GetAsync(int realPropertyAccountGroupId, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_GROUP_ID,
+                                      GROUP_NAME,
+                                      GROUP_NO,
+                                      ACTIVE,
+                                      CONTACT_NAME,
+                                      STREET_ADDR,
+                                      MISC_LINE1,
+                                      MISC_LINE2,
+                                      CITY,
+                                      STATE,
+                                      ZIP_CODE,
+                                      PHONE,
+                                      CREATED_BY,
+                                      CREATED_DT,
+                                      MODIFIED_BY,
+                                      MODIFIED_DT,
+                                      MAIL_TS_FLAG,
+                                      MORTGAGE_FLAG
+                                    FROM ACCT_GROUPS
+                                    WHERE ACCT_GROUP_ID = {realPropertyAccountGroupId}";
+
+                return await connection.QueryAsync<RealPropertyAccountGroup>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT ACCT_GROUP_ID,
+                                      GROUP_NAME,
+                                      GROUP_NO,
+                                      ACTIVE,
+                                      CONTACT_NAME,
+                                      STREET_ADDR,
+                                      MISC_LINE1,
+                                      MISC_LINE2,
+                                      CITY,
+                                      STATE,
+                                      ZIP_CODE,
+                                      PHONE,
+                                      CREATED_BY,
+                                      CREATED_DT,
+                                      MODIFIED_BY,
+                                      MODIFIED_DT,
+                                      MAIL_TS_FLAG,
+                                      MORTGAGE_FLAG
+                                    FROM ACCT_GROUPS
+                                    WHERE ACCT_GROUP_ID = {realPropertyAccountGroupId}";
 
                 return await connection.QueryAsync<RealPropertyAccountGroup>(sql).ConfigureAwait(false);
             }

@@ -201,7 +201,7 @@
                                             @group?.END_DT?.ToShortDateString()
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary text-light">@group?.ACCT_GROUP_ID</a>
+                                            <a class="btn btn-primary text-light" asp-controller="Real" asp-action="AccountGroup" asp-route-id="@group?.ACCT_GROUP_ID">@group?.ACCT_GROUP_ID</a>
                                         </td>
                                     </tr>
                                 }

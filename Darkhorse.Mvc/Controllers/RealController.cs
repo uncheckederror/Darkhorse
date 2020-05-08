@@ -14,6 +14,7 @@ using Oracle.ManagedDataAccess.Client;
 using DarkHorse.DataAccess;
 using DarkHorse.Mvc.Models;
 using System.Globalization;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DarkHorse.Mvc.Controllers
 {
@@ -90,7 +91,7 @@ namespace DarkHorse.Mvc.Controllers
                 });
             }
 
-            var accountGroup = await RealPropertyAccountGroup.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            var accountGroup = await RealPropertyAccountGroup.GetByRpAcctOwnerIdAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
             var notices = await Notice.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
             var sales = await SalesAccount.GetAsync(searchAccount.RP_ACCT_ID, dbConnection);
             var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
@@ -296,7 +297,7 @@ namespace DarkHorse.Mvc.Controllers
             }
 
             var contacts = await Contact.GetRealContactsByIdAsync(selectedOwner.CONTACT_ID, dbConnection);
-            var accountGroups = await RealPropertyAccountGroup.GetAsync(selectedOwner.RP_ACCT_OWNER_ID, dbConnection);
+            var accountGroups = await RealPropertyAccountGroup.GetByRpAcctOwnerIdAsync(selectedOwner.RP_ACCT_OWNER_ID, dbConnection);
             var notices = await Notice.GetAsync(selectedOwner.RP_ACCT_OWNER_ID, dbConnection);
             var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
 
@@ -310,6 +311,27 @@ namespace DarkHorse.Mvc.Controllers
                 AccountGroups = accountGroups,
                 Notices = notices,
                 AccountTags = tags
+            });
+        }
+
+        [Route("Real/AccountGroup/{acctGroupId}")]
+        public async Task<IActionResult> RealPropertyAccountGroups(string acctGroupId)
+        {
+            using var dbConnection = DbConnection;
+
+            var checkRealAccountId = int.TryParse(acctGroupId, out int realPropertyAccountGroupId);
+            if (!checkRealAccountId)
+            {
+                return View("Search");
+            }
+
+            var accountGroups = await RealPropertyAccountGroup.GetAsync(realPropertyAccountGroupId, dbConnection);
+            var selectedAccountGroup = accountGroups.FirstOrDefault();
+
+            return View("AccountGroups", new RealAccountGroupsDetail
+            {
+                AccountGroups = accountGroups,
+                SelectedAccountGroup = selectedAccountGroup
             });
         }
 
@@ -511,7 +533,6 @@ namespace DarkHorse.Mvc.Controllers
                 AccountsFilter = searchAccount
             });
         }
-
 
         [Route("Real/Receipts/{rpAcctId}")]
         public async Task<IActionResult> RealPropertyAccountReceipts(string rpAcctId, int? receipt)
