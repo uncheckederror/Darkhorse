@@ -40,14 +40,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
+            @{
+                foreach (var owner in Model?.Owners)
+                {
+                    <tr>
+                        <td>
+                            @owner?.NAME
+                        </td>
+                        <td>
+                            @owner?.BEGIN_DT.ToShortDateString()
+                        </td>
+                        <td>
+                            @owner?.END_DT?.ToShortDateString()
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
@@ -90,190 +98,281 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-        <div class="table-responsive pt-3">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Contact Name
-                        </th>
-                        <th>
-                            Contact Type
-                        </th>
-                        <th>
-                            Change Reason
-                        </th>
-                        <th>
-                            Begin Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                        <th>
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model.Contacts.Any())
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Contact Name
+                                </th>
+                                <th>
+                                    Contact Type
+                                </th>
+                                <th>
+                                    Change Reason
+                                </th>
+                                <th>
+                                    Begin Date
+                                </th>
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+                                    Details
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var contact in Model?.Contacts)
+                                {
+                                    <tr>
+                                        <td>
+                                            @contact?.NAME
+                                        </td>
+                                        <td>
+                                            @contact?.CONTACT_TYPE
+                                        </td>
+                                        <td>
+                                            @contact?.CHG_CODE
+                                        </td>
+                                        <td>
+                                            @contact?.BEGIN_DT.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @contact?.END_DT?.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-controller="Common" asp-action="Contact" asp-route-id="@contact.CONTACT_ID">@contact?.CONTACT_ID</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No contacts found for this account owner.
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade show" id="accountgroups" role="tabpanel" aria-labelledby="accountgroups-tab">
-        <div class="table-responsive pt-3">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Account Group
-                        </th>
-                        <th>
-                            Begin Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                        <th>
-                            Details
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+        @{
+            if (Model.AccountGroups.Any())
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Account Group
+                                </th>
+                                <th>
+                                    Begin Date
+                                </th>
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+                                    Details
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var group in Model?.AccountGroups)
+                                {
+                                    <tr>
+                                        <td>
+                                            @group?.GROUP_NAME
+                                        </td>
+                                        <td>
+                                            @group?.BEGIN_DT.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @group?.END_DT?.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary text-light">@group?.ACCT_GROUP_ID</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No account groups found for this account owner.
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade show" id="notices" role="tabpanel" aria-labelledby="notices-tab">
-        <div class="table-responsive pt-3">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Notice Type
-                        </th>
-                        <th>
-                            Destination
-                        </th>
-                        <th>
-                            Notice Date
-                        </th>
-                        <th>
-                            Notice Generation Date
-                        </th>
-                        <th>
-                            Suppress
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model.Notices.Any())
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Notice Type
+                                </th>
+                                <th>
+                                    Destination
+                                </th>
+                                <th>
+                                    Notice Date
+                                </th>
+                                <th>
+                                    Notice Generation Date
+                                </th>
+                                <th>
+                                    Suppress
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var notice in Model?.Notices)
+                                {
+                                    <tr>
+                                        <td>
+                                            @notice?.DESCRIPTION
+                                        </td>
+                                        <td>
+                                            @notice?.NAME
+                                        </td>
+                                        <td>
+                                            @notice?.NOTICE_DT?.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @notice?.NOTICE_GENERATION_DT?.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            @notice?.SUPPRESS_FLAG
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No notices for this account owner.
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade show" id="accounttags" role="tabpanel" aria-labelledby="accounttags-tab">
-        <div class="table-responsive pt-3">
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Tag Code
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            Begin Date
-                        </th>
-                        <th>
-                            End Date
-                        </th>
-                        <th>
-                            Removed By
-                        </th>
-                        <th>
-                            Temp
-                        </th>
-                        <th>
-                            No State
-                        </th>
-                        <th>
-                            Que State
-                        </th>
-                        <th>
-                            Transfer
-                        </th>
-                        <th>
-                            Alert
-                        </th>
-                        <th>
-                            Lock Account
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model.AccountTags.Any())
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Tag Code
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Begin Date
+                                </th>
+                                <th>
+                                    End Date
+                                </th>
+                                <th>
+                                    Removed By
+                                </th>
+                                <th>
+                                    Temp
+                                </th>
+                                <th>
+                                    No State
+                                </th>
+                                <th>
+                                    Que State
+                                </th>
+                                <th>
+                                    Transfer
+                                </th>
+                                <th>
+                                    Alert
+                                </th>
+                                <th>
+                                    Lock Account
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var tag in Model?.AccountTags)
+                                {
+                                    <tr>
+                                        <td>
+                                            @tag?.TAG_CODE
+                                        </td>
+                                        <td>
+                                            @tag?.DESCRIPTION
+                                        </td>
+                                        <td>
+                                            @tag?.BEGIN_DT
+                                        </td>
+                                        <td>
+                                            @tag?.END_DT
+                                        </td>
+                                        <td>
+                                            @tag?.REMOVED_BY
+                                        </td>
+                                        <td>
+                                            @tag?.TEMP_FLAG
+                                        </td>
+                                        <td>
+                                            @tag?.NO_STATEMENT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag?.QUE_STATEMENT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag?.TRANSFER_FLAG
+                                        </td>
+                                        <td>
+                                            @tag?.ALERT_FLAG
+                                        </td>
+                                        <td>
+                                            @tag?.LOCK_ACCT_FLAG
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No tags found for this account owner.
+                </div>
+            }
+        }
     </div>
 </div>

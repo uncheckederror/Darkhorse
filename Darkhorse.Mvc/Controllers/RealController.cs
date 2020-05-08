@@ -272,7 +272,7 @@ namespace DarkHorse.Mvc.Controllers
         }
 
         [Route("Real/AccountHistory/{rpAcctId}")]
-        public async Task<IActionResult> RealAccountAccountHistory(string rpAcctId)
+        public async Task<IActionResult> RealAccountAccountHistory(string rpAcctId, string contactId)
         {
             using var dbConnection = DbConnection;
 
@@ -287,12 +287,29 @@ namespace DarkHorse.Mvc.Controllers
             var account = results.FirstOrDefault();
             var search = await RealPropertyAccountsFilter.GetByAccountNumberAsync(account.ACCT_NO, dbConnection);
             var searchAccount = search.FirstOrDefault();
-            var owner = await RealAccountOwner.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
+            var owners = await RealAccountOwner.GetByRpAcctIdAsync(account.RP_ACCT_ID, dbConnection);
+            var selectedOwner = owners.FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(contactId))
+            {
+                selectedOwner = owners.Where(x => x.CONTACT_ID.ToString() == contactId).FirstOrDefault();
+            }
+
+            var contacts = await Contact.GetRealContactsByIdAsync(selectedOwner.CONTACT_ID, dbConnection);
+            var accountGroups = await RealPropertyAccountGroup.GetAsync(selectedOwner.RP_ACCT_OWNER_ID, dbConnection);
+            var notices = await Notice.GetAsync(selectedOwner.RP_ACCT_OWNER_ID, dbConnection);
+            var tags = await AccountTag.GetAsync(searchAccount.RP_ACCT_OWNER_ID, dbConnection);
 
             return View("AccountHistory", new RealAccountHistoryDetail
             {
                 Account = account,
-                AccountsFilter = searchAccount
+                AccountsFilter = searchAccount,
+                Owners = owners,
+                SelectedOwner = selectedOwner,
+                Contacts = contacts,
+                AccountGroups = accountGroups,
+                Notices = notices,
+                AccountTags = tags
             });
         }
 
