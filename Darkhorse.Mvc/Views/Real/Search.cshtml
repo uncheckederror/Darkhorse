@@ -165,13 +165,16 @@
                     <input asp-for="Query.AccountGroup" type="text" class="form-control" id="accountGroup" aria-describedby="accountGroup" placeholder="Account Group" title="Account Group" value="@Model?.Query?.AccountGroup">
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Tag Codes</span>
                     </div>
                     <input asp-for="Query.Tags" type="text" class="form-control" id="tags" aria-describedby="tags" placeholder="Tag Codes" title="Tag Codes" value="@Model?.Query?.Tags">
                 </div>
+            </div>
+            <div class="col-2">
+                <a class="btn btn-primary col-12" asp-controller="Real" asp-action="Search">Reset</a>
             </div>
             <div class="col-2">
                 <button class="btn btn-danger col-12" type="submit">Search</button>
