@@ -78,6 +78,9 @@
                         <th>
                             Tax Year
                         </th>
+                        <th>
+                            Related Accounts
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,7 +89,7 @@
                         {
                             <tr>
                                 <td>
-                                    @plat.PLAT_SECTION_ID
+                                    @plat.PLAT_NO
                                 </td>
                                 <td>
                                     @plat.PLAT_NAME
@@ -99,6 +102,9 @@
                                 </td>
                                 <td>
                                     @plat.TAX_YR
+                                </td>
+                                <td>
+                                    <a class="btn btn-block btn-primary" href="https://psearch.kitsapgov.com/platssearch?SearchString=@plat.PLAT_NO">@plat.PLAT_NO</a>
                                 </td>
                             </tr>
                         }
