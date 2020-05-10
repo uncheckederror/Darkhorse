@@ -1,0 +1,96 @@
+﻿@model RealAccountCadastralDetail;
+@{
+    ViewData["Title"] = "Cadastral";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Cadastral Actions</p>
+
+<form asp-controller="Real" asp-action="Cadastral" method="get" id="searchForm">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-12 col-xl-8 pt-3">
+                <div class="input-group input-group-lg pb-3">
+                    <input type="text" class="form-control" name="an" placeholder="Enter a Cadastral Action Number (ex. 20190279)" aria-label="Enter a Cadastral Action Number" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <a class="btn btn-lg btn-secondary" asp-controller="Real" asp-action="Cadastral">Reset</a>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-lg btn-primary" type="submit" form="searchForm" id="button-addon2">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Add a New Action</a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Minimum Tax Year Displayed</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Action Number
+                </th>
+                <th scope="col">
+                    Orignal or New
+                </th>
+                <th scope="col">
+                    Process Number
+                </th>
+                <th scope="col">
+                    Account
+                </th>
+                <th scope="col">
+                    Action Type
+                </th>
+                <th scope="col">
+                    Action Reason
+                </th>
+                <th scope="col">
+                    Date Canceled
+                </th>
+                <th scope="col">
+                    Date Finalized
+                </th>
+                <th scope="col">
+                    Date Completed
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var action in Model?.Actions)
+                {
+                    <tr onclick="window.location='./Cadastral?an=@action.CAD_ACTN_NO'">
+                        <td>@action.CAD_ACTN_NO</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>@action.CAD_ACTN_TYPE</td>
+                        <td>@action.CAD_ACTN_RSN</td>
+                        <td>@action.CANCEL_DT?.ToShortDateString()</td>
+                        <td>@action.FINALIZED_DT?.ToShortDateString()</td>
+                        <td>@action.COMPLETED_DT?.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

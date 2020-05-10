@@ -692,6 +692,36 @@ namespace DarkHorse.Mvc.Controllers
             }
         }
 
+        [Route("Real/Cadastral/")]
+        public async Task<IActionResult> RealPropertyCadastral(int? an)
+        {
+            using var dbConnection = DbConnection;
+
+            // Remap to a more descriptive name, while keeping the URL simple.
+            var actionNumber = an ?? 0;
+
+            var curretTaxYear = new DateTime(2020, 1, 1);
+
+            if (an > 1999)
+            {
+                var actions = await CadastralAction.GetByIdAsync(curretTaxYear, actionNumber, dbConnection);
+
+                return View("Cadastral", new RealAccountCadastralDetail
+                {
+                    Actions = actions
+                });
+            }
+            else
+            {
+                var actions = await CadastralAction.GetAllAsync(curretTaxYear, dbConnection);
+
+                return View("Cadastral", new RealAccountCadastralDetail
+                {
+                    Actions = actions
+                });
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();
