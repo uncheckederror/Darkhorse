@@ -667,6 +667,31 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
+        [Route("Real/SectionTownshipRange")]
+        public async Task<IActionResult> SectionTownshipRangeLookup(string str)
+        {
+            using var dbConnection = DbConnection;
+
+            var sectionTownShipRanges = await SectionTownshipRange.GetAsync(str, dbConnection);
+            if (sectionTownShipRanges.Count() == 1)
+            {
+                var relatedPlats = await SectionTownshipRange.GetRelatedPlatsAsync(sectionTownShipRanges.FirstOrDefault().SEC_TWN_RNG_ID, dbConnection);
+
+                return View("SectionTownshipRange", new SectionTownshipRangeResults
+                {
+                    SearchResults = sectionTownShipRanges,
+                    RelatedPlats = relatedPlats
+                });
+            }
+            else
+            {
+                return View("SectionTownshipRange", new SectionTownshipRangeResults
+                {
+                    SearchResults = sectionTownShipRanges
+                });
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();

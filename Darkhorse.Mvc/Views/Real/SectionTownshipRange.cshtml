@@ -1,0 +1,116 @@
+﻿@model SectionTownshipRangeResults
+@{
+    ViewData["Title"] = "SectionTownshipRange";
+}
+
+<p class="display-4 pr-3">🏠 Section, Township, and Range</p>
+
+<form asp-controller="Real" asp-action="SectionTownshipRange" method="get" id="searchForm">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-12 col-xl-8 pt-3">
+                <div class="input-group input-group-lg pb-3">
+                    <input type="text" class="form-control" name="str" placeholder="Enter a Section Township and Range (ex. 01231E)" aria-label="Enter a Section Township and Range" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <a class="btn btn-lg btn-secondary" asp-controller="Real" asp-action="SectionTownshipRange">Reset</a>
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-lg btn-primary" type="submit" form="searchForm" id="button-addon2">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@{
+    if (Model.SearchResults.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <tbody>
+                    @{
+                        if (Model.SearchResults.Count() == 1)
+                        {
+                            <tr class="table-success">
+                                <td>
+                                    @Model.SearchResults.FirstOrDefault().SEC_TWN_RNG
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var result in Model.SearchResults)
+                            {
+                                <tr>
+                                    <td onclick="window.location='./SectionTownshipRange?str=@result.SEC_TWN_RNG'">
+                                        @result.SEC_TWN_RNG
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+@{
+    if (Model.RelatedPlats != null && Model.RelatedPlats.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Plat Number
+                        </th>
+                        <th>
+                            Plat Name
+                        </th>
+                        <th>
+                            Auditor's File Number
+                        </th>
+                        <th>
+                            Recorded Date
+                        </th>
+                        <th>
+                            Tax Year
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var plat in Model?.RelatedPlats)
+                        {
+                            <tr>
+                                <td>
+                                    @plat.PLAT_SECTION_ID
+                                </td>
+                                <td>
+                                    @plat.PLAT_NAME
+                                </td>
+                                <td>
+                                    @plat.AUDITOR_FILE_NO
+                                </td>
+                                <td>
+                                    @plat.RECORDED_DT?.ToShortDateString()
+                                </td>
+                                <td>
+                                    @plat.TAX_YR
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No related plats found.
+        </div>
+    }
+}
