@@ -1,6 +1,25 @@
 # DarkHorse
  A modern front-end for the Land Information System.
  
+# Update 5/10/2020
+This week we built out the Contacts and Real Property Contacts pages.
+
+LIS has the concept of a contact that is common to all account types. It then relates that contact to a specific account type, like a real property account.
+
+This means we can do cool things like find all of the contacts related to a specific account or find all of the different accounts related to a specific contacts.
+
+We also spent some time revising the Real Accounts page and the Search page to improve the look. We added the zoning codes and tax service information which was missing from older version of the Accounts page.
+
+In the account "Details" menu we built out the "Account History by Owner" page. This page is list of contacts that have been associated with a Real Property Account. It links out to the page for that specific contact. It also maintains a list of Account Groups that the owner's account was a part of.
+
+To enable this linking we built out the Account Groups page. It contains basic contact information about the account group.
+
+Then we built out the Section, Township, and Range page. This page allows you to lookup a specific entry and then see all of the plats associated with it. We also enabled searching by partial section, township, and range values. 
+
+It seemed odd that the lookup stopped at the plat; so to make this page more useful we've added links for each plat to take you to a list of accounts related to that plat in the stand-alone Plats Search application.
+
+Finally we started building out the Cadastral Actions page which is very similar in concept to the Section, Township, and Range page.
+ 
 # Update 5/3/2020
 This week we rebuilt the Real Property Prepayment Calculator. This is the first page that directly calls to a stored procedure. 
 
