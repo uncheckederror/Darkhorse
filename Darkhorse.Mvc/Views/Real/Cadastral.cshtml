@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive pt-3">
     <table class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
@@ -80,9 +80,9 @@
                 {
                     <tr onclick="window.location='./Cadastral?an=@action.CAD_ACTN_NO'">
                         <td>@action.CAD_ACTN_NO</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>@action.ORIG_NEW</td>
+                        <td>@action.RP_ACCT_ID</td>
+                        <td>@action.ACCT_NO</td>
                         <td>@action.CAD_ACTN_TYPE</td>
                         <td>@action.CAD_ACTN_RSN</td>
                         <td>@action.CANCEL_DT?.ToShortDateString()</td>
