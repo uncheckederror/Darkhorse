@@ -692,6 +692,67 @@ namespace DarkHorse.Mvc.Controllers
             }
         }
 
+        [Route("Real/Cadastral/")]
+        public async Task<IActionResult> RealPropertyCadastral(int? an)
+        {
+            using var dbConnection = DbConnection;
+
+            // Remap to a more descriptive name, while keeping the URL simple.
+            var actionNumber = an ?? 0;
+
+            var curretTaxYear = new DateTime(2020, 1, 1);
+
+            if (an > 1999)
+            {
+                var actions = await CadastralAction.GetByIdAsync(curretTaxYear, actionNumber, dbConnection);
+
+                return View("Cadastral", new RealAccountCadastralDetail
+                {
+                    Actions = actions
+                });
+            }
+            else
+            {
+                var actions = await CadastralAction.GetAllAsync(curretTaxYear, dbConnection);
+
+                return View("Cadastral", new RealAccountCadastralDetail
+                {
+                    Actions = actions
+                });
+            }
+        }
+
+        [Route("Real/Cadastral/New")]
+        public async Task<IActionResult> CreateNewRealPropertyCadastral()
+        {
+            using var dbConnection = DbConnection;
+
+            return View("NewCadastral", new RealAccountCadastralDetail
+            {
+
+            });
+        }
+
+        [Route("Real/Cadastral/{cadastralActionNumber}")]
+        public async Task<IActionResult> RealPropertyCadastralAction(int cadastralActionNumber)
+        {
+            using var dbConnection = DbConnection;
+
+            var action = await CadastralAction.GetByActionNumberAsync(cadastralActionNumber, dbConnection);
+            if (action.PLAT_ID != null)
+            {
+                // This doesn't make sense, because I've already checked for the null before I use the nullcoalesing operator here.
+                var plat = await Plat.GetByIdAsync(action.PLAT_ID ?? 0, dbConnection);
+                action.PLAT_NAME = plat.PLAT_NAME;
+                action.PLAT_NO = plat.PLAT_NO;
+            }
+
+            return View("NewCadastral", new RealAccountCadastralDetail
+            {
+                SelectedAction = action
+            });
+        }
+
         public IActionResult Privacy()
         {
             return View();
