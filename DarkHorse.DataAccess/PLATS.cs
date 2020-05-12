@@ -43,5 +43,26 @@ namespace DarkHorse.DataAccess
                 return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
             }
         }
+
+        public static async Task<Plat> GetByIdAsync(int platId, IDbConnection dbConnection)
+        {
+
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT PLAT_ID, PLAT_NO, PLAT_NAME FROM PLATS WHERE PLAT_ID = {platId}";
+
+                return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT PLAT_ID, PLAT_NO, PLAT_NAME FROM PLATS WHERE PLAT_ID = {platId}";
+
+                return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
+            }
+        }
     }
 }

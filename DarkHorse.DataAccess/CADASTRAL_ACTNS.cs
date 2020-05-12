@@ -38,6 +38,14 @@ namespace DarkHorse.DataAccess
         // From RP_ACCTS
         public string ACCT_NO { get; set; }
 
+        // From PLATS
+        public string PLAT_NO { get; set; }
+        public string PLAT_NAME { get; set; }
+
+        // From TYPE lookups
+        public string CAD_ACTN_TYPE_DESCR { get; set; }
+        public string CAD_ACTN_RSN_DESCR { get; set; }
+
         public static async Task<IEnumerable<CadastralAction>> GetAllAsync(DateTime minimumTaxYear, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
@@ -183,6 +191,64 @@ namespace DarkHorse.DataAccess
                 return await connection.QueryAsync<CadastralAction>(sql).ConfigureAwait(false);
             }
         }
+
+        public static async Task<CadastralAction> GetByActionNumberAsync(int cadastralActionNumber, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                // TODO: Not sure if this works in MS-SQL
+                var sql = $@"SELECT CADAC.CADASTRAL_ACTN_ID,
+                                      CADAC.CAD_ACTN_TYPE,
+                                      CADAC.CAD_ACTN_RSN,
+                                      CADAC.PLAT_ID,
+                                      CADAC.CAD_ACTN_NO,
+                                      CADAC.FINALIZED_DT,
+                                      CADAC.CANCEL_DT,
+                                      CADAC.CAD_ACTN_EFF_YR,
+                                      CADAC.NO_STMT,
+                                      CADAC.ACCTS_LOCKED,
+                                      CADAC.COMPLETED_DT,
+                                      CAT.DESCRIPTION AS CAD_ACTN_TYPE_DESCR,
+                                      CART.DESCRIPTION AS CAD_ACTN_RSN_DESCR
+                                    FROM CADASTRAL_ACTNS CADAC
+                                    INNER JOIN CADASTRAL_ACTN_TYPES CAT
+                                    ON (CADAC.CAD_ACTN_TYPE = CAT.CAD_ACTN_TYPE)
+                                    INNER JOIN CADASTRAL_ACTN_RSN_TYPES CART
+                                    ON (CADAC.CAD_ACTN_RSN = CART.CODE_TEXT)
+                                    WHERE CADAC.CAD_ACTN_NO = {cadastralActionNumber}";
+
+                return await connection.QueryFirstOrDefaultAsync<CadastralAction>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT CADAC.CADASTRAL_ACTN_ID,
+                                      CADAC.CAD_ACTN_TYPE,
+                                      CADAC.CAD_ACTN_RSN,
+                                      CADAC.PLAT_ID,
+                                      CADAC.CAD_ACTN_NO,
+                                      CADAC.FINALIZED_DT,
+                                      CADAC.CANCEL_DT,
+                                      CADAC.CAD_ACTN_EFF_YR,
+                                      CADAC.NO_STMT,
+                                      CADAC.ACCTS_LOCKED,
+                                      CADAC.COMPLETED_DT,
+                                      CAT.DESCRIPTION AS CAD_ACTN_TYPE_DESCR,
+                                      CART.DESCRIPTION AS CAD_ACTN_RSN_DESCR
+                                    FROM CADASTRAL_ACTNS CADAC
+                                    INNER JOIN CADASTRAL_ACTN_TYPES CAT
+                                    ON (CADAC.CAD_ACTN_TYPE = CAT.CAD_ACTN_TYPE)
+                                    INNER JOIN CADASTRAL_ACTN_RSN_TYPES CART
+                                    ON (CADAC.CAD_ACTN_RSN = CART.CODE_TEXT)
+                                    WHERE CADAC.CAD_ACTN_NO = {cadastralActionNumber}";
+
+                return await connection.QueryFirstOrDefaultAsync<CadastralAction>(sql).ConfigureAwait(false);
+            }
+        }
+
 
     }
 }

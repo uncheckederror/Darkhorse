@@ -733,6 +733,26 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
+        [Route("Real/Cadastral/{cadastralActionNumber}")]
+        public async Task<IActionResult> RealPropertyCadastralAction(int cadastralActionNumber)
+        {
+            using var dbConnection = DbConnection;
+
+            var action = await CadastralAction.GetByActionNumberAsync(cadastralActionNumber, dbConnection);
+            if (action.PLAT_ID != null)
+            {
+                // This doesn't make sense, because I've already checked for the null before I use the nullcoalesing operator here.
+                var plat = await Plat.GetByIdAsync(action.PLAT_ID ?? 0, dbConnection);
+                action.PLAT_NAME = plat.PLAT_NAME;
+                action.PLAT_NO = plat.PLAT_NO;
+            }
+
+            return View("NewCadastral", new RealAccountCadastralDetail
+            {
+                SelectedAction = action
+            });
+        }
+
         public IActionResult Privacy()
         {
             return View();

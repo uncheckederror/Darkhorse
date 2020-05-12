@@ -3,7 +3,7 @@
     ViewData["Title"] = "Cadastral";
 }
 
-<p class="display-4 pr-3">🏊‍♀️ New Cadastral Action</p>
+<p class="display-4 pr-3">🏊‍♀️ Cadastral Action</p>
 
 <div class="form-group">
     <div class="form-row">
@@ -12,7 +12,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Number</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_NO">
             </div>
         </div>
         <div class="col-4">
@@ -20,12 +20,12 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Type</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_TYPE">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction?.CAD_ACTN_TYPE_DESCR">
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Year Effective</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_EFF_YR">
             </div>
         </div>
         <div class="col-4">
@@ -45,12 +45,12 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Reason</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_RSN">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction?.CAD_ACTN_RSN_DESCR">
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date Canceled</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.CANCEL_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
@@ -70,12 +70,12 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Plat or Condo Nubmer</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.PLAT_NO">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.PLAT_NAME">
             </div>
         </div>
     </div>
@@ -87,14 +87,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date Finalized</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model.SelectedAction.FINALIZED_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
                 <div class="btn-group-toggle" data-toggle="buttons">
                     @{
-                        if ('Y' == 'Y')
+                        if (Model?.SelectedAction?.NO_STMT == 'Y')
                         {
                             <label class="btn btn-secondary active">
                                 <input type="checkbox" checked> No Statement
@@ -119,14 +119,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date Completed</span>
                 </div>
-                <input type="text" class="form-control" value="@DateTime.Now.Year">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.COMPLETED_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
                 <div class="btn-group-toggle" data-toggle="buttons">
                     @{
-                        if ('Y' == 'Y')
+                        if (Model?.SelectedAction?.ACCTS_LOCKED == 'Y')
                         {
                             <label class="btn btn-secondary active">
                                 <input type="checkbox" checked> Accounts Locked

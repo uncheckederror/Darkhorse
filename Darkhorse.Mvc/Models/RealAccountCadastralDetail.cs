@@ -9,5 +9,6 @@ namespace DarkHorse.Mvc
     public class RealAccountCadastralDetail
     {
         public IEnumerable<CadastralAction> Actions { get; set; }
+        public CadastralAction SelectedAction { get; set; }
     }
 }
