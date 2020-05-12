@@ -722,6 +722,17 @@ namespace DarkHorse.Mvc.Controllers
             }
         }
 
+        [Route("Real/Cadastral/New")]
+        public async Task<IActionResult> CreateNewRealPropertyCadastral()
+        {
+            using var dbConnection = DbConnection;
+
+            return View("NewCadastral", new RealAccountCadastralDetail
+            {
+
+            });
+        }
+
         public IActionResult Privacy()
         {
             return View();

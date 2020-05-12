@@ -1,0 +1,385 @@
+﻿@model RealAccountCadastralDetail;
+@{
+    ViewData["Title"] = "Cadastral";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ New Cadastral Action</p>
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Action Number</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Action Type</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Year Effective</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Action Reason</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Date Canceled</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Plat or Condo Nubmer</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Date Finalized</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if ('Y' == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> No Statement
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Statement
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Date Completed</span>
+                </div>
+                <input type="text" class="form-control" value="@DateTime.Now.Year">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="input-group">
+                <div class="btn-group-toggle" data-toggle="buttons">
+                    @{
+                        if ('Y' == 'Y')
+                        {
+                            <label class="btn btn-secondary active">
+                                <input type="checkbox" checked> Accounts Locked
+                            </label>
+                        }
+                        else
+                        {
+                            <label class="btn btn-outline-secondary">
+                                <input type="checkbox"> Accounts Not Locked
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Add Action</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Prevent Statement</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-info btn-block" href="#">Real Property Account</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Finalize Action</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Cancel Action</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Lock Accounts</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Modify Tax Records</a>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="input-group">
+                <a class="btn btn-danger btn-block" href="#">Complete Action</a>
+            </div>
+        </div>
+    </div>
+</div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="accounts-tab" data-toggle="tab" href="#accounts" role="tab" aria-controls="home" aria-selected="true">
+            Accounts
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="steps-tab" data-toggle="tab" href="#steps" role="tab" aria-controls="home" aria-selected="true">
+            Steps
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="home" aria-selected="true">
+            Documents
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="warnings-tab" data-toggle="tab" href="#warnings" role="tab" aria-controls="home" aria-selected="true">
+            Warnings
+        </a>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="accounts" role="tabpanel" aria-labelledby="contacts-tab">
+        <div class="table-responsive pt-3 pb-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Process Number
+                        </th>
+                        <th scope="col">
+                            Orignal Accounts
+                        </th>
+                        <th scope="col">
+                            R/C
+                        </th>
+                        <th scope="col">
+                            A/R/D
+                        </th>
+                        <th scope="col">
+                            Copy
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <form method="post">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-6">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">New Accounts</span>
+                            </div>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-danger btn-block">Generate New Numbers</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive pt-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Process Number
+                        </th>
+                        <th scope="col">
+                            New Accounts
+                        </th>
+                        <th scope="col">
+                            R/C
+                        </th>
+                        <th scope="col">
+                            A/R/D
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="steps" role="tabpanel" aria-labelledby="steps-tab">
+        <div class="table-responsive pt-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Step Type
+                        </th>
+                        <th scope="col">
+                            Step Type Description
+                        </th>
+                        <th scope="col">
+                            Date Assigned
+                        </th>
+                        <th scope="col">
+                            Assigned To
+                        </th>
+                        <th scope="col">
+                            Date Completed
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+        <div class="table-responsive pt-3 pb-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Documents Type
+                        </th>
+                        <th scope="col">
+                            Document Type Description
+                        </th>
+                        <th scope="col">
+                            Auditor File Number
+                        </th>
+                        <th scope="col">
+                            Other Reference Information
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="warnings" role="tabpanel" aria-labelledby="warnings-tab">
+        <div class="table-responsive pt-3 pb-3">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Warning or Override
+                        </th>
+                        <th scope="col">
+                            Begin Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
