@@ -72,6 +72,9 @@
                 <th scope="col">
                     Date Completed
                 </th>
+                <th scope="col">
+                    Edit
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -88,6 +91,9 @@
                         <td>@action.CANCEL_DT?.ToShortDateString()</td>
                         <td>@action.FINALIZED_DT?.ToShortDateString()</td>
                         <td>@action.COMPLETED_DT?.ToShortDateString()</td>
+                        <td>
+                            <a class="btn btn-block btn-danger" asp-controller="Real" asp-action="Cadastral" asp-route-id="@action.CAD_ACTN_NO">Edit</a>
+                        </td>
                     </tr>
                 }
             }

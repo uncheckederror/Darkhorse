@@ -69,5 +69,75 @@ namespace DarkHorse.DataAccess
                 return await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
             }
         }
+
+        public static async Task<IEnumerable<Remark>> GetWarningsAsync(int cadastralActionId, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT RMK_ID,
+                              RMK_CD,
+                              TABLE_NAME,
+                              TABLE_PRIMARY_ID,
+                              FORM_NAME,
+                              PRINT_NOTE_FLAG,
+                              REMARKS,
+                              ACTIVE,
+                              BEGIN_DT,
+                              CREATED_BY,
+                              CREATED_DT,
+                              PP_ACCT_ID,
+                              APPLICATION_ID,
+                              RP_ACCT_ID,
+                              LINK_TEXT,
+                              LINK_OBJECT,
+                              END_DT,
+                              MODIFIED_BY,
+                              MODIFIED_DT,
+                              HOLD_CODE_ID,
+                              COLUMN_NAME,
+                              LINK_FILE
+                            FROM REMARKS R
+                            WHERE TABLE_PRIMARY_ID = {cadastralActionId}
+                            AND RMK_CD             = 'WARNING'
+                            AND TABLE_NAME         = 'CADASTRAL_ACTNS'";
+
+                return await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT RMK_ID,
+                              RMK_CD,
+                              TABLE_NAME,
+                              TABLE_PRIMARY_ID,
+                              FORM_NAME,
+                              PRINT_NOTE_FLAG,
+                              REMARKS,
+                              ACTIVE,
+                              BEGIN_DT,
+                              CREATED_BY,
+                              CREATED_DT,
+                              PP_ACCT_ID,
+                              APPLICATION_ID,
+                              RP_ACCT_ID,
+                              LINK_TEXT,
+                              LINK_OBJECT,
+                              END_DT,
+                              MODIFIED_BY,
+                              MODIFIED_DT,
+                              HOLD_CODE_ID,
+                              COLUMN_NAME,
+                              LINK_FILE
+                            FROM REMARKS R
+                            WHERE TABLE_PRIMARY_ID = {cadastralActionId}
+                            AND RMK_CD             = 'WARNING'
+                            AND TABLE_NAME         = 'CADASTRAL_ACTNS'";
+
+                return await connection.QueryAsync<Remark>(sql).ConfigureAwait(false);
+            }
+        }
     }
 }

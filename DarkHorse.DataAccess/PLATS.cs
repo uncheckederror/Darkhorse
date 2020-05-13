@@ -1,6 +1,7 @@
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -62,6 +63,26 @@ namespace DarkHorse.DataAccess
                 var sql = $@"SELECT PLAT_ID, PLAT_NO, PLAT_NAME FROM PLATS WHERE PLAT_ID = {platId}";
 
                 return await connection.QueryFirstOrDefaultAsync<Plat>(sql).ConfigureAwait(false) ?? new Plat();
+            }
+        }
+
+        public static async Task<IEnumerable<Plat>> GetAllAsync(IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT PLAT_ID, PLAT_NO, PLAT_NAME FROM PLATS";
+
+                return await connection.QueryAsync<Plat>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT PLAT_ID, PLAT_NO, PLAT_NAME FROM PLATS";
+
+                return await connection.QueryAsync<Plat>(sql).ConfigureAwait(false);
             }
         }
     }

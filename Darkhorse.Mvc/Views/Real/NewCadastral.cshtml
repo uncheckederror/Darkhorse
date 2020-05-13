@@ -124,7 +124,24 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Plat or Condo Nubmer</span>
                 </div>
-                <input type="text" class="form-control" value="@Model?.SelectedAction?.PLAT_NO">
+                @{
+                    if (string.IsNullOrWhiteSpace(Model?.SelectedAction?.PLAT_NO) && Model?.SelectedAction?.CADASTRAL_ACTN_ID == 0)
+                    {
+                        <select class="custom-select" id="actionType">
+                            <option selected></option>
+                            @{
+                                foreach (var plat in Model?.Plats)
+                                {
+                                    <option value="@plat.PLAT_ID">@plat.PLAT_NO</option>
+                                }
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" value="@Model?.SelectedAction?.PLAT_NO">
+                    }
+                }
             </div>
         </div>
         <div class="col-4">
@@ -270,59 +287,70 @@
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="accounts" role="tabpanel" aria-labelledby="contacts-tab">
-        <div class="table-responsive pt-3 pb-3">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Process Number
-                        </th>
-                        <th scope="col">
-                            Orignal Accounts
-                        </th>
-                        <th scope="col">
-                            R/C
-                        </th>
-                        <th scope="col">
-                            A/R/D
-                        </th>
-                        <th scope="col">
-                            Copy
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var account in Model?.Actions)
-                        {
-                            if (account?.ORIG_NEW == 'O')
-                            {
-                                <tr>
-                                    <td>@account?.RP_ACCT_ID</td>
-                                    <td>@account?.ACCT_NO</td>
-                                    <td>@account?.WORK_GROUP</td>
-                                    @{
-                                        if (account.REFERENCE_DT != null)
-                                        {
-                                            <td>@account.REFERENCE_DT?.ToShortDateString()</td>
-                                        }
-                                        else if (account.INACTIVE_DT != null)
-                                        {
-                                            <td>@account.INACTIVE_DT?.ToShortDateString()</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
+        @{
+            if (Model?.Actions != null && Model.Actions.Any(x => x.ORIG_NEW == 'O'))
+            {
+                <div class="table-responsive pt-3 pb-3">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Process Number
+                                </th>
+                                <th scope="col">
+                                    Orignal Accounts
+                                </th>
+                                <th scope="col">
+                                    R/C
+                                </th>
+                                <th scope="col">
+                                    A/R/D
+                                </th>
+                                <th scope="col">
+                                    Copy
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var account in Model?.Actions)
+                                {
+                                    if (account?.ORIG_NEW == 'O')
+                                    {
+                                        <tr>
+                                            <td>@account?.RP_ACCT_ID</td>
+                                            <td>@account?.ACCT_NO</td>
+                                            <td>@account?.WORK_GROUP</td>
+                                            @{
+                                                if (account.REFERENCE_DT != null)
+                                                {
+                                                    <td>@account.REFERENCE_DT?.ToShortDateString()</td>
+                                                }
+                                                else if (account.INACTIVE_DT != null)
+                                                {
+                                                    <td>@account.INACTIVE_DT?.ToShortDateString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                            <td>@account?.COPY_CHAR_FLAG</td>
+                                        </tr>
                                     }
-                                    <td>@account?.COPY_CHAR_FLAG</td>
-                                </tr>
+                                }
                             }
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No original accounts found.
+                </div>
+            }
+        }
         <form method="post">
             <div class="form-group">
                 <div class="form-row">
@@ -342,140 +370,202 @@
                 </div>
             </div>
         </form>
-        <div class="table-responsive pt-3">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Process Number
-                        </th>
-                        <th scope="col">
-                            New Accounts
-                        </th>
-                        <th scope="col">
-                            R/C
-                        </th>
-                        <th scope="col">
-                            A/R/D
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        foreach (var account in Model?.Actions)
-                        {
-                            if (account?.ORIG_NEW == 'N')
-                            {
-                                <tr>
-                                    <td>@account?.RP_ACCT_ID</td>
-                                    <td>@account?.ACCT_NO</td>
-                                    <td>@account?.WORK_GROUP</td>
-                                    @{
-                                        if (account.REFERENCE_DT != null)
-                                        {
-                                            <td>@account.REFERENCE_DT?.ToShortDateString()</td>
-                                        }
-                                        else if (account.INACTIVE_DT != null)
-                                        {
-                                            <td>@account.INACTIVE_DT?.ToShortDateString()</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
+        @{
+            if (Model?.Actions != null && Model.Actions.Any(x => x.ORIG_NEW == 'N'))
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Process Number
+                                </th>
+                                <th scope="col">
+                                    New Accounts
+                                </th>
+                                <th scope="col">
+                                    R/C
+                                </th>
+                                <th scope="col">
+                                    A/R/D
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var account in Model?.Actions)
+                                {
+                                    if (account?.ORIG_NEW == 'N')
+                                    {
+                                        <tr>
+                                            <td>@account?.RP_ACCT_ID</td>
+                                            <td>@account?.ACCT_NO</td>
+                                            <td>@account?.WORK_GROUP</td>
+                                            @{
+                                                if (account.REFERENCE_DT != null)
+                                                {
+                                                    <td>@account.REFERENCE_DT?.ToShortDateString()</td>
+                                                }
+                                                else if (account.INACTIVE_DT != null)
+                                                {
+                                                    <td>@account.INACTIVE_DT?.ToShortDateString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                        </tr>
                                     }
-                                </tr>
+                                }
                             }
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="pt-3">
+                    <div class="alert alert-warning" role="alert">
+                        No new accounts found.
+                    </div>
+                </div>
+            }
+        }
     </div>
+
     <div class="tab-pane fade show" id="steps" role="tabpanel" aria-labelledby="steps-tab">
-        <div class="table-responsive pt-3">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Step Type
-                        </th>
-                        <th scope="col">
-                            Step Type Description
-                        </th>
-                        <th scope="col">
-                            Date Assigned
-                        </th>
-                        <th scope="col">
-                            Assigned To
-                        </th>
-                        <th scope="col">
-                            Date Completed
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model?.Steps != null && Model.Steps.Any())
+            {
+                <div class="table-responsive pt-3">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Step Type
+                                </th>
+                                <th scope="col">
+                                    Step Type Description
+                                </th>
+                                <th scope="col">
+                                    Date Assigned
+                                </th>
+                                <th scope="col">
+                                    Assigned To
+                                </th>
+                                <th scope="col">
+                                    Date Completed
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var step in Model?.Steps)
+                                {
+                                    <tr>
+                                        <td>@step?.CAD_STEP_TYPE</td>
+                                        <td>@step?.DESCRIPTION</td>
+                                        <td>@step?.CAD_STEP_ASSGN_DT</td>
+                                        <td>@step?.CAD_STEP_ASSGN_TO</td>
+                                        <td>@step?.CAD_STEP_COMPLETE_DT</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No steps found.
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-        <div class="table-responsive pt-3 pb-3">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Documents Type
-                        </th>
-                        <th scope="col">
-                            Document Type Description
-                        </th>
-                        <th scope="col">
-                            Auditor File Number
-                        </th>
-                        <th scope="col">
-                            Other Reference Information
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model?.Documents != null && Model.Documents.Any())
+            {
+                <div class="table-responsive pt-3 pb-3">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Documents Type
+                                </th>
+                                <th scope="col">
+                                    Document Type Description
+                                </th>
+                                <th scope="col">
+                                    Auditor File Number
+                                </th>
+                                <th scope="col">
+                                    Other Reference Information
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var doc in Model?.Documents)
+                                {
+                                    <tr>
+                                        <td>@doc?.DOC_TYPE</td>
+                                        <td>@doc?.DESCRIPTION</td>
+                                        <td>@doc?.AUDITOR_FILE_NO</td>
+                                        <td>@doc?.DOC_NO</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No documents found.
+                </div>
+            }
+        }
     </div>
     <div class="tab-pane fade show" id="warnings" role="tabpanel" aria-labelledby="warnings-tab">
-        <div class="table-responsive pt-3 pb-3">
-            <table class="table table-striped table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            Warning or Override
-                        </th>
-                        <th scope="col">
-                            Begin Date
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @{
+            if (Model?.Warnings != null && Model.Warnings.Any())
+            {
+                <div class="table-responsive pt-3 pb-3">
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Warning or Override
+                                </th>
+                                <th scope="col">
+                                    Begin Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var warning in Model?.Warnings)
+                                {
+                                    <tr>
+                                        <td>@warning?.REMARKS</td>
+                                        <td>@warning?.BEGIN_DT.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3" role="alert">
+                    No warnings found.
+                </div>
+            }
+        }
     </div>
 </div>

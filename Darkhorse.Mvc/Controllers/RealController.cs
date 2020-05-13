@@ -727,10 +727,13 @@ namespace DarkHorse.Mvc.Controllers
         {
             using var dbConnection = DbConnection;
 
+            var plats = await Plat.GetAllAsync(dbConnection);
+
             return View("NewCadastral", new RealAccountCadastralDetail
             {
                 Actions = new List<CadastralAction>(),
-                SelectedAction = new CadastralAction()
+                SelectedAction = new CadastralAction(),
+                Plats = plats
             });
         }
 
@@ -749,11 +752,17 @@ namespace DarkHorse.Mvc.Controllers
             }
 
             var workgroup = await CadastralAction.GetWorkGroupByIdAsync(action.CADASTRAL_ACTN_ID, dbConnection);
+            var steps = await CadastralStep.GetAsync(action.CADASTRAL_ACTN_ID, dbConnection);
+            var docs = await CadastralDoc.GetAsync(action.CADASTRAL_ACTN_ID, dbConnection);
+            var warnings = await Remark.GetWarningsAsync(action.CADASTRAL_ACTN_ID, dbConnection);
 
             return View("NewCadastral", new RealAccountCadastralDetail
             {
                 Actions = workgroup,
-                SelectedAction = action
+                SelectedAction = action,
+                Steps = steps,
+                Documents = docs,
+                Warnings = warnings
             });
         }
 
