@@ -37,6 +37,9 @@ namespace DarkHorse.DataAccess
 
         // From RP_ACCTS
         public string ACCT_NO { get; set; }
+        public DateTime? INACTIVE_DT { get; set; }
+        public DateTime? REFERENCE_DT { get; set; }
+        public string WORK_GROUP { get; set; }
 
         // From PLATS
         public string PLAT_NO { get; set; }
@@ -45,6 +48,7 @@ namespace DarkHorse.DataAccess
         // From TYPE lookups
         public string CAD_ACTN_TYPE_DESCR { get; set; }
         public string CAD_ACTN_RSN_DESCR { get; set; }
+
 
         public static async Task<IEnumerable<CadastralAction>> GetAllAsync(DateTime minimumTaxYear, IDbConnection dbConnection)
         {
@@ -192,6 +196,48 @@ namespace DarkHorse.DataAccess
             }
         }
 
+        public static async Task<IEnumerable<CadastralAction>> GetWorkGroupByIdAsync(int cadastralActionId, IDbConnection dbConnection)
+        {
+            if (dbConnection is SqlConnection)
+            {
+                using var connection = new SqlConnection(dbConnection.ConnectionString);
+
+                // TODO: Not sure if this works in MS-SQL
+                var sql = $@"SELECT CA.RP_ACCT_ID,
+                                      CA.ORIG_NEW,
+                                      CA.COPY_CHAR_FLAG,
+                                      RA.INACTIVE_DT,
+                                      RA.REFERENCE_DT,
+                                      RA.WORK_GROUP,
+                                      RA.ACCT_NO
+                                    FROM CADASTRAL_ACCTS CA
+                                    INNER JOIN RP_ACCTS RA
+                                    ON (CA.RP_ACCT_ID          = RA.RP_ACCT_ID)
+                                    WHERE CA.CADASTRAL_ACTN_ID = {cadastralActionId}";
+
+                return await connection.QueryAsync<CadastralAction>(sql).ConfigureAwait(false);
+            }
+            else
+            {
+                using var connection = new OracleConnection(dbConnection.ConnectionString);
+
+                var sql = $@"SELECT CA.RP_ACCT_ID,
+                                      CA.ORIG_NEW,
+                                      CA.COPY_CHAR_FLAG,
+                                      RA.INACTIVE_DT,
+                                      RA.REFERENCE_DT,
+                                      RA.WORK_GROUP,
+                                      RA.ACCT_NO
+                                    FROM CADASTRAL_ACCTS CA
+                                    INNER JOIN RP_ACCTS RA
+                                    ON (CA.RP_ACCT_ID          = RA.RP_ACCT_ID)
+                                    WHERE CA.CADASTRAL_ACTN_ID = {cadastralActionId}";
+
+                return await connection.QueryAsync<CadastralAction>(sql).ConfigureAwait(false);
+            }
+        }
+
+
         public static async Task<CadastralAction> GetByActionNumberAsync(int cadastralActionNumber, IDbConnection dbConnection)
         {
             if (dbConnection is SqlConnection)
@@ -248,7 +294,5 @@ namespace DarkHorse.DataAccess
                 return await connection.QueryFirstOrDefaultAsync<CadastralAction>(sql).ConfigureAwait(false);
             }
         }
-
-
     }
 }

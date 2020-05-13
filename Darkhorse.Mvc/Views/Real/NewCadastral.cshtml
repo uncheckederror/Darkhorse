@@ -12,7 +12,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Number</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_NO">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_NO">
             </div>
         </div>
         <div class="col-4">
@@ -20,12 +20,35 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Type</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_TYPE">
+                @{
+                    if (string.IsNullOrWhiteSpace(Model?.SelectedAction?.CAD_ACTN_TYPE))
+                    {
+                        <select class="custom-select" id="actionType">
+                            <option selected></option>
+                            <option value="ACCT">New Account</option>
+                            <option value="COND">New Condominium</option>
+                            <option value="DEL">Delete Account</option>
+                            <option value="MGAC">Merge Subaccount</option>
+                            <option value="MGSP">Merge/Split</option>
+                            <option value="MOD">Modification</option>
+                            <option value="MRGE">Merge</option>
+                            <option value="PEND">Pending Action</option>
+                            <option value="PLAT">New Plat</option>
+                            <option value="SPLT">Split</option>
+                            <option value="SUB">New Subaccount</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_TYPE">
+
+                    }
+                }
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
-                <input type="text" class="form-control" value="@Model.SelectedAction?.CAD_ACTN_TYPE_DESCR">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_TYPE_DESCR">
             </div>
         </div>
     </div>
@@ -37,7 +60,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Year Effective</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_EFF_YR">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_EFF_YR">
             </div>
         </div>
         <div class="col-4">
@@ -45,12 +68,43 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Action Reason</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.CAD_ACTN_RSN">
+                @{
+                    if (string.IsNullOrWhiteSpace(Model?.SelectedAction?.CAD_ACTN_RSN))
+                    {
+                        <select class="custom-select" id="actionType">
+                            <option selected></option>
+                            <option value="AC">Acreage Correction</option>
+                            <option value="ADMN">Administrative Request</option>
+                            <option value="BLA">Boundary Line Adjustment</option>
+                            <option value="BSP">Binding Site Plan</option>
+                            <option value="CONDO">Condominuium</option>
+                            <option value="CU">Current Use</option>
+                            <option value="DA">Dual Assessment</option>
+                            <option value="IO">Improvement Only</option>
+                            <option value="LL">Large Lot</option>
+                            <option value="LP">Long Plat</option>
+                            <option value="MG">Merge</option>
+                            <option value="MH">Mobile Home</option>
+                            <option value="NM">New Mapped Account</option>
+                            <option value="PEND">Pending</option>
+                            <option value="ROW">Right of way</option>
+                            <option value="RR">Recorded request</option>
+                            <option value="SC">Senior Citizen</option>
+                            <option value="SP">Short Plat</option>
+                            <option value="SPLT">Split</option>
+                            <option value="TR">Taxpayer Request</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_RSN">
+                    }
+                }
             </div>
         </div>
         <div class="col-4">
             <div class="input-group">
-                <input type="text" class="form-control" value="@Model.SelectedAction?.CAD_ACTN_RSN_DESCR">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.CAD_ACTN_RSN_DESCR">
             </div>
         </div>
     </div>
@@ -62,7 +116,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date Canceled</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.CANCEL_DT?.ToShortDateString()">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.CANCEL_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
@@ -70,7 +124,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Plat or Condo Nubmer</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.PLAT_NO">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.PLAT_NO">
             </div>
         </div>
         <div class="col-4">
@@ -87,7 +141,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date Finalized</span>
                 </div>
-                <input type="text" class="form-control" value="@Model.SelectedAction.FINALIZED_DT?.ToShortDateString()">
+                <input type="text" class="form-control" value="@Model?.SelectedAction?.FINALIZED_DT?.ToShortDateString()">
             </div>
         </div>
         <div class="col-4">
@@ -238,13 +292,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @{
+                        foreach (var account in Model?.Actions)
+                        {
+                            if (account?.ORIG_NEW == 'O')
+                            {
+                                <tr>
+                                    <td>@account?.RP_ACCT_ID</td>
+                                    <td>@account?.ACCT_NO</td>
+                                    <td>@account?.WORK_GROUP</td>
+                                    @{
+                                        if (account.REFERENCE_DT != null)
+                                        {
+                                            <td>@account.REFERENCE_DT?.ToShortDateString()</td>
+                                        }
+                                        else if (account.INACTIVE_DT != null)
+                                        {
+                                            <td>@account.INACTIVE_DT?.ToShortDateString()</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                    <td>@account?.COPY_CHAR_FLAG</td>
+                                </tr>
+                            }
+                        }
+                    }
                 </tbody>
             </table>
         </div>
@@ -286,12 +361,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @{
+                        foreach (var account in Model?.Actions)
+                        {
+                            if (account?.ORIG_NEW == 'N')
+                            {
+                                <tr>
+                                    <td>@account?.RP_ACCT_ID</td>
+                                    <td>@account?.ACCT_NO</td>
+                                    <td>@account?.WORK_GROUP</td>
+                                    @{
+                                        if (account.REFERENCE_DT != null)
+                                        {
+                                            <td>@account.REFERENCE_DT?.ToShortDateString()</td>
+                                        }
+                                        else if (account.INACTIVE_DT != null)
+                                        {
+                                            <td>@account.INACTIVE_DT?.ToShortDateString()</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        }
+                    }
                 </tbody>
             </table>
         </div>

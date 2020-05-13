@@ -729,7 +729,8 @@ namespace DarkHorse.Mvc.Controllers
 
             return View("NewCadastral", new RealAccountCadastralDetail
             {
-
+                Actions = new List<CadastralAction>(),
+                SelectedAction = new CadastralAction()
             });
         }
 
@@ -747,8 +748,11 @@ namespace DarkHorse.Mvc.Controllers
                 action.PLAT_NO = plat.PLAT_NO;
             }
 
+            var workgroup = await CadastralAction.GetWorkGroupByIdAsync(action.CADASTRAL_ACTN_ID, dbConnection);
+
             return View("NewCadastral", new RealAccountCadastralDetail
             {
+                Actions = workgroup,
                 SelectedAction = action
             });
         }
