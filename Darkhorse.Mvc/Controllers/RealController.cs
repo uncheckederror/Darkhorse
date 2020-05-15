@@ -766,6 +766,58 @@ namespace DarkHorse.Mvc.Controllers
             });
         }
 
+        [Route("Real/Nonprofit")]
+        public async Task<IActionResult> RealPropertyNonprofit(int nonProfitAccountId)
+        {
+            using var dbConnection = DbConnection;
+
+            if (nonProfitAccountId > 99)
+            {
+                var selectedAccount = await NonprofitAccount.GetAsync(nonProfitAccountId, dbConnection);
+                var account = selectedAccount.FirstOrDefault();
+
+                if (selectedAccount.Count() == 0)
+                {
+                    return View("Nonprofit");
+                }
+
+                var years = await NonprofitAccount.GetAccountYearAsync(account.NON_PROFIT_ACCT_ID, dbConnection);
+
+                foreach (var year in years)
+                {
+                    var flag = await NonprofitAccount.GetAppliedExemptionAsync(year.NON_PROFIT_ACCT_YR_ID, dbConnection);
+                    year.NON_PROFIT_FLAG = flag.NON_PROFIT_FLAG;
+                }
+
+                return View("Nonprofit", new RealAccountNonprofitDetail
+                {
+                    SelectedAccount = account,
+                    AccountYears = years
+                });
+            }
+            else
+            {
+                var accounts = await NonprofitAccount.GetAllAsync(dbConnection);
+                var account = accounts.FirstOrDefault();
+
+                var selectedAccount = await NonprofitAccount.GetAsync(account.NON_PROFIT_ID, dbConnection);
+                account = selectedAccount.FirstOrDefault();
+
+                var years = await NonprofitAccount.GetAccountYearAsync(account.NON_PROFIT_ACCT_ID, dbConnection);
+                foreach (var year in years)
+                {
+                    var flag = await NonprofitAccount.GetAppliedExemptionAsync(year.NON_PROFIT_ACCT_YR_ID, dbConnection);
+                    year.NON_PROFIT_FLAG = flag.NON_PROFIT_FLAG;
+                }
+
+                return View("Nonprofit", new RealAccountNonprofitDetail
+                {
+                    SelectedAccount = account,
+                    AccountYears = years
+                });
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();

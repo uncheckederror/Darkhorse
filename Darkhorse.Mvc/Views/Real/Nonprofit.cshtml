@@ -1,0 +1,134 @@
+﻿@model RealAccountNonprofitDetail
+@{
+    ViewData["Title"] = "Nonprofit";
+}
+
+<p class="display-4 pr-3">🏢 Real Property Nonprofit</p>
+<div class="form-group pt-3">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Registration Number</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccount?.REGISTRATION_NO">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Applicant</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccount?.APPLICANT">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Occupant</span>
+                </div>
+                <input type="text" class="form-control" value="@Model?.SelectedAccount?.OCCUPANT">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive pt-3">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Prop Number
+                </th>
+                <th scope="col">
+                    Account Number
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Model?.SelectedAccount?.DOR_PROPERTY_NO
+                </td>
+                <td>
+                    @Model?.SelectedAccount?.ACCT_NO
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@{
+    if (Model?.AccountYears != null && Model.AccountYears.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Tax Year
+                        </th>
+                        <th scope="col">
+                            Determination Date
+                        </th>
+                        <th scope="col">
+                            Exempt
+                        </th>
+                        <th scope="col">
+                            Exemption Applied
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var year in Model?.AccountYears)
+                        {
+                            <tr>
+                                <td>
+                                    @year.TAX_YR
+                                </td>
+                                <td>
+                                    @year.DETERMINATION_DT
+                                </td>
+                                <td>
+                                    @year.EXEMPT_STATUS_FLAG
+                                </td>
+                                <td>
+                                    @year.NON_PROFIT_FLAG
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No tax years found for this account.
+        </div>
+    }
+}
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-6">
+            <div class="input-group">
+                <a class="btn btn-block btn-danger" href="#">Insert Determination Letter</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-info" role="alert">
+            Real Property Account Years exemption status cannot be updated from this page.
+        </div>
+    </div>
+</div>
