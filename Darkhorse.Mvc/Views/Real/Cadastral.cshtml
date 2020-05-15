@@ -81,7 +81,7 @@
             @{
                 foreach (var action in Model?.Actions)
                 {
-                    <tr onclick="window.location='./Cadastral?an=@action.CAD_ACTN_NO'">
+                    <tr onclick="window.location='./Cadastral/@action.CAD_ACTN_NO'">
                         <td>@action.CAD_ACTN_NO</td>
                         <td>@action.ORIG_NEW</td>
                         <td>@action.RP_ACCT_ID</td>
@@ -91,9 +91,6 @@
                         <td>@action.CANCEL_DT?.ToShortDateString()</td>
                         <td>@action.FINALIZED_DT?.ToShortDateString()</td>
                         <td>@action.COMPLETED_DT?.ToShortDateString()</td>
-                        <td>
-                            <a class="btn btn-block btn-danger" asp-controller="Real" asp-action="Cadastral" asp-route-id="@action.CAD_ACTN_NO">Edit</a>
-                        </td>
                     </tr>
                 }
             }

@@ -229,7 +229,16 @@
         </div>
         <div class="col-3">
             <div class="input-group">
-                <a class="btn btn-info btn-block" href="#">Real Property Account</a>
+                @{
+                    if (Model?.Actions != null && Model.Actions.Any(x => x.ORIG_NEW == 'O'))
+                    {
+                        <a class="btn btn-info btn-block" asp-controller="Real" asp-action="Account" asp-route-id="@Model?.Actions.Where(x => x.ORIG_NEW == 'O').FirstOrDefault().RP_ACCT_ID">Real Property Account</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-info btn-block disabled">Real Property Account</a>
+                    }
+                }
             </div>
         </div>
         <div class="col-3">
@@ -346,8 +355,10 @@
             }
             else
             {
-                <div class="alert alert-warning mt-3" role="alert">
-                    No original accounts found.
+                <div class="pt-3 pb-3">
+                    <div class="alert alert-warning" role="alert">
+                        No original accounts found.
+                    </div>
                 </div>
             }
         }
