@@ -20,5 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DarkHorse.DataAccess\DarkHorse.DataAccess.csproj" />
+    <ProjectReference Include="..\OracleReports\OracleReports.csproj" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,27 @@
-﻿@{
+﻿@model string;
+@{
     ViewData["Title"] = "Real Property Reports";
 }
 
 <p class="display-4 pr-3">🏊‍♀️ Reports</p>
 
-<form method="post">
+@{
+    if (!string.IsNullOrWhiteSpace(Model))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model
+        </div>
+    }
+}
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <a class="btn btn-block btn-info" href="http://kclis3.co.kitsap.local:9002/reports/rwservlet/showjobs?server=reportservertest" target="_blank">View Report Queue</a>
+        </div>
+    </div>
+</div>
+<form method="get">
     <div class="form-group">
         <div class="form-row">
             <div class="col-4">
@@ -12,6 +29,7 @@
                     <button type="submit" class="btn btn-block btn-secondary">2nd Real Property Exhibit Page</button>
                 </div>
             </div>
+            <input hidden name="reportName" value="rckpendingrpt" />
         </div>
     </div>
 </form>
@@ -22,6 +40,8 @@
                 <div class="input-group">
                     <button type="submit" class="btn btn-block btn-secondary">Accounts by account groups</button>
                 </div>
+                <input hidden name="reportName" value="LISRPARDELQACCTS" />
+
             </div>
         </div>
     </div>
@@ -33,6 +53,7 @@
                 <div class="input-group">
                     <button type="submit" class="btn btn-block btn-secondary">Accounts receiving Copy Statement</button>
                 </div>
+                <input hidden name="reportName" value="LISRPARLTROFDMD" />
             </div>
         </div>
     </div>

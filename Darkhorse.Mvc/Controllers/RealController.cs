@@ -15,6 +15,8 @@ using DarkHorse.DataAccess;
 using DarkHorse.Mvc.Models;
 using System.Globalization;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ServiceReference;
+using OracleReports;
 
 namespace DarkHorse.Mvc.Controllers
 {
@@ -819,11 +821,85 @@ namespace DarkHorse.Mvc.Controllers
         }
 
         [Route("Real/Reports")]
-        public async Task<IActionResult> RealPropertyReports(int cadastralActionNumber)
+        public async Task<IActionResult> RealPropertyReportsByReportName(string reportName)
         {
+            if (string.IsNullOrWhiteSpace(reportName))
+            {
+                return View("RealReports");
+            }
+
             using var dbConnection = DbConnection;
 
-            return View("RealReports");
+            var client = new RWWebServiceClient();
+            client.ClientCredentials.UserName.UserName = _configuration.GetConnectionString("ReportsUsername");
+            client.ClientCredentials.UserName.Password = _configuration.GetConnectionString("ReportsPassword");
+            var serverName = _configuration.GetConnectionString("ReportsServer");
+            // The format is username/password/database
+            var credentialsString = $"{_configuration.GetConnectionString("ReportsUsername")}/{_configuration.GetConnectionString("ReportsPassword")}@";
+            if (serverName.Contains("test"))
+            {
+                // The test reports on the test reports server are complied to run against the LISS database.
+                credentialsString += "liss";
+            }
+            var job = new Job();
+            var parameters = new List<FormParameter>();
+            switch (reportName)
+            {
+                case "rckpendingrpt":
+                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+                    break;
+                case "LISRPARDELQACCTS":
+                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+                    break;
+                case "LISRPARLTROFDMD":
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "PF_foreclose_month_day",
+                                            Value = "1201"
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "PF_rp_acct_id",
+                                            Value = "2385011"
+                                        }
+                                    };
+
+                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+                    break;
+            }
+
+            if (job.JobId == 0)
+            {
+                return View("RealReports", $"Report {reportName} failed to start. Please contact support.");
+            }
+
+            bool jobFinished = false;
+            var responseStatus = await client.getJobInfoAsync(job.JobId, serverName, string.Empty);
+            while (!jobFinished)
+            {
+                await Task.Delay(1000);
+                job = Job.ParseFromStatusResponse(responseStatus);
+                if (job.StatusCode == 4)
+                    if (job.StatusCode == 4)
+                    {
+                        // Sucess
+                        jobFinished = true;
+                    }
+                if (job.StatusCode == 5)
+                {
+                    // Failure
+                    jobFinished = true;
+                }
+                if (job.StatusCode == 2)
+                {
+                    jobFinished = false;
+                }
+                responseStatus = await client.getJobInfoAsync(job.JobId, serverName, string.Empty);
+            }
+
+            return Redirect($"http://kclis3.co.kitsap.local:9002/reports/rwservlet/getjobid{job.JobId}?server=reportservertest");
         }
 
         public IActionResult Privacy()
