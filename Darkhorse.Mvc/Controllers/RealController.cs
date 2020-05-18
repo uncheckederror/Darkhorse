@@ -293,6 +293,15 @@ namespace DarkHorse.Mvc.Controllers
             var owners = await RealAccountOwner.GetByRpAcctIdAsync(account.RP_ACCT_ID, dbConnection);
             var selectedOwner = owners.FirstOrDefault();
 
+            if (!owners.Any())
+            {
+                selectedOwner = new RealAccountOwner
+                {
+                    CONTACT_ID = searchAccount.CONTACT_ID ?? 0,
+                    RP_ACCT_OWNER_ID = searchAccount.RP_ACCT_OWNER_ID
+                };
+            }
+
             if (!string.IsNullOrWhiteSpace(contactId))
             {
                 selectedOwner = owners.Where(x => x.CONTACT_ID.ToString() == contactId).FirstOrDefault();

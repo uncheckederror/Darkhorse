@@ -24,41 +24,52 @@
         </div>
     </div>
 </div>
-<div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr>
-                <th>
-                    Taxpayer
-                </th>
-                <th>
-                    Acquire Date
-                </th>
-                <th>
-                    Transfer Date
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                foreach (var owner in Model?.Owners)
-                {
+@{
+    if (Model != null && Model.Owners != null && Model.Owners.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
                     <tr>
-                        <td>
-                            @owner?.NAME
-                        </td>
-                        <td>
-                            @owner?.BEGIN_DT.ToShortDateString()
-                        </td>
-                        <td>
-                            @owner?.END_DT?.ToShortDateString()
-                        </td>
+                        <th>
+                            Taxpayer
+                        </th>
+                        <th>
+                            Acquire Date
+                        </th>
+                        <th>
+                            Transfer Date
+                        </th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var owner in Model?.Owners)
+                        {
+                            <tr>
+                                <td>
+                                    @owner?.NAME
+                                </td>
+                                <td>
+                                    @owner?.BEGIN_DT.ToShortDateString()
+                                </td>
+                                <td>
+                                    @owner?.END_DT?.ToShortDateString()
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No historical contacts found for this account.
+        </div>
+    }
+}
 <div class="form-group">
     <div class="form-row">
         <div class="btn-group col-4">
