@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.DataAccess", "Dar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkHorse.Tests", "DarkHorse.Tests\DarkHorse.Tests.csproj", "{34E4630C-1057-4373-BFA4-257845B35B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BF939060-3365-4FE1-A32E-EE7D78A9584E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{BF939060-3365-4FE1-A32E-EE7D78A9584E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OracleReports", "OracleReports\OracleReports.csproj", "{068F26D3-49C2-4F57-8124-6B76A13D0BE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BF939060-3365-4FE1-A32E-EE7D78A9584E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF939060-3365-4FE1-A32E-EE7D78A9584E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF939060-3365-4FE1-A32E-EE7D78A9584E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{068F26D3-49C2-4F57-8124-6B76A13D0BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{068F26D3-49C2-4F57-8124-6B76A13D0BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{068F26D3-49C2-4F57-8124-6B76A13D0BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{068F26D3-49C2-4F57-8124-6B76A13D0BE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

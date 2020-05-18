@@ -818,6 +818,14 @@ namespace DarkHorse.Mvc.Controllers
             }
         }
 
+        [Route("Real/Reports")]
+        public async Task<IActionResult> RealPropertyReports(int cadastralActionNumber)
+        {
+            using var dbConnection = DbConnection;
+
+            return View("RealReports");
+        }
+
         public IActionResult Privacy()
         {
             return View();
