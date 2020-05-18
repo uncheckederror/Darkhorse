@@ -58,23 +58,8 @@ namespace OracleReports
                 //var response = await client.getJobInfoAsync(0, string.Empty, string.Empty);
 
                 // Reports Tested working
-                //var reportName = "rckpendingrpt".ToLower();
-                //var reportName = "LISRPARDELQACCTS".ToLower();
-
-                //var reportName = "LISRPARLTROFDMD".ToLower();
-                //var parameters = new List<FormParameter>
-                //{
-                //    new FormParameter
-                //    {
-                //        Name = "PF_foreclose_month_day",
-                //        Value = "1201"
-                //    },
-                //    new FormParameter
-                //    {
-                //        Name = "PF_rp_acct_id",
-                //        Value = "2385011"
-                //    }
-                //};
+                //var reportName = "rckpendingrpt";
+                //var reportName = "LISRPARDELQACCTS";
 
                 var reportName = "LISRPARLTROFDMD";
                 var parameters = new List<FormParameter>
@@ -115,7 +100,8 @@ namespace OracleReports
                     }
                     responseStatus = await client.getJobInfoAsync(job.JobId, serverName, string.Empty);
                 }
-                //var response = await client.getServerInfoAsync("rep_wls_reports_kclis3_frinst", string.Empty);
+
+                // Uncomment this line to return the raw XML file to your browser.
                 //await context.Response.WriteAsync(responseStatus.Body.@return);
                 context.Response.Redirect($"http://kclis3.co.kitsap.local:9002/reports/rwservlet/getjobid{job.JobId}?server=reportservertest");
             });

@@ -41,6 +41,11 @@ namespace OracleReports
         public TimingInfo TimingInfo { get; set; }
         public XmlDocument RawResponse { get; set; }
 
+        /// <summary>
+        /// This is a custom XML parser because the WDSL file doesn't contain enough info on the response format to autogenerate this code.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns> A staticly-typed POCO. </returns>
         public static Job ParseFromResponse(runJobResponse response)
         {
             var xmlFromResponse = new XmlDocument();
@@ -196,6 +201,11 @@ namespace OracleReports
             return jobInfo;
         }
 
+        /// <summary>
+        /// This is a custom XML parser because the WDSL file doesn't contain enough info on the response format to autogenerate this code.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <returns> A staticly-typed POCO. </returns>
         public static Job ParseFromStatusResponse(getJobInfoResponse response)
         {
             var xmlFromResponse = new XmlDocument();
@@ -362,7 +372,7 @@ namespace OracleReports
         /// <returns> The status of the report. </returns>
         public static async Task<Job> StartJobAsync(RWWebServiceClient client, string serverName, string reportName, string userid, IEnumerable<FormParameter>? formParameters)
         {
-            // Build the command and set the parameters.
+            // Build the command and set the parameters. The report name must be lower case. Typically the report name is the same as the module name.
             var command = $"server={serverName} report={reportName.ToLower()}.rdf destype=cache desname=gonowhere desformat=pdf userid={userid}";
             if (formParameters != null && formParameters.Any())
             {
