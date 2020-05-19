@@ -1,6 +1,19 @@
 # DarkHorse
  A modern front-end for the Land Information System.
  
+# Update 5/17/2020
+This week we finished building out the Cadastral page which is both a look up for existing cadastral actions and a secondary page for creating new actions and walking through all of the steps required to complete a cadastral action.
+
+Then we built out the Non-profit page. Interestingly the page doesn't appear to get much use as the most recent entry in the database for this page is from 2004.
+
+One of the key peice of feedback we recieved at the inital Darkhorse demo was that we hadn't developed a strategy to handle the reporting aspect of LIS. I would say the reports are roughly half the code base of this application so that was a pretty big hole in the concept of Darkhorse.
+
+To remedy this problem we wrote a client for the existing Oracle Reporting system that allows us to run and capture any of the reports designed for the existing system inside of Darkhorse.
+
+Thanks to this new capability we were able to start building out the Real Property Reports page and hooking up the reports to these inputs.
+
+The reporting system is quite crufty and difficult to maintain. After Darkhorse goes live we'll have to come back and rebuild these reports in SQL Server Reporting Service.
+
 # Update 5/10/2020
 This week we built out the Contacts and Real Property Contacts pages.
 
