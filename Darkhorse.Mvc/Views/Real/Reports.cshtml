@@ -1,0 +1,487 @@
+﻿@model string;
+@{
+    ViewData["Title"] = "Real Property Reports";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Reports</p>
+
+@{
+    if (!string.IsNullOrWhiteSpace(Model))
+    {
+        <div class="alert alert-danger" role="alert">
+            @Model
+        </div>
+    }
+}
+
+<div class="form-group">
+    <div class="form-row">
+        <div class="col-4">
+            <a class="btn btn-block btn-info" href="http://kclis3.co.kitsap.local:9002/reports/rwservlet/showjobs?server=reportservertest" target="_blank">View Report Queue</a>
+        </div>
+    </div>
+</div>
+<form method="get">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">2nd Real Property Exhibit Page</button>
+                </div>
+            </div>
+            <input hidden name="reportName" value="lisrpargenexbit2" />
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Cause Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="PF_CAUSE_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Interest and Penalty</label>
+                    </div>
+                    <input type="date" class="form-control" name="PF_COMPUTE_DT" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Accounts by account groups</button>
+                </div>
+                <input hidden name="reportName" value="lisacctgrpsbyacct" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Begin Account Group Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="PF_P_BEGIN_ACCT_GROUP_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">End Account Group Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="PF_P_END_ACCT_GROUP_NO" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Accounts receiving Copy Statement</button>
+                </div>
+                <input hidden name="reportName" value="lisrparcopyaccounts" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="2019" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">CAD Accts with Missed Tax Statements</button>
+                </div>
+                <input hidden name="reportName" value="lisrparmissedtxstmt" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">CAD Month</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_CAD_MONTH" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="2019" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Certificate of Delinquency Labels</button>
+                </div>
+                <input hidden name="reportName" value="lisrparltrtaxpayrlbl" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Cause Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_CAUSE_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Real Property Account Id</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_RP_ACCT_ID" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Contract for Treasurer's Deed</button>
+                </div>
+                <input hidden name="reportName" value="lisrparcontractdeed" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_A_ACCT_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Contract Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_A_CONTRACT_NO" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_B_DATE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Buyer</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_C_BUYER" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Sale Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_D_SALE_DATE" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Price</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_E_PRICE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Installment Amount</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_F_INSTALLMENT_AMT" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">30 Percent</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_G_30_PERCENT" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Signature Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_H_SIGNATURE_DATE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Appeared Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_Z_APPEARED_DATE" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">County Treasurer's Deed</button>
+                </div>
+                <input hidden name="reportName" value="lisrparcntytreasdeed" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">End Dated AG/No TS/NO AG/No TS</button>
+                </div>
+                <input hidden name="reportName" value="lisrparendedacctgrp" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Exhibit A</button>
+                </div>
+                <input hidden name="reportName" value="lisrparexhibita" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">FFP Refunds to State</button>
+                </div>
+                <input hidden name="reportName" value="lisrparffpacres" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Mailing Labels/Accounts with Outstanding Balance</button>
+                </div>
+                <input hidden name="reportName" value="liscshrmailingaddr" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Minimum Bid Sheet</button>
+                </div>
+                <input hidden name="reportName" value="lisrparminbidsheet" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Missing Address Info (Copy Accts)</button>
+                </div>
+                <input hidden name="reportName" value="lisrparcopynoadd" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">No Tax Stmt Flag/No AG/by Tax Yr</button>
+                </div>
+                <input hidden name="reportName" value="lisrparnotsflgnoag" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Nox Weed/Cad Actn Report</button>
+                </div>
+                <input hidden name="reportName" value="lisrparnoxweed" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Opening Statement at Sale Notice</button>
+                </div>
+                <input hidden name="reportName" value="lisrparopenstatement" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Outstanding SSWM Fees</button>
+                </div>
+                <input hidden name="reportName" value="lisrparsswmunpaid" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">RP Accts Outstanding Taxes 10 yrs and older</button>
+                </div>
+                <input hidden name="reportName" value="lisrpardelqTenOvr" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">RP Accts Owning - by Year</button>
+                </div>
+                <input hidden name="reportName" value="lisrpardelqacctsbyyr" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">RP Curr Yr Past Due Accts</button>
+                </div>
+                <input hidden name="reportName" value="lisrpardlqacctscuryr" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">RP Exhibit for Press</button>
+                </div>
+                <input hidden name="reportName" value="lisrparpressntc" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Surplus Exhibits</button>
+                </div>
+                <input hidden name="reportName" value="lisrparexbitspls" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Tax Deed</button>
+                </div>
+                <input hidden name="reportName" value="lisrpartaxdeed" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Tax Judgement Sale Notice</button>
+                </div>
+                <input hidden name="reportName" value="lisrpartaxjudgement" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-secondary">Tax Svcs Accts/still owing</button>
+                </div>
+                <input hidden name="reportName" value="liscshrtaxsv1halfowe" />
+            </div>
+        </div>
+    </div>
+</form>

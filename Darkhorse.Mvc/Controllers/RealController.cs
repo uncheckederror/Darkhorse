@@ -830,11 +830,18 @@ namespace DarkHorse.Mvc.Controllers
         }
 
         [Route("Real/Reports")]
-        public async Task<IActionResult> RealPropertyReportsByReportName(string reportName)
+        public async Task<IActionResult> RealPropertyReportsByReportName(
+            string reportName,
+            string PF_CAUSE_NO, DateTime? PF_COMPUTE_DT,
+            string PF_P_BEGIN_ACCT_GROUP_NO, string PF_P_END_ACCT_GROUP_NO,
+            string P_TAX_YR,
+            string P_CAD_MONTH,
+            string P_CAUSE_NO, string P_RP_ACCT_ID,
+            string P_A_ACCT_NO, string P_A_CONTRACT_NO, DateTime? P_B_DATE, string P_C_BUYER, DateTime? P_D_SALE_DATE, string P_E_PRICE, string P_F_INSTALLMENT_AMT, string P_G_30_PERCENT, DateTime? P_H_SIGNATURE_DATE, DateTime? P_Z_APPEARED_DATE)
         {
             if (string.IsNullOrWhiteSpace(reportName))
             {
-                return View("RealReports");
+                return View("Reports");
             }
 
             using var dbConnection = DbConnection;
@@ -850,15 +857,13 @@ namespace DarkHorse.Mvc.Controllers
                 // The test reports on the test reports server are complied to run against the LISS database.
                 credentialsString += "liss";
             }
-            var job = new Job();
+
             var parameters = new List<FormParameter>();
             switch (reportName)
             {
                 case "rckpendingrpt":
-                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
                     break;
                 case "LISRPARDELQACCTS":
-                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
                     break;
                 case "LISRPARLTROFDMD":
                     parameters = new List<FormParameter>
@@ -874,14 +879,170 @@ namespace DarkHorse.Mvc.Controllers
                                             Value = "2385011"
                                         }
                                     };
+                    break;
+                case "lisrpargenexbit2":
+                    if (string.IsNullOrWhiteSpace(PF_CAUSE_NO) || PF_COMPUTE_DT == null)
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid cause number and date");
+                    }
 
-                    job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "PF_CAUSE_NO",
+                                            Value = PF_CAUSE_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "PF_COMPUTE_DT",
+                                            Value = PF_COMPUTE_DT?.ToString("MM/dd/yyyy")
+                                        }
+                                    };
+                    break;
+                case "lisacctgrpsbyacct":
+                    if (string.IsNullOrWhiteSpace(PF_P_BEGIN_ACCT_GROUP_NO) || string.IsNullOrWhiteSpace(PF_P_END_ACCT_GROUP_NO))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid start group and end group.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "PF_P_BEGIN_ACCT_GROUP_NO",
+                                            Value = PF_P_BEGIN_ACCT_GROUP_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "PF_P_END_ACCT_GROUP_NO",
+                                            Value = PF_P_END_ACCT_GROUP_NO
+                                        }
+                                    };
+                    break;
+                case "lisrparcopyaccounts":
+                    if (string.IsNullOrWhiteSpace(P_TAX_YR))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid tax year.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_TAX_YR",
+                                            Value = P_TAX_YR
+                                        },
+                                    };
+                    break;
+                case "lisrparmissedtxstmt":
+                    if (string.IsNullOrWhiteSpace(P_CAD_MONTH) || string.IsNullOrWhiteSpace(P_TAX_YR))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid CAD Month and Tax Year.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_TAX_YR",
+                                            Value = P_TAX_YR
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_CAD_MONTH",
+                                            Value = P_TAX_YR
+                                        },
+                                    };
+                    break;
+                case "lisrparltrtaxpayrlbl":
+                    if (string.IsNullOrWhiteSpace(P_CAUSE_NO) || string.IsNullOrWhiteSpace(P_RP_ACCT_ID))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid Cause number and account Id.");
+                    }
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_CAUSE_NO",
+                                            Value = P_CAUSE_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_RP_ACCT_ID",
+                                            Value = P_RP_ACCT_ID
+                                        },
+                                    };
+                    break;
+                case "lisrparcontractdeed":
+                    if (string.IsNullOrWhiteSpace(P_A_ACCT_NO) || string.IsNullOrWhiteSpace(P_A_CONTRACT_NO)
+                        || P_B_DATE == null || string.IsNullOrWhiteSpace(P_C_BUYER) || P_D_SALE_DATE == null
+                        || string.IsNullOrWhiteSpace(P_E_PRICE) || string.IsNullOrWhiteSpace(P_F_INSTALLMENT_AMT)
+                        || string.IsNullOrWhiteSpace(P_G_30_PERCENT) || P_H_SIGNATURE_DATE == null || P_Z_APPEARED_DATE == null)
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter valid infomration.");
+                    }
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_A_ACCT_NO",
+                                            Value = P_A_ACCT_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_A_CONTRACT_NO",
+                                            Value = P_A_CONTRACT_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_B_DATE",
+                                            Value = P_B_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_C_BUYER",
+                                            Value = P_C_BUYER
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_D_SALE_DATE",
+                                            Value = P_D_SALE_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_E_PRICE",
+                                            Value = P_E_PRICE
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_F_INSTALLMENT_AMT",
+                                            Value = P_F_INSTALLMENT_AMT
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_G_30_PERCENT",
+                                            Value = P_G_30_PERCENT
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_H_SIGNATURE_DATE",
+                                            Value = P_H_SIGNATURE_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_Z_APPEARED_DATE",
+                                            Value = P_Z_APPEARED_DATE?.ToString("MM/dd/yyyy")
+                                        }
+                                    };
                     break;
             }
 
+            var job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+
             if (job.JobId == 0)
             {
-                return View("RealReports", $"Report {reportName} failed to start. Please contact support.");
+                return View("Reports", $"Report {reportName} failed to start. Please contact support.");
             }
 
             bool jobFinished = false;
