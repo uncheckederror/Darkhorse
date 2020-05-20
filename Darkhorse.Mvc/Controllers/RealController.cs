@@ -846,7 +846,11 @@ namespace DarkHorse.Mvc.Controllers
             DateTime? P_INT_PEN_DATE,
             string P_CUR_TAX_YR, DateTime? P_DATE_ENTERED, string P_NOTARY_MONTH_YEAR, DateTime? P_TREAS_SIGNED_DATE,
             string P_SSWM_TYPE,
-            string P_INCLUDE_TAGS)
+            string P_INCLUDE_TAGS,
+            string P_DEED, string P_PURCHASER, string P_PURCHASER2, string P_SOLD_FOR, string P_SURPLUS,
+            DateTime? P_JUDGEMENT_DATE,
+            DateTime? P_AUCTION_DATE, string P_AUCTION_TIME, string P_LOCATION, DateTime? P_SIGNED_DATE,
+            string P_Z_INCLUDE)
         {
             if (string.IsNullOrWhiteSpace(reportName))
             {
@@ -1309,6 +1313,213 @@ namespace DarkHorse.Mvc.Controllers
                                         {
                                             Name = "P_INCLUDE_TAGS",
                                             Value = P_INCLUDE_TAGS
+                                        }
+                                    };
+                    break;
+                case "lisrpardelqacctsbyyr":
+                    if (string.IsNullOrWhiteSpace(P_INCLUDE_TAGS) || string.IsNullOrWhiteSpace(P_TAX_YR))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid tag and date.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_INCLUDE_TAGS",
+                                            Value = P_INCLUDE_TAGS
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_TAX_YR",
+                                            Value = P_TAX_YR
+                                        }
+                                    };
+                    break;
+                case "lisrpardlqacctscuryr":
+                    break;
+                case "lisrparpressntc":
+                    if (string.IsNullOrWhiteSpace(P_CAUSE_NO) || P_INT_PEN_DATE == null)
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid cause number and date.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_CAUSE_NO",
+                                            Value = P_CAUSE_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_INT_PEN_DATE",
+                                            Value = P_INT_PEN_DATE?.ToString("MM/dd/yyyy")
+                                        }
+                                    };
+                    break;
+                case "lisrparexbitspls":
+                    if (string.IsNullOrWhiteSpace(P_ACCT_NO) || string.IsNullOrWhiteSpace(P_CAUSE_NO) || string.IsNullOrWhiteSpace(P_DEED) || P_INT_PEN_DATE == null || string.IsNullOrWhiteSpace(P_PURCHASER) || string.IsNullOrWhiteSpace(P_SOLD_FOR) || string.IsNullOrWhiteSpace(P_SURPLUS))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid cause number and date.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_ACCT_NO",
+                                            Value = P_ACCT_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_CAUSE_NO",
+                                            Value = P_CAUSE_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_DEED",
+                                            Value = P_DEED
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_INT_PEN_DATE",
+                                            Value = P_INT_PEN_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_PURCHASER",
+                                            Value = P_PURCHASER
+                                        },
+                                        //new FormParameter
+                                        //{
+                                        //    Name = "P_PURCHASER2",
+                                        //    Value = P_PURCHASER2
+                                        //},
+                                        new FormParameter
+                                        {
+                                            Name = "P_SOLD_FOR",
+                                            Value = P_SOLD_FOR
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_SURPLUS",
+                                            Value = P_SURPLUS
+                                        },
+                                    };
+                    break;
+                case "lisrpartaxdeed":
+                    if (string.IsNullOrWhiteSpace(P_ACCT_NO) || string.IsNullOrWhiteSpace(P_BUYER) || P_DATE == null || P_JUDGEMENT_DATE == null || string.IsNullOrWhiteSpace(P_PAGE_NO) || string.IsNullOrWhiteSpace(P_PORTION_OF) || P_SALE_DATE == null || string.IsNullOrWhiteSpace(P_SHORT_LEGAL) || P_SIGNATURE_DATE == null || P_Z_APPEARED_DATE == null)
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter valid information.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_ACCT_NO",
+                                            Value = P_ACCT_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_BUYER",
+                                            Value = P_BUYER
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_DATE",
+                                            Value = P_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_JUDGEMENT_DATE",
+                                            Value = P_JUDGEMENT_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_PAGE_NO",
+                                            Value = P_PAGE_NO
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_PORTION_OF",
+                                            Value = P_PORTION_OF
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_SALE_DATE",
+                                            Value = P_SALE_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_SHORT_LEGAL",
+                                            Value = P_SHORT_LEGAL
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_SIGNATURE_DATE",
+                                            Value = P_SIGNATURE_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_Z_APPEARED_DATE",
+                                            Value = P_Z_APPEARED_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                    };
+                    break;
+                case "lisrpartaxjudgement":
+                    if (string.IsNullOrWhiteSpace(P_AUCTION_TIME) || P_AUCTION_DATE == null || P_DATE_ENTERED == null || string.IsNullOrWhiteSpace(P_LOCATION) || P_SIGNED_DATE == null)
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid cause number and date.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_AUCTION_TIME",
+                                            Value = P_AUCTION_TIME
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_AUCTION_DATE",
+                                            Value = P_AUCTION_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_DATE_ENTERED",
+                                            Value = P_DATE_ENTERED?.ToString("MM/dd/yyyy")
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_LOCATION",
+                                            Value = P_LOCATION
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_SIGNED_DATE",
+                                            Value = P_SIGNED_DATE?.ToString("MM/dd/yyyy")
+                                        },
+                                    };
+                    break;
+                case "liscshrtaxsv1halfowe":
+                    if (string.IsNullOrWhiteSpace(P_TAX_YR) || string.IsNullOrWhiteSpace(P_Z_INCLUDE))
+                    {
+                        return View("Reports", $"Report {reportName} failed to start. Please enter a valid tax year and include.");
+                    }
+
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "P_TAX_YR",
+                                            Value = P_TAX_YR
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "P_Z_INCLUDE",
+                                            Value = P_Z_INCLUDE
                                         }
                                     };
                     break;
