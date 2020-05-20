@@ -61,20 +61,8 @@ namespace OracleReports
                 //var reportName = "rckpendingrpt";
                 //var reportName = "LISRPARDELQACCTS";
 
-                var reportName = "LISRPARLTROFDMD";
-                var parameters = new List<FormParameter>
-                {
-                    new FormParameter
-                    {
-                        Name = "PF_foreclose_month_day",
-                        Value = "1201"
-                    },
-                    new FormParameter
-                    {
-                        Name = "PF_rp_acct_id",
-                        Value = "2385011"
-                    }
-                };
+                var reportName = "lisrparexhibita";
+                var parameters = new List<FormParameter>();
 
                 var job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
 

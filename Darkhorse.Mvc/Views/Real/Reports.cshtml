@@ -21,7 +21,7 @@
         </div>
     </div>
 </div>
-<form method="get">
+<form method="post">
     <div class="form-group">
         <div class="form-row">
             <div class="col-4">
@@ -266,6 +266,118 @@
                 </div>
                 <input hidden name="reportName" value="lisrparcntytreasdeed" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Account Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_ACCT_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Buyer</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_BUYER" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_DATE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Page Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_PAGE_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Portion Of</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_PORTION_OF" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Price</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_PRICE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Price Text</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_PRICE_TEXT" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Legal Description</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_P_LEGAL_DESCRIP" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Sale Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_SALE_DATE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Short Legal</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_SHORT_LEGAL" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Signature Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_SIGNATURE_DATE" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Appeared Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_Z_APPEARED_DATE" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -278,6 +390,22 @@
                 </div>
                 <input hidden name="reportName" value="lisrparendedacctgrp" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">End Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_END_DT" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Include Tax Service Accounts</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_INCLUDE_TS_ACCTS" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -289,6 +417,7 @@
                     <button type="submit" class="btn btn-block btn-secondary">Exhibit A</button>
                 </div>
                 <input hidden name="reportName" value="lisrparexhibita" />
+                @*I guess there are no params for this report*@
             </div>
         </div>
     </div>
@@ -302,6 +431,22 @@
                 </div>
                 <input hidden name="reportName" value="lisrparffpacres" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Taxpayer</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAXPAYER" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -313,6 +458,14 @@
                     <button type="submit" class="btn btn-block btn-secondary">Mailing Labels/Accounts with Outstanding Balance</button>
                 </div>
                 <input hidden name="reportName" value="liscshrmailingaddr" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Current Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_CURR_YR" placeholder="@DateTime.Now.Year" />
+                </div>
             </div>
         </div>
     </div>
@@ -326,6 +479,14 @@
                 </div>
                 <input hidden name="reportName" value="lisrparminbidsheet" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Interest and Penalty Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_INT_PEN_DATE" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -337,6 +498,14 @@
                     <button type="submit" class="btn btn-block btn-secondary">Missing Address Info (Copy Accts)</button>
                 </div>
                 <input hidden name="reportName" value="lisrparcopynoadd" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="@DateTime.Now.Year" />
+                </div>
             </div>
         </div>
     </div>
@@ -350,6 +519,14 @@
                 </div>
                 <input hidden name="reportName" value="lisrparnotsflgnoag" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="@DateTime.Now.Year" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -361,6 +538,22 @@
                     <button type="submit" class="btn btn-block btn-secondary">Nox Weed/Cad Actn Report</button>
                 </div>
                 <input hidden name="reportName" value="lisrparnoxweed" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_DATE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="@DateTime.Now.Year" />
+                </div>
             </div>
         </div>
     </div>
@@ -374,6 +567,50 @@
                 </div>
                 <input hidden name="reportName" value="lisrparopenstatement" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Cause Number</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_CAUSE_NO" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Current Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_CUR_TAX_YR" placeholder="@DateTime.Now.Year" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Order of Sale Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_DATE_ENTERED" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Notary Month and Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_NOTARY_MONTH_YEAR" placeholder="June, 2020" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Treasurer Signed Date</label>
+                    </div>
+                    <input type="date" class="form-control" name="P_TREAS_SIGNED_DATE" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -386,6 +623,22 @@
                 </div>
                 <input hidden name="reportName" value="lisrparsswmunpaid" />
             </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">SSWM Type</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_SSWM_TYPE" />
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tax Year</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_TAX_YR" placeholder="@DateTime.Now.Year" />
+                </div>
+            </div>
         </div>
     </div>
 </form>
@@ -397,6 +650,14 @@
                     <button type="submit" class="btn btn-block btn-secondary">RP Accts Outstanding Taxes 10 yrs and older</button>
                 </div>
                 <input hidden name="reportName" value="lisrpardelqTenOvr" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Include Tags</label>
+                    </div>
+                    <input type="text" class="form-control" name="P_INCLUDE_TAGS" />
+                </div>
             </div>
         </div>
     </div>
