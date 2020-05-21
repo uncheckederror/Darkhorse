@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewData["Title"] = "ForeclosureAction";
+}
+
+<p class="display-4 pr-3">🏊‍♀️ Foreclosure Actions</p>
+
+<form method="post">
+    <div class="form-group pt-3">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-primary">Delinquent Report</button>
+                </div>
+                <input hidden name="reportName" value="lisrpardelqaccts" />
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group pt-3">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-primary">Letter of Demand</button>
+                </div>
+                <input hidden name="reportName" value="lisrparltrofdmd" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Letter Date</span>
+                    </div>
+                    <input type="date" class="form-control" name="demandDate">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group pt-3">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-danger">Generate Exhibits</button>
+                </div>
+                <input hidden name="reportName" value="lisrpargenexbit" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Process Number</span>
+                    </div>
+                    <input type="text" class="form-control" name="process">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group pt-3">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-danger">Certificate of Delinquency</button>
+                </div>
+                <input hidden name="reportName" value="lisrparltrtaxpayer" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Process Number</span>
+                    </div>
+                    <input type="text" class="form-control" name="process">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cause Number</span>
+                    </div>
+                    <input type="text" class="form-control" name="cause">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Certified Filed Date</span>
+                    </div>
+                    <input type="date" class="form-control" name="certDate">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Compute Date</span>
+                    </div>
+                    <input type="date" class="form-control" name="computeDate">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Auction Date and Time</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" name="auctionDate">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form method="post">
+    <div class="form-group pt-3">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-block btn-danger">Run Foreclosure Actions</button>
+                </div>
+                <input hidden name="reportName" value="lisrparltrtaxpayer" />
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Process Number</span>
+                    </div>
+                    <input type="text" class="form-control" name="process">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Foreclosure Action</span>
+                    </div>
+                    <input type="text" class="form-control" name="cause">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Action Date</span>
+                    </div>
+                    <input type="date" class="form-control" name="actionDate">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cost</span>
+                    </div>
+                    <input type="text" class="form-control" name="cost">
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Compute Date</span>
+                    </div>
+                    <input type="date" class="form-control" name="computeDate">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Auction Date and Time</span>
+                    </div>
+                    <input type="datetime-local" class="form-control" name="auctionDate">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

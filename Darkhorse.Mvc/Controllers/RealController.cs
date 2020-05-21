@@ -830,6 +830,87 @@ namespace DarkHorse.Mvc.Controllers
             }
         }
 
+        [Route("Real/ForeclosureAction")]
+        public async Task<IActionResult> RealPropertyForclosureAction(string reportName, DateTime? demandDate, string process, string cause, DateTime? certDate, DateTime? actionDate, string cost)
+        {
+            if (string.IsNullOrWhiteSpace(reportName))
+            {
+                return View("ForeclosureAction");
+            }
+
+            using var dbConnection = DbConnection;
+
+            var client = new RWWebServiceClient();
+            client.ClientCredentials.UserName.UserName = _configuration.GetConnectionString("ReportsUsername");
+            client.ClientCredentials.UserName.Password = _configuration.GetConnectionString("ReportsPassword");
+            var serverName = _configuration.GetConnectionString("ReportsServer");
+            // The format is username/password/database
+            var credentialsString = $"{_configuration.GetConnectionString("ReportsUsername")}/{_configuration.GetConnectionString("ReportsPassword")}@";
+            if (serverName.Contains("test"))
+            {
+                // The test reports on the test reports server are complied to run against the LISS database.
+                credentialsString += "liss";
+            }
+
+            var parameters = new List<FormParameter>();
+            switch (reportName)
+            {
+                case "rckpendingrpt":
+                    break;
+                case "lisrpardelqaccts":
+                    break;
+                case "lisrparltrofdmd":
+                    parameters = new List<FormParameter>
+                                    {
+                                        new FormParameter
+                                        {
+                                            Name = "PF_foreclose_month_day",
+                                            Value = "1201"
+                                        },
+                                        new FormParameter
+                                        {
+                                            Name = "PF_rp_acct_id",
+                                            Value = "2385011"
+                                        }
+                                    };
+                    break;
+            }
+
+            var job = await Job.StartJobAsync(client, serverName, reportName, credentialsString, parameters);
+
+            if (job.JobId == 0)
+            {
+                return View("Reports", $"Report {reportName} failed to start. Please contact support.");
+            }
+
+            bool jobFinished = false;
+            var responseStatus = await client.getJobInfoAsync(job.JobId, serverName, string.Empty);
+            while (!jobFinished)
+            {
+                await Task.Delay(1000);
+                job = Job.ParseFromStatusResponse(responseStatus);
+                if (job.StatusCode == 4)
+                    if (job.StatusCode == 4)
+                    {
+                        // Sucess
+                        jobFinished = true;
+                    }
+                if (job.StatusCode == 5)
+                {
+                    // Failure
+                    jobFinished = true;
+                }
+                if (job.StatusCode == 2)
+                {
+                    jobFinished = false;
+                }
+                responseStatus = await client.getJobInfoAsync(job.JobId, serverName, string.Empty);
+            }
+
+            return Redirect($"http://kclis3.co.kitsap.local:9002/reports/rwservlet/getjobid{job.JobId}?server=reportservertest");
+
+        }
+
         [Route("Real/Reports")]
         public async Task<IActionResult> RealPropertyReportsByReportName(
             string reportName,
