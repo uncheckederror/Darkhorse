@@ -1,6 +1,9 @@
 # DarkHorse
  A modern front-end for the Land Information System.
  
+# Update 6/30/2020
+Due to other commitments development stop on this project in late May. I am picking back up on it now. It seems unlikely that any of this will ever be used so I am trying to develop alternative uses for this code base. [ABStreet](https://github.com/dabreegster/abstreet) is a pretty neat project so perhaps I can find a way to transition this app in that direction.
+ 
 # Update 5/17/2020
 This week we finished building out the Cadastral page which is both a look up for existing cadastral actions and a secondary page for creating new actions and walking through all of the steps required to complete a cadastral action.
 
