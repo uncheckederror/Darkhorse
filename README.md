@@ -65,3 +65,32 @@ This is yet another page with many tabs. Each tab typically takes an equal amoun
 Additionally there are many button in the tabs that link out to other pages in the application. For right now I am not implementing any of the Override buttons but I am creating the other pages that don't lead to places where you can edit values.
 
 On the backend we've started revising the data models to better match with the data types present in database. Specifically we are not marking some fields as nullable as they are in the database.
+
+# Why Darkhorse?
+
+Darkhorse is a clone of Kitsap County’s Land Information System (LIS).
+
+Fundamentally, the administration and collection of property tax is a complex business. Each county has a different set of rules and institutional business processes to consider. This means that every county has a slightly different tax administration system. These customizations may not seem that important as taxes have been collected consistently for most of human history; But they have a big impact on operating costs, employee happiness, and the County’s ability to provide a high-quality service to the public.
+
+If you’re familiar with software development you’ll enjoy this read on internal politics on the Microsoft Excel team in the mid-1990’s: https://www.joelonsoftware.com/2001/10/14/in-defense-of-not-invented-here-syndrome/
+
+For everyone else the key point is this:
+
+**If it’s a core business function — do it yourself, no matter what.**
+
+Pick your core business competencies and goals, and do those in house. If you’re a software company, writing excellent code is how you’re going to succeed. Go ahead and outsource the company cafeteria and the CD-ROM duplication. If you’re a pharmaceutical company, write software for drug research, but don’t write your own accounting package. If you’re a web accounting service, write your own accounting package, but don’t try to create your own magazine ads. If you have customers, never outsource customer service.
+
+The core business of the County is to assess and collect property tax. Those tax dollars enable all the other services we provide and business we engage in.
+
+Currently Kitsap County uses LIS to enable the assessment of taxes and the collection of taxes. This system was developed by a private contractor specifically for use by Kitsap County and its partially owned by the County. We have copies of its source code and its database is hosted on premises.
+
+Unfortunately, the technology it’s built on is now wildly outdated and highly insecure. Additionally, there are more than a decade’s worth of integrations that rely on consistent access to this system.
+
+A few years ago, the County decided that it was time to replace LIS. They brought in a private contracting group that over the course of the past 3 years worked on developing a replacement. In parallel Kitsap County began devoting significant resources towards building custom software integrations against this contractor’s product and providing feedback to them.
+This process has been difficult. There are many reasons, but essentially problem is that the contractor took to many technical risks and that led to extreme schedule creep and mis-aligned expectations.
+
+To directly address this problem Darkhorse was created as a minimum risk pathway towards a modern tax administration system. It is a direct clone of LIS, but it is built using the latest tooling and technologies from Microsoft. People new to Darkhorse will find that all the buttons and screens they use every day in LIS have been painstakingly recreated in Darkhorse. Initially it will reuse the database and infrastructure of the existing system, LIS. Once we can prove to ourselves that it works as intended, we can transition from the existing LIS desktop application at our own pace.
+
+Because we are retaining the same database, the software customizations and integrations that have been built over the lifetime of LIS will continue to work without interruption when Darkhorse goes live. There won’t be a migration to perform and if necessary, the existing LIS desktop application will continue working as a fall back.
+
+We are developing Darkhorse from the start out in the open. If you want to see what work is being done or check on the status of our efforts, you can review the code, bugs, and Kanban board for yourself here on Github.
