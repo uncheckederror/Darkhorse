@@ -1,3 +1,5 @@
+![repository-open-graph-template](https://user-images.githubusercontent.com/11726956/166069932-69108c24-06d5-45ff-b9eb-2b4e08956c28.png)
+
 # DarkHorse
  A modern front-end for the Land Information System.
  
